@@ -4,13 +4,16 @@ import Domanda from './Domanda'
 import doggo from './doggo.png'
 import audio from './i-ruv-you-1.mp3'
 import domande from './domande.json'
-import love from './lovecomp.png'
 
 
 export default function App(props) {
   const scena = useRef()
   let resize = false
   let gameOver = false
+  let j = 1;
+  let clean = false;
+  let freeVar = "domanda2"
+  var punteggio = 0
 
   useEffect(()=>{
     var Engine = Matter.Engine,
@@ -22,6 +25,9 @@ export default function App(props) {
 
     var engine = Engine.create({
     })
+
+    var domanda;
+    var domanda2;
 
     var render = Render.create({
       element:scena.current,
@@ -47,7 +53,7 @@ export default function App(props) {
     function handleClick() {
       if (engine.gravity.y == 0) {
         engine.gravity.y = 0.05
-        var domanda = Domanda({screenHeight:render.options.height,groundHeight:render.options.height/50, x:render.options.width/2+300, q:domande["domanda0"]})
+        domanda = Domanda({screenHeight:render.options.height,groundHeight:render.options.height/50, x:render.options.width/2+300, q:domande["domanda0"]})
         Composite.add(engine.world, [domanda])
         document.body.style.animationPlayState = "running"
       }
@@ -80,6 +86,15 @@ export default function App(props) {
 
     var ground = Bodies.rectangle(render.options.width/2, window.innerHeight-window.innerHeight/100, render.options.width, window.innerHeight/50, { isStatic: true, render:{fillStyle: 'red'} });
     Composite.add(engine.world, [ground, camera, player]);
+
+    function handleChange(vecchio) {
+      var nuovo = Domanda({screenHeight:render.options.height,groundHeight:render.options.height/50, x:player.position.x+render.options.width/2, q:domande["domanda"+j]})
+      Composite.add(engine.world, [nuovo])
+        setTimeout(()=>{
+          Composite.remove(engine.world, [vecchio])
+          clean = false
+        },10000)
+    }
     
 
     Events.on(engine, "afterUpdate", ()=>{
@@ -97,6 +112,14 @@ export default function App(props) {
         //Engine.clear(engine)
         //console.log("game over")
       }
+
+      if (engine.gravity !== 0 && typeof domanda.bodies[0].position.x !== 'undefined' && (player.position.x-Composite.allBodies(engine.world)[Composite.allBodies(engine.world).length-1].position.x)>10 && !clean) {
+        console.log(Composite.allBodies(engine.world)[Composite.allBodies(engine.world).length-1])
+        clean = true
+
+        handleChange(Composite.allBodies(engine.world)[Composite.allBodies(engine.world).length-1])
+        j++
+      }
     })
 
     Events.on(engine, 'collisionStart', function(event) {
@@ -108,6 +131,11 @@ export default function App(props) {
         gameOver=true
         document.body.style.animationPlayState = "paused"
         console.log("game over")
+      }
+
+      else {
+        punteggio++
+        console(punteggio)
       }
 
       // change object colours to show those in an active collision (e.g. resting contact)
