@@ -1,0 +1,192 @@
+{
+    "domanda0": {
+        "d": "Chi è il più guapetón?",
+        "r0": {
+            "r": "Xavier",
+            "giusto": false
+        },
+        "r1": {
+            "r": "José Miguel",
+            "giusto": true
+        },
+        "r2": {
+            "r": "Joseph Michel",
+            "giusto": false
+        },
+        "r3": {
+            "r": "Giosuè Michele",
+            "giusto": false
+        }
+    },
+    "domanda1": {
+        "d": "La data del nostro primo date?",
+        "r0": {
+            "r": "6 novembre 2021",
+            "giusto": true
+        },
+        "r1": {
+            "r": "4 novembre 2021",
+            "giusto": false
+        },
+        "r2": {
+            "r": "6 novembre 2022",
+            "giusto": false
+        },
+        "r3": {
+            "r": "6 dicembre 2021",
+            "giusto": false
+        }
+    },
+    "domanda2": {
+        "d": "Fino a dove ti amo?",
+        "r0": {
+            "r": "Cesena",
+            "giusto": false
+        },
+        "r1": {
+            "r": "Forlì",
+            "giusto": false
+        },
+        "r2": {
+            "r": "Roma",
+            "giusto": false
+        },
+        "r3": {
+            "r": "Montréal",
+            "giusto": true
+        }
+    },
+    "domanda3": {
+        "d": "Buono __ sapersi",
+        "r0": {
+            "r": "a",
+            "giusto": true
+        },
+        "r1": {
+            "r": "da",
+            "giusto": false
+        },
+        "r2": {
+            "r": "di",
+            "giusto": false
+        },
+        "r3": {
+            "r": "per",
+            "giusto": false
+        }
+    },
+    "domanda4": {
+        "d": "Las quesadillas pueden no llevar queso?",
+        "r0": {
+            "r": "Que que que no!",
+            "giusto": false
+        },
+        "r1": {
+            "r": "No me toques los cojones",
+            "giusto": false
+        },
+        "r2": {
+            "r": "Se llaman \"quesadillas\" por una razón, collón!",
+            "giusto": false
+        },
+        "r3": {
+            "r": "Sí :)",
+            "giusto": true
+        }
+    },
+    "domanda5": {
+        "d": "Bruxelles __",
+        "r0": {
+            "r": "Je t'aimes",
+            "giusto": false
+        },
+        "r1": {
+            "r": "Je t'ames",
+            "giusto": false
+        },
+        "r2": {
+            "r": "Je t'aime",
+            "giusto": true
+        },
+        "r3": {
+            "r": "Tu m'avais manqué",
+            "giusto": false
+        }
+    },
+    "domanda6": {
+        "d": "Mejor queso?",
+        "r0": {
+            "r": "Emmental",
+            "giusto": false
+        },
+        "r1": {
+            "r": "Squacquerone",
+            "giusto": true
+        },
+        "r2": {
+            "r": "Manchego",
+            "giusto": false
+        },
+        "r3": {
+            "r": "Cheddar",
+            "giusto": false
+        }
+    },
+    "domanda7": {
+        "d": "Qué pueden llevar los tacos?",
+        "r0": {
+            "r": "LAY-TCHOO-GAH",
+            "giusto": false
+        },
+        "r1": {
+            "r": "Lechuga",
+            "giusto": false
+        },
+        "r2": {
+            "r": "Porotos",
+            "giusto": false
+        },
+        "r3": {
+            "r": "Frijoles",
+            "giusto": true
+        }
+    },
+    "domanda8": {
+        "d": "Cosa fa per resistere alla calura?",
+        "r0": {
+            "r": "Gelato allusivo al fallo",
+            "giusto": true
+        },
+        "r1": {
+            "r": "Impianto idrico atto alla pulizia della pelle",
+            "giusto": false
+        },
+        "r2": {
+            "r": "Refrigerazione del cranio tramtie applicazione di soluzione idrosalina naturale",
+            "giusto": false
+        },
+        "r3": {
+            "r": "Bevanda al luppolo",
+            "giusto": false
+        }
+    },
+    "domanda9": {
+        "d": "Il tuo film preferito?",
+        "r0": {
+            "r": "Emily in Paris",
+            "giusto": false
+        },
+        "r1": {
+            "r": "Amélie Poulain",
+            "giusto": true
+        },
+        "r2": {
+            "r": "RuPaul's Drag Race",
+            "giusto": false
+        },
+        "r3": {
+            "r": "Pose",
+            "giusto": false
+        }
+    }
+}

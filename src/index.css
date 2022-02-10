@@ -5,9 +5,35 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+  background-image: url('lovecomp.png');
+  background-size: auto 100%;
+  background-repeat: repeat-x;
+  animation:background-infinite 60s linear infinite;
+  animation-play-state: paused;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+@keyframes background-infinite {
+  from {
+    background-position: 0%;
+  }
+
+  to {
+    background-position: 480%;
+  }
+}
+
+@-webkit-keyframes background-infinite {
+  from {
+    background-position: 0%;
+  }
+
+  to {
+    background-position: 480%;
+  }
 }
