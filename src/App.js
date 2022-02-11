@@ -16,7 +16,7 @@ function createImage(string, w, h) {
 
   var text = new fabric.Textbox(string,{
       width:w,
-      fontSize:15,
+      fontSize:12,
       textAlign:'center',
       fontFamily: 'Ubuntu',
       fill: '#fff',
