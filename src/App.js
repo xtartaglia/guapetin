@@ -12,18 +12,24 @@ function createImage(string, w, h) {
 
   canvas.width = w
   canvas.height = h
-  
+  var limit = canvas.height;
 
-  var text = new fabric.Textbox(string,{
-      width:w,
-      fontSize:12,
-      textAlign:'center',
-      fontFamily: 'Ubuntu',
-      fill: '#fff',
-      stroke: '#000',
-      strokeWidth: 4,
-      paintFirst: 'stroke', // stroke behind fill
-  })
+var text = new fabric.Textbox(string);
+// set initial values
+text.set({
+    top: 5,
+    width: canvas.width,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: 20,
+    stroke: 'white'
+});
+  while (text.width > canvas.width) {
+    text.set(text.width -= 10);
+}
+while (text.height >  limit) {
+    text.set({fontSize: text.fontSize-1});
+}
 
   canvas.add(text)
   canvas.centerObject(text)
