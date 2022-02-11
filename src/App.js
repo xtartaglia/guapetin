@@ -88,7 +88,7 @@ export default function App(props) {
     Composite.add(engine.world, [ground, camera, player]);
 
     function handleChange(vecchio) {
-      var nuovo = Domanda({screenHeight:render.options.height,groundHeight:render.options.height/50, x:player.position.x+render.options.width/2, q:domande["domanda"+j]})
+      var nuovo = Domanda({screenHeight:render.options.height,groundHeight:render.options.height/50, x:player.position.x+render.options.height/2, q:domande["domanda"+j]})
       Composite.add(engine.world, [nuovo])
         setTimeout(()=>{
           Composite.remove(engine.world, [vecchio])
