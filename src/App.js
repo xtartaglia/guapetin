@@ -31,15 +31,15 @@ function createImage(string, w, h) {
   return canvas.toDataURL("image/png");
 }
 
-function getAnswers(q,screenHeight,screenWidth,playerPos,groundHeight) {
+function getAnswers(q,screenHeight,screenWidth,playerPos,groundHeight, scale) {
   let r = Object.keys(q)
   let rgraph = Composite.create()
   console.log(r)
 
   for (let i=0;i<r.length-1;i++) {
-    var sprite = createImage(domande["domanda0"]["r"+i].r.toUpperCase(),200,(screenHeight-groundHeight)/4.5*0.6)
+    var sprite = createImage(domande["domanda0"]["r"+i].r.toUpperCase(),200*scale,(screenHeight-groundHeight)/4.5*0.6)
     console.log(sprite)
-    var ans = Bodies.rectangle(playerPos+screenWidth/4,(2*i+1)*(screenHeight-groundHeight)/9+(screenHeight-groundHeight)/18,200,(screenHeight-groundHeight)/4.5*0.6,{isStatic:true, isSensor:true, render:{sprite:{texture:sprite}}})
+    var ans = Bodies.rectangle(playerPos+screenWidth/4,(2*i+1)*(screenHeight-groundHeight)/9+(screenHeight-groundHeight)/18,200*scale,(screenHeight-groundHeight)/4.5*0.6,{isStatic:true, isSensor:true, render:{sprite:{texture:sprite}}})
     ans.collisionFilter = {
       'group': -1,
       'category': 2,
@@ -61,6 +61,10 @@ export default function App(props) {
   var punteggio = 0
 
 
+  const [scale, setScale] = useState(window.innerHeight/746)
+  const [scaleX, setScaleX] = useState(window.innerWidth/1536)
+
+  console.log(scale)
   useEffect(()=>{
     var Engine = Matter.Engine,
         World = Matter.World,
@@ -86,15 +90,6 @@ export default function App(props) {
       }
     })
 
-    var scale = 0
-
-    if (render.options.height > 500) {
-      scale = 1
-    }
-
-    else {
-      scale = 0.3
-    }
 
     var player = Bodies.rectangle(window.innerWidth/4, window.innerHeight/2, 50*scale, 37*scale, {chamfer: {radius: 15}, render:{sprite:{texture:doggo, xScale:scale,yScale:scale}}})
     Body.setMass(player, 20)
@@ -108,8 +103,8 @@ export default function App(props) {
 
     function handleClick() {
       if (engine.gravity.y == 0) {
-        engine.gravity.y = 0.1
-        domanda = Domanda({screenHeight:render.options.height,groundHeight:render.options.height/50, x:render.options.width/2+300, q:domande["domanda0"]})
+        engine.gravity.y = 0.1*scale
+        domanda = Domanda({screenHeight:render.options.height,groundHeight:render.options.height/50, x:render.options.width/2+300, q:domande["domanda0"], scale:scale})
         Composite.add(engine.world, [domanda])
         document.body.style.animationPlayState = "running"  
 
@@ -119,7 +114,7 @@ export default function App(props) {
         var q = Bodies.rectangle(player.position.x,player.position.y-render.options.height/4,300,100, {isSensor:true, isStatic:true, render:{sprite:{texture:sprite}}})
         Composite.add(qr, [q])
         Composite.add(engine.world, [qr])
-        var risp = getAnswers(domande["domanda0"],render.options.height,render.options.width,player.position.x,render.options.height/50)
+        var risp = getAnswers(domande["domanda0"],render.options.height,render.options.width,player.position.x,render.options.height/50,scale)
         setTimeout(()=>{
           Composite.add(qr,[risp])
         },1000)

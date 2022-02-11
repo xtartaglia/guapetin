@@ -3,13 +3,13 @@ import { Engine, Bodies, World, Composite, Body } from 'matter-js'
 import { fabric } from 'fabric';
 
 export default function Domanda (props) {
-  const { screenHeight, groundHeight, x, q, player } = props
+  const { screenHeight, groundHeight, x, q, scale } = props
   const domanda = Composite.create()
 
   const altezzaA = (screenHeight-groundHeight)/4.5*0.4
   const altezzaB = (screenHeight-groundHeight)/4.5*0.6
   const altezzaC = (screenHeight-groundHeight)/9
-  const larghezza = 200
+  const larghezza = 200*scale
 
   for (let i=0;i<9;i++) {
 
