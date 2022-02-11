@@ -37,7 +37,7 @@ function getAnswers(q,screenHeight,screenWidth,playerPos,groundHeight, scale) {
   console.log(r)
 
   for (let i=0;i<r.length-1;i++) {
-    var sprite = createImage(domande["domanda0"]["r"+i].r.toUpperCase(),200*scale,(screenHeight-groundHeight)/4.5*0.6)
+    var sprite = createImage(q["r"+i].r.toUpperCase(),200*scale,(screenHeight-groundHeight)/4.5*0.6)
     console.log(sprite)
     var ans = Bodies.rectangle(playerPos+screenWidth/4,(2*i+1)*(screenHeight-groundHeight)/9+(screenHeight-groundHeight)/18,200*scale,(screenHeight-groundHeight)/4.5*0.6,{isStatic:true, isSensor:true, render:{sprite:{texture:sprite}}})
     ans.collisionFilter = {
@@ -111,7 +111,7 @@ export default function App(props) {
         var qr = Composite.create()
         var sprite = createImage(domande["domanda0"].d.toUpperCase(),300,100)
         console.log(sprite)
-        var q = Bodies.rectangle(player.position.x,player.position.y-render.options.height/4,300,100, {isSensor:true, isStatic:true, render:{sprite:{texture:sprite}}})
+        var q = Bodies.rectangle(player.position.x,render.options.height/4,300,100, {isSensor:true, isStatic:true, render:{sprite:{texture:sprite}}})
         Composite.add(qr, [q])
         Composite.add(engine.world, [qr])
         var risp = getAnswers(domande["domanda0"],render.options.height,render.options.width,player.position.x,render.options.height/50,scale)
@@ -133,9 +133,29 @@ export default function App(props) {
           if (lastChild.position.x-player.position.x < render.options.width/4) {
             Composite.remove(qr, [q])
             Composite.translate(risp,{x:-2,y:0})
-            setTimeout(()=>{
+
+            if (Composite.allBodies(risp)[Composite.allBodies(risp).length-1].position.x-player.position.x < 100) {
               Composite.remove(qr, [risp])
-            },1000)
+            }
+
+            
+
+            if (lastChild.position.x<-100) {
+              Composite.remove(engine.world, [domanda])
+              domanda = domanda = Domanda({screenHeight:render.options.height,groundHeight:render.options.height/50, x:player.position.x+500*scaleX, q:domande["domanda"+j], scale:scale})
+              Composite.add(engine.world, [domanda])
+              sprite = createImage(domande["domanda"+j].d.toUpperCase(),300,100)
+              console.log(sprite)
+              q = Bodies.rectangle(player.position.x,render.options.height/4,300,100, {isSensor:true, isStatic:true, render:{sprite:{texture:sprite}}})
+              Composite.add(qr, [q])
+
+              risp = getAnswers(domande["domanda"+j],render.options.height,render.options.width,player.position.x,render.options.height/50,scale)
+              setTimeout(()=>{
+              Composite.add(qr,[risp])
+              },1000)
+
+              j++
+            }
           }
     
         },1000/60)
