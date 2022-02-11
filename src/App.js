@@ -151,7 +151,7 @@ export default function App(props) {
         var sound = document.querySelector(".audio")
         sound.playbackRate = 1.5
         sound.play()
-        Body.applyForce(player,{x:player.position.x, y:player.position.y},{x:0, y:-0.1})
+        Body.applyForce(player,{x:player.position.x, y:player.position.y},{x:0, y:-0.1*scale})
       }
     }
 
