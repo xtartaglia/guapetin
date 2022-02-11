@@ -98,7 +98,7 @@ export default function App(props) {
 
     function handleClick() {
       if (engine.gravity.y == 0) {
-        engine.gravity.y = 0.05
+        engine.gravity.y = 0.1
         domanda = Domanda({screenHeight:render.options.height,groundHeight:render.options.height/50, x:render.options.width/2+300, q:domande["domanda0"]})
         Composite.add(engine.world, [domanda])
         document.body.style.animationPlayState = "running"  
@@ -109,9 +109,31 @@ export default function App(props) {
         var q = Bodies.rectangle(player.position.x,player.position.y-render.options.height/4,300,100, {isSensor:true, isStatic:true, render:{sprite:{texture:sprite}}})
         Composite.add(qr, [q])
         Composite.add(engine.world, [qr])
+        var risp = getAnswers(domande["domanda0"],render.options.height,render.options.width,player.position.x,render.options.height/50)
         setTimeout(()=>{
-          Composite.add(qr,[getAnswers(domande["domanda0"],render.options.height,render.options.width,player.position.x,render.options.height/50)])
+          Composite.add(qr,[risp])
         },1000)
+
+        var update = setInterval(()=>{
+          if (typeof domanda !== "undefined" && !gameOver) {
+            Composite.translate(domanda,{x:-2,y:0})
+          }
+    
+          else if (gameOver) {
+            clearInterval(update)
+          }
+
+          var lastChild = Composite.allBodies(domanda)[Composite.allBodies(domanda).length-1]
+
+          if (lastChild.position.x-player.position.x < render.options.width/4) {
+            Composite.remove(qr, [q])
+            Composite.translate(risp,{x:-2,y:0})
+            setTimeout(()=>{
+              Composite.remove(qr, [risp])
+            },1000)
+          }
+    
+        },10)
 
       }
       console.log("click")
@@ -160,13 +182,6 @@ export default function App(props) {
           clean = false
         },10000)
     }
-    
-
-    Events.on(engine, "afterUpdate", ()=>{
-      if (typeof domanda !== "undefined" && !gameOver) {
-        Composite.translate(domanda, {x:-5, y:0})
-      }
-    })
 
     Events.on(engine, 'collisionStart', function(event) {
       var pairs = event.pairs;

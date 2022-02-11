@@ -14,19 +14,19 @@ export default function Domanda (props) {
   for (let i=0;i<9;i++) {
 
     if (i%2===0 && i !==8 && i !== 0) {
-        var box = Bodies.rectangle(x+500,i*(screenHeight-groundHeight)/9+(screenHeight-groundHeight)/18,larghezza,altezzaA, {isStatic:true, render:{fillStyle:'red'}})
+        var box = Bodies.rectangle(x+500,i*(screenHeight-groundHeight)/9+(screenHeight-groundHeight)/18,larghezza,altezzaA, {isStatic:true, label:'box'+i, render:{fillStyle:'red'}})
     }
 
     else if (i === 0) {
-        var box = Bodies.rectangle(x+500,i*(screenHeight-groundHeight)/9+(screenHeight-groundHeight)/18,larghezza,altezzaC, {isStatic:true, render:{fillStyle:'red'}})
+        var box = Bodies.rectangle(x+500,i*(screenHeight-groundHeight)/9+(screenHeight-groundHeight)/18,larghezza,altezzaC, {isStatic:true, label:'box'+i, render:{fillStyle:'red'}})
     }
 
     else if (i === 8) {
-        var box = Bodies.rectangle(x+500,i*(screenHeight-groundHeight)/9+(screenHeight-groundHeight)/18,larghezza,altezzaC, {isStatic:true, render:{fillStyle:'red'}})
+        var box = Bodies.rectangle(x+500,i*(screenHeight-groundHeight)/9+(screenHeight-groundHeight)/18,larghezza,altezzaC, {isStatic:true, label:'box'+i, render:{fillStyle:'red'}})
     }
 
     else {
-        var box = Bodies.rectangle(x+500,i*(screenHeight-groundHeight)/9+(screenHeight-groundHeight)/18,larghezza,altezzaB, {isStatic:true, isSensor:true, render:{visible:false}})
+        var box = Bodies.rectangle(x+500,i*(screenHeight-groundHeight)/9+(screenHeight-groundHeight)/18,larghezza,altezzaB, {isStatic:true, isSensor:true, label:'box'+i, render:{visible:false}})
 
         if (!q["r"+(i-1)/2].giusto) {
             box.collisionFilter = {
