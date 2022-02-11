@@ -104,7 +104,7 @@ export default function App(props) {
     function handleClick() {
       if (engine.gravity.y == 0) {
         engine.gravity.y = 0.1*scale
-        domanda = Domanda({screenHeight:render.options.height,groundHeight:render.options.height/50, x:player.position.x+500, q:domande["domanda0"], scale:scale})
+        domanda = Domanda({screenHeight:render.options.height,groundHeight:render.options.height/50, x:player.position.x+500*scaleX, q:domande["domanda0"], scale:scale})
         Composite.add(engine.world, [domanda])
         document.body.style.animationPlayState = "running"  
 
