@@ -24,7 +24,7 @@ text.set({
     width: canvas.width,
     textAlign: 'center',
     fontFamily:'Impact',
-    fontSize: 30,
+    fontSize: 15,
     fill:'white',
     stroke:'black'
 });
@@ -230,7 +230,7 @@ export default function App(props) {
       Body.setVelocity(player,{x:0,y:0})
       Body.setAngularVelocity(player,0)
       punteggio = 0
-      j = 0
+      j = 1
 
       punti = Bodies.rectangle(player.position.x,render.options.height*0.8,1,1,{isStatic:true,isSensor:true, render:{sprite:{texture:createImage(punteggio.toString(),30,30)}}})
           punti.collisionFilter = {
