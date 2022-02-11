@@ -96,7 +96,7 @@ export default function App(props) {
       else {
         distanza = render.options.width
       }
-      var nuovo = Domanda({screenHeight:render.options.height,groundHeight:render.options.height/50, x:player.position.x+distanza/2, q:domande["domanda"+j]})
+      var nuovo = Domanda({screenHeight:render.options.height,groundHeight:render.options.height/50, x:player.position.x+distanza*3/4, q:domande["domanda"+j]})
       Composite.add(engine.world, [nuovo])
         setTimeout(()=>{
           Composite.remove(engine.world, [vecchio])
