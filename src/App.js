@@ -138,7 +138,7 @@ export default function App(props) {
             },1000)
           }
     
-        },10)
+        },1000/60)
 
       }
       console.log("click")
