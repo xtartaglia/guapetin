@@ -62,7 +62,7 @@ export default function App(props) {
 
 
   const [scale, setScale] = useState(window.innerHeight/746)
-  const [scaleX, setScaleX] = useState(window.innerWidth/1536)
+  const [scaleX, setScaleX] = useState(1536/window.innerWidth)
 
   console.log(scale)
   useEffect(()=>{
