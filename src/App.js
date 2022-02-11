@@ -121,7 +121,7 @@ export default function App(props) {
 
         var update = setInterval(()=>{
           if (typeof domanda !== "undefined" && !gameOver) {
-            Composite.translate(domanda,{x:-2*scaleX,y:0})
+            Composite.translate(domanda,{x:-2,y:0})
           }
     
           else if (gameOver) {
@@ -132,7 +132,7 @@ export default function App(props) {
 
           if (lastChild.position.x-player.position.x < render.options.width/4) {
             Composite.remove(qr, [q])
-            Composite.translate(risp,{x:-2*scaleX,y:0})
+            Composite.translate(risp,{x:-2,y:0})
             setTimeout(()=>{
               Composite.remove(qr, [risp])
             },1000)
