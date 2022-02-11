@@ -65,7 +65,6 @@ export default function App(props) {
   const [scaleX, setScaleX] = useState(1/window.devicePixelRatio)
 
   console.log(scale)
-  alert("Here is your Pixel ratio: "+window.devicePixelRatio)
   useEffect(()=>{
     var Engine = Matter.Engine,
         World = Matter.World,
