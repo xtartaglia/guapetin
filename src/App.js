@@ -109,7 +109,7 @@ export default function App(props) {
         document.body.style.animationPlayState = "running"  
 
         var qr = Composite.create()
-        var sprite = createImage(domande["domanda0"].d.toUpperCase(),render.options.width/8,render.options.height/8)
+        var sprite = createImage(domande["domanda0"].d.toUpperCase(),render.options.width/6,render.options.height/6)
         console.log(sprite)
         var q = Bodies.rectangle(player.position.x,render.options.height/4,300,100, {isSensor:true, isStatic:true, render:{sprite:{texture:sprite}}})
         Composite.add(qr, [q])
@@ -144,7 +144,7 @@ export default function App(props) {
               Composite.remove(engine.world, [domanda])
               domanda = domanda = Domanda({screenHeight:render.options.height,groundHeight:render.options.height/50, x:player.position.x+500*scaleX, q:domande["domanda"+j], scale:scale})
               Composite.add(engine.world, [domanda])
-              sprite = createImage(domande["domanda"+j].d.toUpperCase(),render.options.width/8,render.options.height/8)
+              sprite = createImage(domande["domanda"+j].d.toUpperCase(),render.options.width/6,render.options.height/6)
               console.log(sprite)
               q = Bodies.rectangle(player.position.x,render.options.height/4,300,100, {isSensor:true, isStatic:true, render:{sprite:{texture:sprite}}})
               Composite.add(qr, [q])
