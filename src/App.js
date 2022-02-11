@@ -86,7 +86,17 @@ export default function App(props) {
       }
     })
 
-    var player = Bodies.rectangle(window.innerWidth/4, window.innerHeight/2, 50, 37, {chamfer: {radius: 15}, render:{sprite:{texture:doggo}}})
+    var scale = 0
+
+    if (render.options.height > 500) {
+      scale = 1
+    }
+
+    else {
+      scale = 0.3
+    }
+
+    var player = Bodies.rectangle(window.innerWidth/4, window.innerHeight/2, 50*scale, 37*scale, {chamfer: {radius: 15}, render:{sprite:{texture:doggo, xScale:scale,yScale:scale}}})
     Body.setMass(player, 20)
 
     var camera = Bodies.rectangle(player.position.x+render.options.width/4, player.position.y,1,1, {isSensor:true, isStatic:true, render:{visible:false}})
