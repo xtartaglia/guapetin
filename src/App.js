@@ -196,7 +196,7 @@ export default function App(props) {
               Composite.remove(engine.world, [domanda])
               domanda = domanda = Domanda({screenHeight:render.options.height,groundHeight:render.options.height/50, x:player.position.x+1000*scaleX, q:domande["domanda"+j], scale:scale})
               Composite.add(engine.world, [domanda])
-              sprite = createImage(domande["domanda"+j].d.toUpperCase(),render.options.width/2,render.options.height/8,type)
+              sprite = createImage(domande["domanda"+j].d.toUpperCase(),render.options.width/2,(window.innerHeight/50*49)/4.5*0.4,type)
               q = Bodies.rectangle(player.position.x,(window.innerHeight/50*49)/4.5*0.2,(window.innerHeight/50*49)/4.5*0.4,render.options.width/2, {isSensor:true, isStatic:true, render:{sprite:{texture:sprite}}})
               q.collisionFilter = {
                 'group': -1,
