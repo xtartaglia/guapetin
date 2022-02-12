@@ -25,7 +25,7 @@ function createImage(string, w, h, type) {
     canvas.width = w/2
     canvas.height = h
     var stroke='none'
-    var size = 10
+    var size = 15
   }
 
   var limit = canvas.height;
