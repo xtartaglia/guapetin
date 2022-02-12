@@ -16,11 +16,11 @@ export default function Domanda (props) {
   for (let i=0;i<9;i++) {
 
     if (i%2===0 && i !==8 && i !== 0) {
-        var box = Bodies.rectangle(x+500,i*(screenHeight-groundHeight)/9+(screenHeight-groundHeight)/18,larghezza,altezzaA, {isStatic:true, label:'box'+i, chamfer: {radius:altezzaA/2},render:{overflow:'hidden',sprite:{texture:nuvola,xScale:1,yScale:altezzaA/100*1.2}}})
+        var box = Bodies.rectangle(x+500,i*(screenHeight-groundHeight)/9+(screenHeight-groundHeight)/18,larghezza-10,altezzaA, {isStatic:true, label:'box'+i, chamfer: {radius:altezzaA/2},render:{overflow:'hidden',sprite:{texture:nuvola,xScale:1.2,yScale:altezzaA/100*1.6}}})
     }
 
     else if (i === 0) {
-        var box = Bodies.rectangle(x+500,i*(screenHeight-groundHeight)/9+(screenHeight-groundHeight)/18,larghezza,altezzaC, {isStatic:true, label:'box'+i, chamfer: {radius:altezzaC/2},render:{overflow:'hidden',sprite:{texture:nuvola,xScale:1,yScale:altezzaC/100*1.2}}})
+        var box = Bodies.rectangle(x+500,i*(screenHeight-groundHeight)/9+(screenHeight-groundHeight)/18,larghezza-10,altezzaC, {isStatic:true, label:'box'+i, chamfer: {radius:altezzaC/2},render:{overflow:'hidden',sprite:{texture:nuvola,xScale:1.2,yScale:altezzaC/100*1.6}}})
     }
 
     else if (i === 8) {

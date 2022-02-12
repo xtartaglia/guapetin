@@ -19,7 +19,7 @@
         }
     },
     "domanda1": {
-        "d": "La data del nostro primo date?",
+        "d": "La data del nostro primo appuntamento?",
         "r0": {
             "r": "6 novembre 2021",
             "giusto": true
@@ -162,7 +162,7 @@
             "giusto": false
         },
         "r2": {
-            "r": "Refrigerazione del cranio tramtie applicazione di soluzione idrosalina naturale",
+            "r": "Refrigerazione del cranio tramite applicazione di soluzione idrosalina naturale",
             "giusto": false
         },
         "r3": {

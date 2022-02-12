@@ -9,26 +9,76 @@ import { fabric } from 'fabric'
 import './index.css'
 import earth from './ground.png'
 import gO from './game over.mp3'
+import doggoLove from './doggo_love.png'
+import doggoSad from './doggo_sad.png'
+import doggoDead from './doggo_dead.png'
+import wrong from './wrong.wav'
 
 function createImage(string, w, h, type) {
 
   var canvas = new fabric.Canvas()
   var stroke;
   var size;
+  var fontFamily = 'Arial'
+  var fill
 
   if (type === 0) {
     canvas.width = w
     canvas.height = h
     stroke='black'
     size = 30
+    fill='white'
   }
 
-  else {
+  else if (type === 1) {
     canvas.width = w
     canvas.height = h
     stroke='white'
     size = 20
+    fill='white'
   }
+
+  else if (type === 2) {
+    canvas.width = w
+    canvas.height = h
+    stroke = 'white'
+    size = 1000
+    fill='white'
+  }
+
+  else if (type === 3) {
+    canvas.width = w
+    canvas.height = h
+    stroke = 'orange'
+    fill= 'orange'
+
+    size = 1000
+  }
+
+  var words = string.split(' ')
+  var sizes = []
+
+  for (var i=0;i<words.length;i++) {
+    var graphText = new fabric.Text(words[i], {
+      fontSize:size,
+      fontFamily:fontFamily,
+      fontWeight: 'bold',
+      fill:fill,
+      stroke:stroke
+    })
+    
+    while (graphText.width>canvas.width) {
+      graphText.set({fontSize: graphText.fontSize-1})
+    }
+    //Math.min doesn't work if more values are equal
+    if (!sizes.includes(graphText.fontSize)) {
+      sizes.push(graphText.fontSize)
+    }
+  }
+
+  size = Math.min.apply(null, sizes)
+
+  console.log(size)
 
   var limit = canvas.height;
 
@@ -37,7 +87,7 @@ var text = new fabric.Textbox(string);
 text.set({
     width: canvas.width,
     textAlign: 'center',
-    fontFamily:'Arial',
+    fontFamily:fontFamily,
     fontWeight: 'bold',
     fontSize: size,
     fill:'white',
@@ -52,6 +102,7 @@ while (text.height >  limit) {
 
   canvas.add(text)
   canvas.centerObject(text)
+  console.log(canvas.toDataURL("image/png"))
 
   return canvas.toDataURL("image/png");
 }
@@ -74,6 +125,9 @@ function getAnswers(q,screenHeight,screenWidth,playerPos,groundHeight, scale) {
 
   for (let i=0;i<r.length-1;i++) {
     var sprite = createImage(q["r"+i].r,200,(screenHeight-groundHeight)/4.5*0.6, type)
+    if (i===0) {
+      console.log("w: "+200+" h: "+(screenHeight-groundHeight)/4.5*0.6)
+    }
     var ans = Bodies.rectangle(pos,(2*i+1)*(screenHeight-groundHeight)/9+(screenHeight-groundHeight)/18,200,(screenHeight-groundHeight)/4.5*0.6,{isStatic:true, isSensor:true, render:{sprite:{texture:sprite}}})
     ans.collisionFilter = {
       'group': -1,
@@ -91,9 +145,13 @@ export default function App(props) {
   const scena = useRef()
   let resize = false
   let gameOver = false
-  let j = 1;
-  let clean = false
+  let j = 1
+  let won = false
   var punteggio = 0
+  var l = 0
+  var checkedWon = false
+  var conto
+  var noClick = true
 
 
   const [scale, setScale] = useState(window.innerHeight/746)
@@ -146,8 +204,47 @@ export default function App(props) {
         Composite.add(engine.world,[punti])
 
     function handleClick() {
-      if (gameOver) {
-        restart()
+      if (gameOver && noClick) {
+        noClick = false
+        if (l === 0) {
+          var go = setInterval(()=>{
+
+            try {
+              Composite.remove(engine.world,[conto])
+            } catch (error) {
+              console.error(error);
+              // expected output: ReferenceError: nonExistentFunction is not defined
+              // Note - error messages will vary depending on browser
+            }
+
+            conto = Bodies.rectangle(render.options.width/2,render.options.height/2,render.options.width/4,render.options.height/4,{isStatic:true,isSensor:true, render:{sprite:{texture:createImage((5-l).toString(),render.options.width/4,render.options.height/4,2)}}})
+            punti.collisionFilter = {
+            'group': -1,
+            'category': 2,
+            'mask': 0,
+            }
+
+            Composite.add(engine.world, [conto])
+
+            if (l === 5)
+            {
+              restart()
+              clearInterval(go)
+            }
+            
+            else {
+              l++
+            }
+          },1000)
+        }
+
+        else {
+          console.log("L IS NOT ZERO: "+l)
+        }
+      }
+
+      else {
+        console.log("gameOver: "+gameOver+" noClick: "+noClick)
       }
 
       if (engine.gravity.y === 0) {
@@ -182,6 +279,19 @@ export default function App(props) {
 
           var lastChild = Composite.allBodies(domanda)[Composite.allBodies(domanda).length-1]
 
+          if (lastChild.position.x<player.position.x-10 && !checkedWon) {
+            checkedWon = true
+            if (!won) {
+              player.render.sprite.texture = doggoSad
+              var sad = document.querySelector(".wrong")
+              sad.play()
+            setTimeout(()=>{
+              player.render.sprite.texture = doggo
+              won = false
+            },2000)
+            }
+          }
+
           if (lastChild.position.x-player.position.x < render.options.width/4) {
             Composite.remove(qr, [q])
             Composite.translate(risp,{x:-2,y:0})
@@ -190,10 +300,15 @@ export default function App(props) {
               Composite.remove(qr, [risp])
             }
 
-            
-
             if (lastChild.position.x<-100) {
               Composite.remove(engine.world, [domanda])
+              checkedWon = false
+              if (j===10) {
+                gameOver=true
+                alert("La partita è finita.\nIl tuo punteggio è: "+punteggio+"\nClicca su qualsiasi punto dello schermo dopo aver chiuso questo messaggio per iniziare una nuova partita.")
+
+                clearInterval(update)
+              }
               domanda = domanda = Domanda({screenHeight:render.options.height,groundHeight:render.options.height/50, x:player.position.x+1000*scaleX, q:domande["domanda"+j], scale:scale})
               Composite.add(engine.world, [domanda])
               sprite = createImage(domande["domanda"+j].d,render.options.width/2,(window.innerHeight/50*49)/4.5*0.3,type)
@@ -212,11 +327,6 @@ export default function App(props) {
 
               j++
             }
-          }
-
-          if (j===10) {
-            gameOver=true
-            clearInterval(update)
           }
     
         },1000/60)
@@ -253,7 +363,7 @@ export default function App(props) {
 
     function restart() {
       try {
-        Composite.remove(engine.world,[domanda,qr,punti])
+        Composite.remove(engine.world,[domanda,qr,punti,conto])
       } catch (error) {
         console.error(error);
         // expected output: ReferenceError: nonExistentFunction is not defined
@@ -277,22 +387,30 @@ export default function App(props) {
 
       console.log(punteggio)
       gameOver=false
+      noClick = true
+      l = 0
+      won = false
+      console.log("HERE IS L: "+l)
     }
 
-    Events.on(engine, 'collisionEnd', function(event) {
+    Events.on(engine, 'collisionStart', function(event) {
       var pairs = event.pairs;
+      
+      console.log(pairs[0].bodyB)
 
-      var sensorA = pairs[0].bodyA.isSensor
-      var sensorB = pairs[0].bodyB.isSensor
+      if (!pairs[0].bodyA.isSensor && !pairs[0].bodyB.isSensor && !gameOver) {
+        gameOver=true
+        document.body.style.animationPlayState = "paused"
+        console.log("game over")
+        document.querySelector(".gO").play()
+        player.render.sprite.texture = doggoDead
+        alert("NOOOOOOO! Hai fatto male a guapetín :(\nIl tuo punteggio è: "+punteggio+"\nClicca su qualsiasi punto dello schermo dopo aver chiuso questo messaggio per iniziare una nuova partita.")
+        setTimeout(()=>{
+          player.render.sprite.texture = doggo
+        },2000)
 
-      //Somehow I have to do this, otherwise the object is gone.
-
-      setTimeout(()=>{
-        if ((sensorA || sensorB) && !gameOver) {
-
-          punteggio++
-          var win = document.querySelector(".win")
-          win.play()
+        if (won) {
+          punteggio=punteggio-1
             Composite.remove(engine.world,punti)
             punti = Bodies.rectangle(player.position.x,render.options.height*0.8,1,1,{isStatic:true,isSensor:true, render:{sprite:{texture:createImage(punteggio.toString(),30,30,type)}}})
             punti.collisionFilter = {
@@ -301,21 +419,30 @@ export default function App(props) {
             'mask': 0,
             }
           Composite.add(engine.world,[punti])
-  
         }
-      },100)
-    })
+      }
 
-    Events.on(engine, 'collisionStart', function(event) {
-      var pairs = event.pairs;
-      
-      console.log(pairs[0].bodyB)
+      else {
+        if (!gameOver) {
+          won = true
+        var win = document.querySelector(".win")
+        win.play()
+        player.render.sprite.texture = doggoLove
+            setTimeout(()=>{
+              player.render.sprite.texture = doggo
+              won = false
+            },2000)
 
-      if (!pairs[0].bodyA.isSensor && !pairs[0].bodyB.isSensor) {
-        gameOver=true
-        document.body.style.animationPlayState = "paused"
-        console.log("game over")
-        document.querySelector(".gO").play()
+            punteggio++
+            Composite.remove(engine.world,punti)
+            punti = Bodies.rectangle(player.position.x,render.options.height*0.8,1,1,{isStatic:true,isSensor:true, render:{sprite:{texture:createImage(punteggio.toString(),30,30,type)}}})
+            punti.collisionFilter = {
+            'group': -1,
+            'category': 2,
+            'mask': 0,
+            }
+          Composite.add(engine.world,[punti])
+        }
       }
   });
 
@@ -328,6 +455,10 @@ export default function App(props) {
       <audio className="win" src={win} preload="auto"></audio>
       <audio className="jump" src={jump} preload="auto"></audio>
       <audio className="gO" src={gO} preload="auto"></audio>
+      <audio className="wrong" src={wrong} preload="auto"></audio>
+      <img src={doggoLove} preload="auto" hidden={true}></img>
+      <img src={doggoSad} preload="auto" hidden={true}></img>
+      <img src={doggoDead} preload="auto" hidden={true}></img>
     </div>
   )
 }
