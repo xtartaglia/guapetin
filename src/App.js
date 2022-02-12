@@ -445,16 +445,15 @@ export default function App(props) {
       console.log(pairs[0].bodyB)
 
       if (!pairs[0].bodyA.isSensor && !pairs[0].bodyB.isSensor && !gameOver) {
-        document.body.style.animationPlayState = "paused"
+        //document.body.style.animationPlayState = "paused"
         console.log("game over")
         document.querySelector(".gO").play()
         player.render.sprite.texture = doggoDead
-        gameOver=true
+        alert("NOOOOOOO! Hai fatto male a guapetín :(\nIl tuo punteggio è: "+punteggio+"\nClicca su qualsiasi punto dello schermo dopo aver chiuso questo messaggio per iniziare una nuova partita.")
 
         setTimeout(()=>{
-          
-          alert("NOOOOOOO! Hai fatto male a guapetín :(\nIl tuo punteggio è: "+punteggio+"\nClicca su qualsiasi punto dello schermo dopo aver chiuso questo messaggio per iniziare una nuova partita.")
           player.render.sprite.texture = doggo
+          gameOver=true
         },2000)
 
         if (won) {
