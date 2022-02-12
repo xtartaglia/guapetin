@@ -23,7 +23,7 @@ function createImage(string, w, h, type) {
 
   else {
     canvas.width = w/2
-    canvas.height = h/2
+    canvas.height = h
     var stroke='none'
     var size = 10
   }
@@ -69,7 +69,7 @@ function getAnswers(q,screenHeight,screenWidth,playerPos,groundHeight, scale) {
   }
 
   for (let i=0;i<r.length-1;i++) {
-    var sprite = createImage(q["r"+i].r,200*scale,(screenHeight-groundHeight)/4.5*0.6, type)
+    var sprite = createImage(q["r"+i].r,200*scale,(screenHeight-groundHeight)/4.5*0.6, 0)
     var ans = Bodies.rectangle(pos,(2*i+1)*(screenHeight-groundHeight)/9+(screenHeight-groundHeight)/18,200*scale,(screenHeight-groundHeight)/4.5*0.6,{isStatic:true, isSensor:true, render:{sprite:{texture:sprite}}})
     ans.collisionFilter = {
       'group': -1,
@@ -154,7 +154,7 @@ export default function App(props) {
         document.body.style.animationPlayState = "running"  
 
         qr = Composite.create()
-        var sprite = createImage(domande["domanda0"].d.toUpperCase(),render.options.width/4,render.options.height/4,type)
+        var sprite = createImage(domande["domanda0"].d.toUpperCase(),render.options.width/4,render.options.height/4,0)
         var q = Bodies.rectangle(player.position.x,render.options.height/4,300,100, {isSensor:true, isStatic:true, render:{sprite:{texture:sprite}}})
         q.collisionFilter = {
           'group': -1,
