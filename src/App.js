@@ -17,11 +17,13 @@ function createImage(string, w, h, type) {
   if (type === 0) {
     canvas.width = w
     canvas.height = h
+    stroke='black'
   }
 
   else {
     canvas.width = w/2
     canvas.height = h/2
+    stroke='none'
   }
 
   var limit = canvas.height;
@@ -35,7 +37,7 @@ text.set({
     fontWeight: 'bold',
     fontSize: 30,
     fill:'white',
-    stroke:'black'
+    stroke:stroke
 });
   while (text.width > canvas.width) {
     text.set(text.width -= 10);
