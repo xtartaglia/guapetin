@@ -158,7 +158,7 @@ export default function App(props) {
 
         qr = Composite.create()
         var sprite = createImage(domande["domanda0"].d.toUpperCase(),render.options.width/2,render.options.height/8,0)
-        var q = Bodies.rectangle(player.position.x,(window.innerHeight/50*49)/4.5*0.2,(window.innerHeight/50*49)/4.5*0.4,render.options.width/2, {isSensor:true, isStatic:true, render:{sprite:{texture:sprite}}})
+        var q = Bodies.rectangle(player.position.x,(window.innerHeight/50*49)/4.5*0.25,(window.innerHeight/50*49)/4.5*0.3,render.options.width/2, {isSensor:true, isStatic:true, render:{sprite:{texture:sprite}}})
         q.collisionFilter = {
           'group': -1,
           'category': 2,
