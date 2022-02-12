@@ -155,7 +155,7 @@ export default function App(props) {
 
         qr = Composite.create()
         var sprite = createImage(domande["domanda0"].d.toUpperCase(),render.options.width/4*3,render.options.height/8,0)
-        var q = Bodies.rectangle(player.position.x,render.options.height/8*7,300,100, {isSensor:true, isStatic:true, render:{sprite:{texture:sprite}}})
+        var q = Bodies.rectangle(player.position.x,render.options.height/8,300,100, {isSensor:true, isStatic:true, render:{sprite:{texture:sprite}}})
         q.collisionFilter = {
           'group': -1,
           'category': 2,
@@ -193,8 +193,8 @@ export default function App(props) {
               Composite.remove(engine.world, [domanda])
               domanda = domanda = Domanda({screenHeight:render.options.height,groundHeight:render.options.height/50, x:player.position.x+1000*scaleX, q:domande["domanda"+j], scale:scale})
               Composite.add(engine.world, [domanda])
-              sprite = createImage(domande["domanda"+j].d.toUpperCase(),render.options.width/4,render.options.height/4,type)
-              q = Bodies.rectangle(player.position.x,render.options.height/4,300,100, {isSensor:true, isStatic:true, render:{sprite:{texture:sprite}}})
+              sprite = createImage(domande["domanda"+j].d.toUpperCase(),render.options.width/4,render.options.height/4,0)
+              q = Bodies.rectangle(player.position.x,render.options.height/8,300,100, {isSensor:true, isStatic:true, render:{sprite:{texture:sprite}}})
               q.collisionFilter = {
                 'group': -1,
                 'category': 2,
