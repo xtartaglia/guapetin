@@ -260,7 +260,7 @@ export default function App(props) {
         },1000)
 
         var update = setInterval(()=>{
-          if (typeof domanda !== "undefined" && !gameOver) {
+          if (typeof domanda !== "undefined" && !gameOver && !alreadyTouched) {
             Composite.translate(domanda,{x:-2,y:0})
           }
     
@@ -448,6 +448,7 @@ export default function App(props) {
       if (!pairs[0].bodyA.isSensor && !pairs[0].bodyB.isSensor && !gameOver && !alreadyTouched) {
         //document.body.style.animationPlayState = "paused"
         alreadyTouched = true
+        document.body.style.animationPlayState="paused"
         console.log("game over")
         document.querySelector(".gO").play()
         player.render.sprite.texture = doggoDead
