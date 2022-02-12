@@ -73,8 +73,8 @@ function getAnswers(q,screenHeight,screenWidth,playerPos,groundHeight, scale) {
   }
 
   for (let i=0;i<r.length-1;i++) {
-    var sprite = createImage(q["r"+i].r,200*scale,(screenHeight-groundHeight)/4.5*0.6, type)
-    var ans = Bodies.rectangle(pos,(2*i+1)*(screenHeight-groundHeight)/9+(screenHeight-groundHeight)/18,200*scale,(screenHeight-groundHeight)/4.5*0.6,{isStatic:true, isSensor:true, render:{sprite:{texture:sprite}}})
+    var sprite = createImage(q["r"+i].r,200,(screenHeight-groundHeight)/4.5*0.6, type)
+    var ans = Bodies.rectangle(pos,(2*i+1)*(screenHeight-groundHeight)/9+(screenHeight-groundHeight)/18,200,(screenHeight-groundHeight)/4.5*0.6,{isStatic:true, isSensor:true, render:{sprite:{texture:sprite}}})
     ans.collisionFilter = {
       'group': -1,
       'category': 2,

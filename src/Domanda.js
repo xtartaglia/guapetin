@@ -11,7 +11,7 @@ export default function Domanda (props) {
   const altezzaA = (screenHeight-groundHeight)/4.5*0.4
   const altezzaB = (screenHeight-groundHeight)/4.5*0.6
   const altezzaC = (screenHeight-groundHeight)/9
-  const larghezza = 200*scale
+  const larghezza = 200
 
   for (let i=0;i<9;i++) {
 
