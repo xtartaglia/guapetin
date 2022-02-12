@@ -438,12 +438,11 @@ export default function App(props) {
         gOSound.play()
         player.render.sprite.texture = doggoDead
         gameOver=true
-        
-        if (window.confirm("NOOOOOOO! Hai fatto male a guapetín :(\nIl tuo punteggio è: "+punteggio+"\nChiudi questo messaggio per iniziare una nuova partita") == true) {
-          restart()
-        }
 
         setTimeout(()=>{
+          if (window.confirm("NOOOOOOO! Hai fatto male a guapetín :(\nIl tuo punteggio è: "+punteggio+"\nChiudi questo messaggio per iniziare una nuova partita") == true) {
+            restart()
+          }
           alreadyTouched = false
           player.render.sprite.texture = doggo
         },2000)
