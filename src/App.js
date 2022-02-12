@@ -23,7 +23,7 @@ var text = new fabric.Textbox(string);
 text.set({
     width: canvas.width,
     textAlign: 'center',
-    fontFamily:'Impact',
+    fontFamily:'Arial',
     fontSize: 15,
     fill:'white',
     stroke:'black'
