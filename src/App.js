@@ -24,7 +24,7 @@ function createImage(string, w, h, type) {
   }
 
   else {
-    canvas.width = w/2
+    canvas.width = w
     canvas.height = h
     stroke='white'
     size = 20
