@@ -152,6 +152,7 @@ export default function App(props) {
   var checkedWon = false
   var conto
   var noClick = true
+  var justStarted = true
 
 
   const [scale, setScale] = useState(window.innerHeight/746)
@@ -201,55 +202,13 @@ export default function App(props) {
           'category': 2,
           'mask': 0,
           }
-        Composite.add(engine.world,[punti])
 
     function handleClick() {
-      if (gameOver && noClick) {
-        noClick = false
-        if (l === 0) {
-          var go = setInterval(()=>{
 
-            try {
-              Composite.remove(engine.world,[conto])
-            } catch (error) {
-              console.error(error);
-              // expected output: ReferenceError: nonExistentFunction is not defined
-              // Note - error messages will vary depending on browser
-            }
-
-            conto = Bodies.rectangle(render.options.width/2,render.options.height/2,render.options.width/4,render.options.height/4,{isStatic:true,isSensor:true, render:{sprite:{texture:createImage((5-l).toString(),render.options.width/4,render.options.height/4,2)}}})
-            punti.collisionFilter = {
-            'group': -1,
-            'category': 2,
-            'mask': 0,
-            }
-
-            Composite.add(engine.world, [conto])
-
-            if (l === 5)
-            {
-              restart()
-              clearInterval(go)
-            }
-            
-            else {
-              l++
-            }
-          },1000)
-        }
-
-        else {
-          console.log("L IS NOT ZERO: "+l)
-        }
-      }
-
-      else {
-        console.log("gameOver: "+gameOver+" noClick: "+noClick)
-      }
-
-      if (engine.gravity.y === 0) {
+      if (justStarted && !gameOver) {
+        justStarted = false
         engine.gravity.y = 0.1*scale
-        domanda = Domanda({screenHeight:render.options.height,groundHeight:render.options.height/50, x:player.position.x+500*scaleX, q:domande["domanda0"], scale:scale})
+        domanda = Domanda({screenHeight:render.options.height,groundHeight:render.options.height/50, x:player.position.x+1000*scaleX, q:domande["domanda0"], scale:scale})
         Composite.add(engine.world, [domanda])
         document.body.style.animationPlayState = "running"  
 
@@ -275,6 +234,12 @@ export default function App(props) {
     
           else if (gameOver) {
             clearInterval(update)
+            Composite.remove(engine.world, [qr, domanda])
+            Body.setPosition(player,{x:render.options.width/4,y:render.options.height/2})
+            Body.setAngle(player,0)
+            Body.setVelocity(player,{x:0,y:0})
+            Body.setAngularVelocity(player,0)
+            engine.gravity.y = 0
           }
 
           var lastChild = Composite.allBodies(domanda)[Composite.allBodies(domanda).length-1]
@@ -305,11 +270,13 @@ export default function App(props) {
               checkedWon = false
               if (j===10) {
                 gameOver=true
+                document.body.style.animationPlayState = "paused"
+                engine.gravity = 0
                 alert("La partita è finita.\nIl tuo punteggio è: "+punteggio+"\nClicca su qualsiasi punto dello schermo dopo aver chiuso questo messaggio per iniziare una nuova partita.")
 
                 clearInterval(update)
               }
-              domanda = domanda = Domanda({screenHeight:render.options.height,groundHeight:render.options.height/50, x:player.position.x+1000*scaleX, q:domande["domanda"+j], scale:scale})
+              domanda = Domanda({screenHeight:render.options.height,groundHeight:render.options.height/50, x:player.position.x+1000*scaleX, q:domande["domanda"+j], scale:scale})
               Composite.add(engine.world, [domanda])
               sprite = createImage(domande["domanda"+j].d,render.options.width/2,(window.innerHeight/50*49)/4.5*0.3,type)
               q = Bodies.rectangle(player.position.x,(window.innerHeight/50*49)/4.5*0.3,render.options.width/2,(window.innerHeight/50*49)/4.5*0.3, {isSensor:true, isStatic:true, render:{sprite:{texture:sprite}}})
@@ -339,6 +306,50 @@ export default function App(props) {
         sound.play()
         Body.applyForce(player,{x:player.position.x, y:player.position.y},{x:0, y:-0.1*scale})
       }
+
+      if (gameOver && noClick) {
+        noClick = false
+        if (l === 0) {
+          var go = setInterval(()=>{
+
+            try {
+              Composite.remove(engine.world,[conto])
+            } catch (error) {
+              console.error(error);
+              // expected output: ReferenceError: nonExistentFunction is not defined
+              // Note - error messages will vary depending on browser
+            }
+
+            conto = Bodies.rectangle(render.options.width/2,render.options.height/2,render.options.width/4,render.options.height/4,{label:'conto',isStatic:true,isSensor:true, render:{sprite:{texture:createImage((5-l).toString(),render.options.width/4,render.options.height/4,2)}}})
+            punti.collisionFilter = {
+            'group': -1,
+            'category': 2,
+            'mask': 0,
+            }
+            Composite.add(engine.world, [conto])
+
+            console.log(Composite.allBodies(engine.world))
+
+            if (l === 5)
+            {
+              restart()
+              clearInterval(go)
+            }
+            
+            else {
+              l++
+            }
+          },1000)
+        }
+
+        else {
+          console.log("L IS NOT ZERO: "+l)
+        }
+      }
+
+      else {
+        console.log("gameOver: "+gameOver+" noClick: "+noClick)
+      }
     }
 
     document.addEventListener("click", handleClick)
@@ -359,7 +370,7 @@ export default function App(props) {
     engine.gravity.y = 0
 
     var ground = Bodies.rectangle(render.options.width/2, window.innerHeight-window.innerHeight/100, render.options.width, window.innerHeight/50, { isStatic: true, render:{sprite:{texture:earth,xScale:1,yScale:window.innerHeight/50/100}} });
-    Composite.add(engine.world, [ground, player]);
+    Composite.add(engine.world, [ground, player, punti]);
 
     function restart() {
       try {
@@ -390,7 +401,9 @@ export default function App(props) {
       noClick = true
       l = 0
       won = false
+      justStarted = true
       console.log("HERE IS L: "+l)
+      handleClick()
     }
 
     Events.on(engine, 'collisionStart', function(event) {
