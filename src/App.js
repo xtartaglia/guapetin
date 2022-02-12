@@ -24,7 +24,7 @@ text.set({
     width: canvas.width,
     textAlign: 'center',
     fontFamily:'Arial',
-    fontSize: 15,
+    fontSize: 30,
     fill:'white',
     stroke:'black'
 });
@@ -45,9 +45,17 @@ function getAnswers(q,screenHeight,screenWidth,playerPos,groundHeight, scale) {
   let r = Object.keys(q)
   let rgraph = Composite.create()
 
+  if (screenWidth<screenHeight) {
+    var pos = playerPos+screenWidth/8
+  }
+
+  else {
+    var pos = playerPos+screenWidth/4
+  }
+
   for (let i=0;i<r.length-1;i++) {
     var sprite = createImage(q["r"+i].r,200*scale,(screenHeight-groundHeight)/4.5*0.6)
-    var ans = Bodies.rectangle(playerPos+screenWidth/4,(2*i+1)*(screenHeight-groundHeight)/9+(screenHeight-groundHeight)/18,200*scale,(screenHeight-groundHeight)/4.5*0.6,{isStatic:true, isSensor:true, render:{sprite:{texture:sprite}}})
+    var ans = Bodies.rectangle(pos,(2*i+1)*(screenHeight-groundHeight)/9+(screenHeight-groundHeight)/18,200*scale,(screenHeight-groundHeight)/4.5*0.6,{isStatic:true, isSensor:true, render:{sprite:{texture:sprite}}})
     ans.collisionFilter = {
       'group': -1,
       'category': 2,
