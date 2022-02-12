@@ -18,12 +18,14 @@ function createImage(string, w, h, type) {
     canvas.width = w
     canvas.height = h
     var stroke='black'
+    var size = 30
   }
 
   else {
     canvas.width = w/2
     canvas.height = h/2
     var stroke='none'
+    var size = 10
   }
 
   var limit = canvas.height;
@@ -57,7 +59,7 @@ function getAnswers(q,screenHeight,screenWidth,playerPos,groundHeight, scale) {
   let rgraph = Composite.create()
 
   if (screenWidth<screenHeight) {
-    var pos = playerPos+screenWidth/8*7
+    var pos = playerPos+screenWidth/8*3
     var type = 1
   }
 
