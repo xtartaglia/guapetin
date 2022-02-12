@@ -140,6 +140,30 @@ function getAnswers(q,screenHeight,screenWidth,playerPos,groundHeight, scale) {
   return rgraph;
 }
 
+function shuffle(array) {
+  let currentIndex = array.length,  randomIndex;
+
+  // While there remain elements to shuffle...
+  while (currentIndex != 0) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex], array[currentIndex]];
+  }
+
+  return array;
+}
+
+function mescolareDomande(domande) {
+  for (var i=0;i<Object.keys(domande).length;i++) {
+    
+  }
+}
+
 
 export default function App(props) {
   const scena = useRef()
@@ -271,9 +295,9 @@ export default function App(props) {
               if (j===10) {
                 gameOver=true
                 document.body.style.animationPlayState = "paused"
-                engine.gravity = 0
-                alert("La partita è finita.\nIl tuo punteggio è: "+punteggio+"\nClicca su qualsiasi punto dello schermo dopo aver chiuso questo messaggio per iniziare una nuova partita.")
-
+                setTimeout(()=>{
+                  alert("La partita è finita.\nIl tuo punteggio è: "+punteggio+"\nClicca su qualsiasi punto dello schermo dopo aver chiuso questo messaggio per iniziare una nuova partita.")
+                },2000)
                 clearInterval(update)
               }
               domanda = Domanda({screenHeight:render.options.height,groundHeight:render.options.height/50, x:player.position.x+1000*scaleX, q:domande["domanda"+j], scale:scale})
@@ -417,8 +441,9 @@ export default function App(props) {
         console.log("game over")
         document.querySelector(".gO").play()
         player.render.sprite.texture = doggoDead
-        alert("NOOOOOOO! Hai fatto male a guapetín :(\nIl tuo punteggio è: "+punteggio+"\nClicca su qualsiasi punto dello schermo dopo aver chiuso questo messaggio per iniziare una nuova partita.")
+
         setTimeout(()=>{
+          alert("NOOOOOOO! Hai fatto male a guapetín :(\nIl tuo punteggio è: "+punteggio+"\nClicca su qualsiasi punto dello schermo dopo aver chiuso questo messaggio per iniziare una nuova partita.")
           player.render.sprite.texture = doggo
         },2000)
 
