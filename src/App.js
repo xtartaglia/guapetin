@@ -266,12 +266,6 @@ export default function App(props) {
     
           else if (gameOver) {
             clearInterval(update)
-            Composite.remove(engine.world, [qr, domanda])
-            Body.setPosition(player,{x:render.options.width/4,y:render.options.height/2})
-            Body.setAngle(player,0)
-            Body.setVelocity(player,{x:0,y:0})
-            Body.setAngularVelocity(player,0)
-            engine.gravity.y = 0
           }
 
           var lastChild = Composite.allBodies(domanda)[Composite.allBodies(domanda).length-1]
@@ -300,13 +294,15 @@ export default function App(props) {
             if (lastChild.position.x<-100) {
               Composite.remove(engine.world, [domanda])
               checkedWon = false
-              if (j===10) {
+              if (j===Object.keys(domande).length) {
                 gameOver=true
                 engine.gravity.y = 0
                 document.body.style.animationPlayState = "paused"
                 setTimeout(()=>{
                   clearInterval(update)
-                  alert("La partita è finita.\nIl tuo punteggio è: "+punteggio+"\nClicca su qualsiasi punto dello schermo dopo aver chiuso questo messaggio per iniziare una nuova partita.")
+                  if (window.confirm("La partita è finita.\nIl tuo punteggio è: "+punteggio+"\nChiudi questo messaggio per avviare una nuova partita") == true) {
+                    restart()
+                  }
                 },2000)
               }
               domanda = Domanda({screenHeight:render.options.height,groundHeight:render.options.height/50, x:player.position.x+1000*scaleX, q:domande["domanda"+j], scale:scale})
@@ -336,52 +332,9 @@ export default function App(props) {
       if (!gameOver) {
         var sound = document.querySelector(".jump")
         sound.playbackRate = 2
+        sound.volume = 0.5
         sound.play()
         Body.applyForce(player,{x:player.position.x, y:player.position.y},{x:0, y:-0.1*scale})
-      }
-
-      if (gameOver && noClick) {
-        noClick = false
-        if (l === 0) {
-          var go = setInterval(()=>{
-
-            try {
-              Composite.remove(engine.world,[conto])
-            } catch (error) {
-              console.error(error);
-              // expected output: ReferenceError: nonExistentFunction is not defined
-              // Note - error messages will vary depending on browser
-            }
-
-            conto = Bodies.rectangle(render.options.width/2,render.options.height/2,render.options.width/4,render.options.height/4,{label:'conto',isStatic:true,isSensor:true, render:{sprite:{texture:createImage((5-l).toString(),render.options.width/4,render.options.height/4,2)}}})
-            punti.collisionFilter = {
-            'group': -1,
-            'category': 2,
-            'mask': 0,
-            }
-            Composite.add(engine.world, [conto])
-
-            console.log(Composite.allBodies(engine.world))
-
-            if (l === 5)
-            {
-              restart()
-              clearInterval(go)
-            }
-            
-            else {
-              l++
-            }
-          },1000)
-        }
-
-        else {
-          console.log("L IS NOT ZERO: "+l)
-        }
-      }
-
-      else {
-        console.log("gameOver: "+gameOver+" noClick: "+noClick)
       }
     }
 
@@ -407,6 +360,59 @@ export default function App(props) {
 
     function restart() {
       domande = shuffleDomande(domande)
+      engine.gravity.y = 0
+      Body.setPosition(player,{x:render.options.width/4,y:render.options.height/2})
+      Body.setAngle(player,0)
+      Body.setVelocity(player,{x:0,y:0})
+      Body.setAngularVelocity(player,0)
+      j = 1
+      if (l === 0) {
+        var go = setInterval(()=>{
+
+          try {
+            Composite.remove(engine.world,[conto])
+          } catch (error) {
+            console.error(error);
+            // expected output: ReferenceError: nonExistentFunction is not defined
+            // Note - error messages will vary depending on browser
+          }
+
+          conto = Bodies.rectangle(render.options.width/2,render.options.height/2,render.options.width/4,render.options.height/4,{label:'conto',isStatic:true,isSensor:true, render:{sprite:{texture:createImage((5-l).toString(),render.options.width/4,render.options.height/4,2)}}})
+          punti.collisionFilter = {
+          'group': -1,
+          'category': 2,
+          'mask': 0,
+          }
+          Composite.add(engine.world, [conto])
+
+          console.log(Composite.allBodies(engine.world))
+
+          if (l === 5)
+          {
+          punteggio = 0
+          console.log(punteggio)
+          gameOver=false
+          noClick = true
+          l = 0
+          won = false
+          justStarted = true
+          console.log("HERE IS L: "+l)
+          handleClick()
+            clearInterval(go)
+            setTimeout(()=>{
+              Composite.remove(engine.world,[conto])
+            },1000)
+          }
+          
+          else {
+            l++
+          }
+        },1000)
+      }
+
+      else {
+        console.log("L IS NOT ZERO: "+l)
+      }
       try {
         Composite.remove(engine.world,[domanda,qr,punti,conto])
       } catch (error) {
@@ -414,30 +420,6 @@ export default function App(props) {
         // expected output: ReferenceError: nonExistentFunction is not defined
         // Note - error messages will vary depending on browser
       }
-      engine.gravity.y = 0
-      Body.setPosition(player,{x:render.options.width/4,y:render.options.height/2})
-      Body.setAngle(player,0)
-      Body.setVelocity(player,{x:0,y:0})
-      Body.setAngularVelocity(player,0)
-      punteggio = 0
-      j = 1
-
-      punti = Bodies.rectangle(player.position.x,render.options.height*0.8,1,1,{isStatic:true,isSensor:true, render:{sprite:{texture:createImage(punteggio.toString(),30,30,type)}}})
-          punti.collisionFilter = {
-          'group': -1,
-          'category': 2,
-          'mask': 0,
-          }
-        Composite.add(engine.world,[punti])
-
-      console.log(punteggio)
-      gameOver=false
-      noClick = true
-      l = 0
-      won = false
-      justStarted = true
-      console.log("HERE IS L: "+l)
-      handleClick()
     }
 
     Events.on(engine, 'collisionStart', function(event) {
@@ -450,14 +432,19 @@ export default function App(props) {
         alreadyTouched = true
         document.body.style.animationPlayState="paused"
         console.log("game over")
-        document.querySelector(".gO").play()
+        var gOSound = document.querySelector(".gO")
+        gOSound.volume = 0.5
+        gOSound.play()
         player.render.sprite.texture = doggoDead
-        alert("NOOOOOOO! Hai fatto male a guapetín :(\nIl tuo punteggio è: "+punteggio+"\nClicca su qualsiasi punto dello schermo dopo aver chiuso questo messaggio per iniziare una nuova partita.")
+        gameOver=true
+        
+        if (window.confirm("NOOOOOOO! Hai fatto male a guapetín :(\nIl tuo punteggio è: "+punteggio+"\nChiudi questo messaggio per iniziare una nuova partita") == true) {
+          restart()
+        }
 
         setTimeout(()=>{
-          player.render.sprite.texture = doggo
-          gameOver=true
           alreadyTouched = false
+          player.render.sprite.texture = doggo
         },2000)
 
         if (won) {
@@ -477,6 +464,7 @@ export default function App(props) {
         if (!gameOver) {
           won = true
         var win = document.querySelector(".win")
+        win.volume = 0.5
         win.play()
         player.render.sprite.texture = doggoLove
             setTimeout(()=>{
