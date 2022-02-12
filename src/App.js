@@ -157,7 +157,7 @@ export default function App(props) {
         document.body.style.animationPlayState = "running"  
 
         qr = Composite.create()
-        var sprite = createImage(domande["domanda0"].d,render.options.width/2,render.options.height/8,type)
+        var sprite = createImage(domande["domanda0"].d,render.options.width/2,(window.innerHeight/50*49)/4.5*0.3,type)
         var q = Bodies.rectangle(player.position.x,(window.innerHeight/50*49)/4.5*0.3,(window.innerHeight/50*49)/4.5*0.3,render.options.width/2, {isSensor:true, isStatic:true, render:{sprite:{texture:sprite}}})
         q.collisionFilter = {
           'group': -1,
