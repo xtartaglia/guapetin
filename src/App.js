@@ -17,13 +17,13 @@ function createImage(string, w, h, type) {
   if (type === 0) {
     canvas.width = w
     canvas.height = h
-    stroke='black'
+    var stroke='black'
   }
 
   else {
     canvas.width = w/2
     canvas.height = h/2
-    stroke='none'
+    var stroke='none'
   }
 
   var limit = canvas.height;
