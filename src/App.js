@@ -37,7 +37,7 @@ text.set({
     textAlign: 'center',
     fontFamily:'Arial',
     fontWeight: 'bold',
-    fontSize: 30,
+    fontSize: size,
     fill:'white',
     stroke:stroke
 });
