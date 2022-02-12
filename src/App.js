@@ -183,6 +183,7 @@ export default function App(props) {
   var conto
   var noClick = true
   var justStarted = true
+  var alreadyTouched = false
 
 
   const [scale, setScale] = useState(window.innerHeight/746)
@@ -444,8 +445,9 @@ export default function App(props) {
       
       console.log(pairs[0].bodyB)
 
-      if (!pairs[0].bodyA.isSensor && !pairs[0].bodyB.isSensor && !gameOver) {
+      if (!pairs[0].bodyA.isSensor && !pairs[0].bodyB.isSensor && !gameOver && !alreadyTouched) {
         //document.body.style.animationPlayState = "paused"
+        alreadyTouched = true
         console.log("game over")
         document.querySelector(".gO").play()
         player.render.sprite.texture = doggoDead
@@ -454,6 +456,7 @@ export default function App(props) {
         setTimeout(()=>{
           player.render.sprite.texture = doggo
           gameOver=true
+          alreadyTouched = false
         },2000)
 
         if (won) {
