@@ -140,28 +140,43 @@ function getAnswers(q,screenHeight,screenWidth,playerPos,groundHeight, scale) {
   return rgraph;
 }
 
-function shuffle(array) {
-  let currentIndex = array.length,  randomIndex;
+function shuffle(obj,excl) {
+  var shuffledObj = {}
+  var objArray = Object.keys(obj)
+  var rArray = []
+  
+  for (var i = 0;i<Object.keys(obj).length;i++) {
+  
+  	if (i === excl) {
+    	shuffledObj[Object.keys(obj)[i]] = obj[objArray[i]]
+      
+      objArray.splice(i,1)
+    }
+    
+    else {
+    	var random = Math.floor(Math.random()*objArray.length)
 
-  // While there remain elements to shuffle...
-  while (currentIndex != 0) {
-
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex--;
-
-    // And swap it with the current element.
-    [array[currentIndex], array[randomIndex]] = [
-      array[randomIndex], array[currentIndex]];
+   	shuffledObj[Object.keys(obj)[i]] = obj[objArray[random]]
+    
+    
+    rArray.push(obj[objArray[random]])
+    objArray.splice(random,1)
+    }
   }
+ 
 
-  return array;
+  return shuffledObj;
 }
 
-function mescolareDomande(domande) {
-  for (var i=0;i<Object.keys(domande).length;i++) {
-    
+function shuffleDomande(obj) {
+	for (var i=0; i<Object.keys(obj).length;i++) {
+  	obj[Object.keys(obj)[i]] = shuffle(obj[Object.keys(obj)[i]],0)
   }
+  for (i=0; i<Object.keys(obj).length;i++) {
+  	obj = shuffle(obj)
+  }
+
+  return obj
 }
 
 
@@ -231,6 +246,7 @@ export default function App(props) {
 
       if (justStarted && !gameOver) {
         justStarted = false
+        domande = shuffleDomande(domande)
         engine.gravity.y = 0.1*scale
         domanda = Domanda({screenHeight:render.options.height,groundHeight:render.options.height/50, x:player.position.x+1000*scaleX, q:domande["domanda0"], scale:scale})
         Composite.add(engine.world, [domanda])
@@ -294,11 +310,12 @@ export default function App(props) {
               checkedWon = false
               if (j===10) {
                 gameOver=true
+                engine.gravity.y = 0
                 document.body.style.animationPlayState = "paused"
                 setTimeout(()=>{
+                  clearInterval(update)
                   alert("La partita è finita.\nIl tuo punteggio è: "+punteggio+"\nClicca su qualsiasi punto dello schermo dopo aver chiuso questo messaggio per iniziare una nuova partita.")
                 },2000)
-                clearInterval(update)
               }
               domanda = Domanda({screenHeight:render.options.height,groundHeight:render.options.height/50, x:player.position.x+1000*scaleX, q:domande["domanda"+j], scale:scale})
               Composite.add(engine.world, [domanda])
@@ -397,6 +414,7 @@ export default function App(props) {
     Composite.add(engine.world, [ground, player, punti]);
 
     function restart() {
+      domande = shuffleDomande(domande)
       try {
         Composite.remove(engine.world,[domanda,qr,punti,conto])
       } catch (error) {
@@ -436,13 +454,13 @@ export default function App(props) {
       console.log(pairs[0].bodyB)
 
       if (!pairs[0].bodyA.isSensor && !pairs[0].bodyB.isSensor && !gameOver) {
-        gameOver=true
         document.body.style.animationPlayState = "paused"
         console.log("game over")
         document.querySelector(".gO").play()
         player.render.sprite.texture = doggoDead
 
         setTimeout(()=>{
+          gameOver=true
           alert("NOOOOOOO! Hai fatto male a guapetín :(\nIl tuo punteggio è: "+punteggio+"\nClicca su qualsiasi punto dello schermo dopo aver chiuso questo messaggio per iniziare una nuova partita.")
           player.render.sprite.texture = doggo
         },2000)
