@@ -25,7 +25,7 @@ function createImage(string, w, h, type) {
     canvas.width = w/2
     canvas.height = h
     var stroke='none'
-    var size = 15
+    var size = 20
   }
 
   var limit = canvas.height;
@@ -155,7 +155,7 @@ export default function App(props) {
 
         qr = Composite.create()
         var sprite = createImage(domande["domanda0"].d.toUpperCase(),render.options.width/4*3,render.options.height/8,0)
-        var q = Bodies.rectangle(player.position.x,render.options.height/8,300,100, {isSensor:true, isStatic:true, render:{sprite:{texture:sprite}}})
+        var q = Bodies.rectangle(player.position.x,render.options.height/8,(render.options.height-ground.height)/4.5*0.4,render.options.width*3/4, {isSensor:true, isStatic:true, render:{sprite:{texture:sprite}}})
         q.collisionFilter = {
           'group': -1,
           'category': 2,
