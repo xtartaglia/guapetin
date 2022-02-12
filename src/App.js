@@ -33,7 +33,7 @@ function createImage(string, w, h, type) {
   else if (type === 1) {
     canvas.width = w
     canvas.height = h
-    stroke='white'
+    stroke=''
     size = 20
     fill='white'
   }
@@ -44,15 +44,6 @@ function createImage(string, w, h, type) {
     stroke = 'white'
     size = 1000
     fill='white'
-  }
-
-  else if (type === 3) {
-    canvas.width = w
-    canvas.height = h
-    stroke = 'orange'
-    fill= 'orange'
-
-    size = 1000
   }
 
   var words = string.split(' ')
@@ -458,9 +449,10 @@ export default function App(props) {
         console.log("game over")
         document.querySelector(".gO").play()
         player.render.sprite.texture = doggoDead
+        gameOver=true
 
         setTimeout(()=>{
-          gameOver=true
+          
           alert("NOOOOOOO! Hai fatto male a guapetín :(\nIl tuo punteggio è: "+punteggio+"\nClicca su qualsiasi punto dello schermo dopo aver chiuso questo messaggio per iniziare una nuova partita.")
           player.render.sprite.texture = doggo
         },2000)
