@@ -296,10 +296,11 @@ export default function App(props) {
               checkedWon = false
               if (j===Object.keys(domande).length) {
                 gameOver=true
+                clearInterval(update)
                 engine.gravity.y = 0
                 document.body.style.animationPlayState = "paused"
                 setTimeout(()=>{
-                  clearInterval(update)
+
                   if (window.confirm("La partita è finita.\nIl tuo punteggio è: "+punteggio+"\nChiudi questo messaggio per avviare una nuova partita") == true) {
                     restart()
                   }
