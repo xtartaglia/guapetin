@@ -157,7 +157,7 @@ export default function App(props) {
         document.body.style.animationPlayState = "running"  
 
         qr = Composite.create()
-        var sprite = createImage(domande["domanda0"].d.toUpperCase(),render.options.width/2,render.options.height/8,0)
+        var sprite = createImage(domande["domanda0"].d.toUpperCase(),render.options.width/2,render.options.height/8,type)
         var q = Bodies.rectangle(player.position.x,(window.innerHeight/50*49)/4.5*0.3,(window.innerHeight/50*49)/4.5*0.3,render.options.width/2, {isSensor:true, isStatic:true, render:{sprite:{texture:sprite}}})
         q.collisionFilter = {
           'group': -1,
@@ -196,7 +196,7 @@ export default function App(props) {
               Composite.remove(engine.world, [domanda])
               domanda = domanda = Domanda({screenHeight:render.options.height,groundHeight:render.options.height/50, x:player.position.x+1000*scaleX, q:domande["domanda"+j], scale:scale})
               Composite.add(engine.world, [domanda])
-              sprite = createImage(domande["domanda"+j].d.toUpperCase(),render.options.width/2,render.options.height/8,0)
+              sprite = createImage(domande["domanda"+j].d.toUpperCase(),render.options.width/2,render.options.height/8,type)
               q = Bodies.rectangle(player.position.x,(window.innerHeight/50*49)/4.5*0.2,(window.innerHeight/50*49)/4.5*0.4,render.options.width/2, {isSensor:true, isStatic:true, render:{sprite:{texture:sprite}}})
               q.collisionFilter = {
                 'group': -1,
