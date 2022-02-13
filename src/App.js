@@ -284,10 +284,12 @@ export default function App(props) {
 
     if (width<height) {
       type = 1
+      speed = 1
     }
 
     else {
       type = 0
+      speed = 1.5
     }
 
     
@@ -319,7 +321,7 @@ export default function App(props) {
         var update = setInterval(()=>{
           console.log(height)
           if (typeof domanda !== "undefined" && !gameOver && !alreadyTouched) {
-            Composite.translate(domanda,{x:mov,y:0})
+            Composite.translate(domanda,{x:mov*speed,y:0})
           }
     
           else if (gameOver) {
