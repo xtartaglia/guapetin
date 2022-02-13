@@ -181,6 +181,7 @@ export default function App(props) {
   var ground
   var punti
   var started = false
+  var voluntary = false
 
 
   const [scale, setScale] = useState(window.innerHeight/746)
@@ -411,6 +412,7 @@ export default function App(props) {
                     }
 
                     else {
+                      voluntary = true
                       document.exitFullscreen()
               swal.fire({
                 title:"Se vedemo zi'",
@@ -622,6 +624,7 @@ export default function App(props) {
             }
 
             else {
+              voluntary = true
               document.exitFullscreen()
               swal.fire({
                 title:"Se vedemo zi'",
