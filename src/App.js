@@ -213,7 +213,7 @@ export default function App(props) {
       }
     })
 
-    ground = Bodies.rectangle(window.screen.width/2, window.screen.height-window.screen.height/100, window.screen.width, window.screen.height/50, { isStatic: true, render:{sprite:{texture:earth,xScale:1,yScale:window.screen.height/5000}}});
+    ground = Bodies.rectangle(window.screen.width/2, window.screen.height-window.screen.height/50, window.screen.width, window.screen.height/25, { isStatic: true, render:{sprite:{texture:earth,xScale:1,yScale:window.screen.height/2500}}});
     Composite.add(engine.world,[ground])
 
     console.log("before fullscreen"+window.screen.height)
