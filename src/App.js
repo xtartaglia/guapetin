@@ -236,6 +236,9 @@ export default function App(props) {
 
     function fullscreenChange(event) {
       if (document.fullscreenElement) {
+        console.log(document.querySelector(".canvas").height)
+
+
         height = window.screen.height
         width = window.screen.width
         console.log("HEY BITCH FULLSCREEEEEN"+height+window.outerHeight)
@@ -630,7 +633,7 @@ export default function App(props) {
   }, [scena])
 
   return (
-    <div ref={scena} className="canvas" >
+    <div ref={scena} className="canvas" height="100vh" width="100vh" >
       <audio className="win" src={win} preload="auto"></audio>
       <audio className="jump" src={jump} preload="auto"></audio>
       <audio className="gO" src={gO} preload="auto"></audio>
