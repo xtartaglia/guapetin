@@ -236,8 +236,8 @@ export default function App(props) {
 
     function fullscreenChange(event) {
       if (document.fullscreenElement) {
-        height = window.screen.availHeight
-        width = window.screen.availWidth
+        height = window.outerHeight
+        width = window.outerWidth
         console.log("HEY BITCH FULLSCREEEEEN"+height+window.outerHeight)
         setScale(window.screen.height/746)
         fullscreen = true
