@@ -207,6 +207,7 @@ export default function App(props) {
     var domanda;
     var qr;
     var type;
+    var speed
 
     var render = Render.create({
       element:scena.current,
@@ -273,7 +274,22 @@ export default function App(props) {
           }
 
           else {
-            window.top.close()
+            document.exitFullscreen()
+              swal.fire({
+                title:"Se vedemo zi'",
+                html:"Spero il gioco ti sia piaciuto",
+                showCancelButton: false,
+                showConfirmButton:false,
+                color:'white',
+                background: '#373737'
+              })
+              gameOver = true;
+              try {
+                Composite.remove(engine.world,[qr, domanda, punti, conto, player, ground])
+              }
+              catch(error) {
+                
+              }
           }
         })
       }
@@ -289,7 +305,7 @@ export default function App(props) {
 
     else {
       type = 0
-      speed = 1.5
+      speed = 2
     }
 
     
@@ -347,7 +363,7 @@ export default function App(props) {
 
           if (lastChild.position.x-player.position.x < width/3) {
             Composite.remove(qr, [q])
-            Composite.translate(risp,{x:mov,y:0})
+            Composite.translate(risp,{x:mov*speed,y:0})
 
             if (Composite.allBodies(risp)[Composite.allBodies(risp).length-1].position.x-player.position.x < 100) {
               Composite.remove(qr, [risp])
@@ -391,6 +407,25 @@ export default function App(props) {
                     
                     if (result.value === true) {
                       start()
+                    }
+
+                    else {
+                      document.exitFullscreen()
+              swal.fire({
+                title:"Se vedemo zi'",
+                html:"Spero il gioco ti sia piaciuto",
+                showCancelButton: false,
+                showConfirmButton:false,
+                color:'white',
+                background: '#373737'
+              })
+              gameOver = true;
+              try {
+                Composite.remove(engine.world,[qr, domanda, punti, conto, player, ground])
+              }
+              catch(error) {
+                
+              }
                     }
                   })
                 },2000)
@@ -585,6 +620,25 @@ export default function App(props) {
             
             if (result.value === true) {
               start()
+            }
+
+            else {
+              document.exitFullscreen()
+              swal.fire({
+                title:"Se vedemo zi'",
+                html:"Spero il gioco ti sia piaciuto",
+                showCancelButton: false,
+                showConfirmButton:false,
+                color:'white',
+                background: '#373737'
+              })
+              gameOver = true;
+              try {
+                Composite.remove(engine.world,[qr, domanda, punti, conto, player, ground])
+              }
+              catch(error) {
+
+              }
             }
           })
 
