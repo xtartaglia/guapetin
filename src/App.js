@@ -16,7 +16,82 @@ import doggoDead from './doggo_dead.png'
 import wrong from './wrong.wav'
 import swal from 'sweetalert2'
 
-function createImage(string, w, h, type) {
+const rightAnswer = new Event('rightanswer')
+var rispostaGiusta;
+
+function decodeThatShit(str) {
+  str=decodeURI(str)
+
+  str = str.replace("%3F","?")
+  str = str.replace("%2F","/")
+  str = str.replace("%2C",",")
+
+  return str
+}
+
+function ordinare(data) {
+	var newDomanda = {}
+  var qst;
+
+  for (var i=0;i<data.results.length;i++) {
+    qst=decodeURI(data.results[i].question)
+
+    qst = qst.replace("%3F","?")
+    qst = qst.replace("%2F","/")
+    qst = qst.replace("%2C",",")
+    
+    console.log(qst)
+  	newDomanda["domanda"+i] = {
+    d:decodeThatShit(data.results[i].question)
+    }
+   
+   	newDomanda["domanda"+i].r0 = {
+    r:decodeThatShit(data.results[i].correct_answer),
+    giusto:true
+    }
+    
+    for (var j=0;j<3;j++) {
+
+      if (j<data.results[i].incorrect_answers.length) {
+        newDomanda["domanda"+i]["r"+(j+1)] = {
+          r:decodeThatShit(data.results[i].incorrect_answers[j]),
+          giusto:false
+        }
+      }
+
+    else {
+      newDomanda["domanda"+i]["r"+(j+1)] = {
+        r:"lol",
+        giusto:false
+      }
+    }
+    
+    console.log(data.results.length)
+  }
+  
+}
+
+return newDomanda
+}
+
+const getQuestions = async () => {
+    try {
+      var response = await fetch('https://opentdb.com/api.php?amount=20&encode=url3986');
+      var data = await response.json();
+      var questions = ordinare(data)
+      console.log(questions)
+      questions = shuffleDomande(questions)
+      console.log(questions)
+      
+      
+    } catch (e) {
+      console.log(e.message);
+    }
+
+    return questions
+  }
+
+function createImage(string, w, h, type, color) {
 
   var canvas = new fabric.Canvas()
   var size;
@@ -75,6 +150,10 @@ text.set({
     fontSize: size,
     fill:'white'
 });
+
+if (typeof color !== 'undefined') {
+  canvas.backgroundColor = color
+}
   while (text.width > canvas.width) {
     text.set(text.width -= 10);
 }
@@ -85,6 +164,10 @@ while (text.height >  limit) {
   canvas.add(text)
   canvas.centerObject(text)
   
+  if (typeof color !== 'undefined') {
+    canvas.backgroundColor = color
+    console.log(canvas.toDataURL("image/png"))
+  }
 
   return canvas.toDataURL("image/png");
 }
@@ -107,8 +190,11 @@ function getAnswers(q,screenHeight,screenWidth,playerPos,groundHeight, scale) {
 
   for (let i=0;i<r.length-1;i++) {
     var sprite = createImage(q["r"+i].r,200,(screenHeight-groundHeight)/4.5*0.6, type)
-    if (i===0) {
-      
+    if (q["r"+i].giusto) {
+      rispostaGiusta = {
+        r:q["r"+i].r,
+        pos:(2*i+1)*(screenHeight-groundHeight)/9+(screenHeight-groundHeight)/18
+      }
     }
     var ans = Bodies.rectangle(pos,(2*i+1)*(screenHeight-groundHeight)/9+(screenHeight-groundHeight)/18,200,(screenHeight-groundHeight)/4.5*0.6,{isStatic:true, isSensor:true, render:{sprite:{texture:sprite}}})
     ans.collisionFilter = {
@@ -244,15 +330,23 @@ export default function App(props) {
     
         else {
           type = 0
-          speed = 2
+          speed = 1
         }
         console.log("HEY BITCH FULLSCREEEEEN"+window.screen.height+window.outerHeight)
         setScale(window.screen.height/850)
         fullscreen = true
         if (!started)
         {
+
           start()
           started = true
+          
+   //       (async () => {
+   //         domande = await getQuestions()
+   //         console.log(domande)
+   //         start()
+   //         started = true
+    //      })()
         }
       }
 
@@ -309,7 +403,7 @@ export default function App(props) {
     function handleClick() {
       if (justStarted && !gameOver && fullscreen) {
         justStarted = false
-        domande = shuffleDomande(domande)
+        
         engine.gravity.y = 0.1*scale
         domanda = Domanda({screenHeight:window.screen.height,groundHeight:window.screen.height/12.5, x:player.position.x+1000*scaleX, q:domande["domanda0"], scale:scale})
         Composite.add(engine.world, [domanda])
@@ -358,6 +452,7 @@ export default function App(props) {
             checkedWon = true
             if (!won) {
               player.render.sprite.texture = doggoSad
+              document.dispatchEvent(rightAnswer)
               var sad = document.querySelector(".wrong")
               sad.play()
             setTimeout(()=>{
@@ -412,7 +507,13 @@ export default function App(props) {
                   .then((result)=> {
                     
                     if (result.value === true) {
-                      start()
+                      
+
+                      (async () => {
+                        const questions = await getQuestions()
+                      })()
+                      
+              
                     }
 
                     else {
@@ -471,6 +572,13 @@ export default function App(props) {
     }
 
     document.addEventListener("click", handleClick)
+
+    document.addEventListener('rightanswer',(e) => {
+      console.log('rightanswer'+e)
+      var img = createImage(rispostaGiusta.r,200,(window.screen.height-window.screen.height/12.5)/4.5*0.6, type, 'rgba(1, 255, 0, 0.32)')
+      var right = Bodies.rectangle(Composite.allBodies(domanda)[Composite.allBodies(domanda).length-1].position.x,rispostaGiusta.pos,200,(window.screen.height-window.screen.height/12.5)/4.5*0.6,{isStatic:true, isSensor:true, render:{sprite:{texture:img}}})
+      Composite.add(domanda,right)
+    })
 
 
     document.addEventListener( 'visibilitychange' , function() {
