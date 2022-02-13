@@ -513,6 +513,11 @@ export default function App(props) {
           }
 
           conto = Bodies.rectangle(window.screen.width/2,window.screen.height/2,window.screen.width/4,window.screen.height/4,{label:'conto',isStatic:true,isSensor:true, render:{sprite:{texture:createImage((3-l).toString(),window.screen.width/4,window.screen.height/4,2)}}})
+          conto.collisionFilter = {
+            'group': -1,
+            'category': 2,
+            'mask': 0,
+            }
 
           Composite.add(engine.world,conto)
 
