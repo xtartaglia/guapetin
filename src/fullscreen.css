@@ -1,0 +1,7 @@
+:not(:root):fullscreen::backdrop {
+    background-image: url('lovecomp1.png');
+    background-size: auto 100%;
+    background-repeat: repeat-x;
+    animation:background-infinite 60s linear infinite;
+    animation-play-state: paused;
+  }

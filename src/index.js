@@ -4,8 +4,6 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-window.screen.orientation.lock('portrait')
-
 ReactDOM.render(
   <React.StrictMode>
     <App />

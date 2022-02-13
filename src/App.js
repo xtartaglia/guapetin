@@ -7,6 +7,7 @@ import jump from './jump.mp3'
 import domande from './domande.json'
 import { fabric } from 'fabric'
 import './App.css'
+import './fullscreen.css'
 import earth from './ground.png'
 import gO from './game over.mp3'
 import doggoLove from './doggo_love.png'
@@ -14,7 +15,6 @@ import doggoSad from './doggo_sad.png'
 import doggoDead from './doggo_dead.png'
 import wrong from './wrong.wav'
 import swal from 'sweetalert2'
-import { findAllInRenderedTree } from 'react-dom/cjs/react-dom-test-utils.production.min'
 
 function createImage(string, w, h, type) {
 
@@ -66,7 +66,7 @@ function createImage(string, w, h, type) {
 
   size = Math.min.apply(null, sizes)
 
-  console.log(size)
+  
 
   var limit = canvas.height;
 
@@ -89,7 +89,7 @@ while (text.height >  limit) {
 
   canvas.add(text)
   canvas.centerObject(text)
-  console.log(canvas.toDataURL("image/png"))
+  
 
   return canvas.toDataURL("image/png");
 }
@@ -113,7 +113,7 @@ function getAnswers(q,screenHeight,screenWidth,playerPos,groundHeight, scale) {
   for (let i=0;i<r.length-1;i++) {
     var sprite = createImage(q["r"+i].r,200,(screenHeight-groundHeight)/4.5*0.6, type)
     if (i===0) {
-      console.log("w: "+200+" h: "+(screenHeight-groundHeight)/4.5*0.6)
+      
     }
     var ans = Bodies.rectangle(pos,(2*i+1)*(screenHeight-groundHeight)/9+(screenHeight-groundHeight)/18,200,(screenHeight-groundHeight)/4.5*0.6,{isStatic:true, isSensor:true, render:{sprite:{texture:sprite}}})
     ans.collisionFilter = {
@@ -170,7 +170,7 @@ function shuffleDomande(obj) {
 export default function App(props) {
   const scena = useRef()
   let resize = false
-  let gameOver = false
+  let gameOver = true
   let j = 1
   let won = false
   var punteggio = 0
@@ -180,6 +180,12 @@ export default function App(props) {
   var noClick = true
   var justStarted = true
   var alreadyTouched = false
+  var mov = -2
+  var fullscreen = false
+  var player
+  var ground
+  var punti
+  var started = false
 
 
   const [scale, setScale] = useState(window.innerHeight/746)
@@ -204,14 +210,73 @@ export default function App(props) {
       element:scena.current,
       engine: engine,
       options: {
-        width:window.innerWidth,
-        height:window.innerHeight,
+        width:window.screen.width,
+        height:window.screen.height,
         wireframes: false,
         background:'transparent'
       }
     })
 
-    if (window.innerWidth<window.innerHeight) {
+    console.log("before fullscreen"+render.options.height)
+
+    swal.fire({
+      title:"Guapetín",
+      html:"Il gioco è semplice. Rispondi alle domande passando attraverso lo spazio corrispondente alla risposta giusta senza far cadere Guapetín.<br>Attento alle nuvole, sono tossiche 😱",
+      icon:"info",
+      confirmButtonText: 'Daje annamoooooo',
+      confirmButtonColor: '#5ca353',
+      color: 'white',
+      background: '#373737'
+    })
+    .then(()=> {
+      document.body.requestFullscreen()
+    })
+
+    function fullscreenChange(event) {
+      if (document.fullscreenElement) {
+        render.options.height = window.screen.height
+        render.options.width = window.screen.width
+        console.log("HEY BITCH FULLSCREEEEEN"+render.options.height+window.outerHeight)
+        setScale(window.screen.height/746)
+        fullscreen = true
+        if (!started)
+        {
+          start()
+          started = true
+        }
+      }
+
+      else {
+        mov = 0
+        engine.gravity.y = 0
+        swal.fire({
+          title:"Ci vuoi lasciare?",
+          html:"Sei sicuro di voler abbandonare la partita?",
+          icon:"warning",
+          showCancelButton: true,
+          confirmButtonText: 'Tornare al gioco',
+          confirmButtonColor: '#5ca353',
+          cancelButtonText: 'Abbandonare la partita',
+          color: 'white',
+          background: '#373737'
+        })
+        .then((result)=> {
+          if (result.value===true) {
+            document.body.requestFullscreen()
+            mov = -2
+            engine.gravity.y = 0.1*scale
+          }
+
+          else {
+            window.top.close()
+          }
+        })
+      }
+    }
+  
+    document.addEventListener('fullscreenchange',fullscreenChange)
+
+    if (render.options.width<render.options.height) {
       type = 1
     }
 
@@ -219,20 +284,10 @@ export default function App(props) {
       type = 0
     }
 
-
-    var player = Bodies.rectangle(window.innerWidth/3, window.innerHeight/2, 50*scale, 37*scale, {chamfer: {radius: 15}, render:{sprite:{texture:doggo, xScale:scale,yScale:scale}}})
-    Body.setMass(player, 20)
-
-    var punti = Bodies.rectangle(player.position.x,render.options.height*0.8,1,1,{isStatic:true,isSensor:true, render:{sprite:{texture:createImage(punteggio.toString(),30,30,type)}}})
-          punti.collisionFilter = {
-          'group': -1,
-          'category': 2,
-          'mask': 0,
-          }
+    
 
     function handleClick() {
-
-      if (justStarted && !gameOver) {
+      if (justStarted && !gameOver && fullscreen) {
         justStarted = false
         domande = shuffleDomande(domande)
         engine.gravity.y = 0.1*scale
@@ -241,8 +296,8 @@ export default function App(props) {
         document.body.style.animationPlayState = "running"  
 
         qr = Composite.create()
-        var sprite = createImage(domande["domanda0"].d,render.options.width/2,(window.innerHeight/50*49)/4.5*0.3,type)
-        var q = Bodies.rectangle(player.position.x,(window.innerHeight/50*49)/4.5*0.3,(window.innerHeight/50*49)/4.5*0.3,render.options.width/2, {isSensor:true, isStatic:true, render:{sprite:{texture:sprite}}})
+        var sprite = createImage(domande["domanda0"].d,render.options.width/2,(render.options.height/50*49)/4.5*0.3,type)
+        var q = Bodies.rectangle(player.position.x,(render.options.height/50*49)/4.5*0.3,(render.options.height/50*49)/4.5*0.3,render.options.width/2, {isSensor:true, isStatic:true, render:{sprite:{texture:sprite}}})
         q.collisionFilter = {
           'group': -1,
           'category': 2,
@@ -256,8 +311,9 @@ export default function App(props) {
         },1000)
 
         var update = setInterval(()=>{
+          console.log(render.options.height)
           if (typeof domanda !== "undefined" && !gameOver && !alreadyTouched) {
-            Composite.translate(domanda,{x:-2,y:0})
+            Composite.translate(domanda,{x:mov,y:0})
           }
     
           else if (gameOver) {
@@ -268,7 +324,7 @@ export default function App(props) {
 
 
           if (lastChild.position.x-100<player.position.x+37*scale/2 && !checkedWon) {
-            console.log('TRUEEEEEEEEEEEEEEEEEE')
+            
             checkedWon = true
             if (!won) {
               player.render.sprite.texture = doggoSad
@@ -283,7 +339,7 @@ export default function App(props) {
 
           if (lastChild.position.x-player.position.x < render.options.width/3) {
             Composite.remove(qr, [q])
-            Composite.translate(risp,{x:-2,y:0})
+            Composite.translate(risp,{x:mov,y:0})
 
             if (Composite.allBodies(risp)[Composite.allBodies(risp).length-1].position.x-player.position.x < 100) {
               Composite.remove(qr, [risp])
@@ -294,9 +350,23 @@ export default function App(props) {
               checkedWon = false
               if (j===Object.keys(domande).length) {
                 gameOver=true
+                started = false
                 clearInterval(update)
                 engine.gravity.y = 0
                 document.body.style.animationPlayState = "paused"
+                try {
+
+                  for (var v = 0;v<document.styleSheets[2].cssRules.length;v++) {
+                    var newRule = document.styleSheets[2].cssRules[v].cssText.replace("running","paused")
+                    document.styleSheets[2].deleteRule(v)
+                    document.styleSheets[2].insertRule(newRule,v)
+                  }
+                  
+                }
+              
+                catch(error) {
+                  console.log(error)
+                }
                 setTimeout(()=>{
                   swal.fire({
                     title:"La partita è finita",
@@ -310,17 +380,20 @@ export default function App(props) {
                     background: '#373737'
                   })
                   .then((result)=> {
-                    console.log(result.value)
+                    
                     if (result.value === true) {
-                      restart()
+                      start()
+                    }
+                    else {
+                      window.top.close()
                     }
                   })
                 },2000)
               }
               domanda = Domanda({screenHeight:render.options.height,groundHeight:render.options.height/50, x:player.position.x+1000*scaleX, q:domande["domanda"+j], scale:scale})
               Composite.add(engine.world, [domanda])
-              sprite = createImage(domande["domanda"+j].d,render.options.width/2,(window.innerHeight/50*49)/4.5*0.3,type)
-              q = Bodies.rectangle(player.position.x,(window.innerHeight/50*49)/4.5*0.3,render.options.width/2,(window.innerHeight/50*49)/4.5*0.3, {isSensor:true, isStatic:true, render:{sprite:{texture:sprite}}})
+              sprite = createImage(domande["domanda"+j].d,render.options.width/2,(render.options.height/50*49)/4.5*0.3,type)
+              q = Bodies.rectangle(player.position.x,(render.options.height/50*49)/4.5*0.3,render.options.width/2,(render.options.height/50*49)/4.5*0.3, {isSensor:true, isStatic:true, render:{sprite:{texture:sprite}}})
               q.collisionFilter = {
                 'group': -1,
                 'category': 2,
@@ -351,32 +424,44 @@ export default function App(props) {
     }
 
     document.addEventListener("click", handleClick)
-    window.addEventListener("resize", ()=>{
-      resize = true;
-      render.bounds.max.x = window.innerWidth;
-      render.bounds.max.y = window.innerHeight;
-      render.options.width = window.innerWidth;
-      render.options.height = window.innerHeight;
-      render.canvas.width = window.innerWidth;
-      render.canvas.height = window.innerHeight;
-  
-      Composite.remove(engine.world, [ground])
-      ground = Bodies.rectangle(render.options.width/2, window.innerHeight-window.innerHeight/100, window.innerWidth, window.innerHeight/50, { isStatic: true, render:{sprite:{texture:earth, xScale:1,yScale:window.innerHeight/50/100}} });
-      Composite.add(engine.world, [ground])
-    })
 
-    engine.gravity.y = 0
 
-    var ground = Bodies.rectangle(render.options.width/2, window.innerHeight-window.innerHeight/100, render.options.width, window.innerHeight/50, { isStatic: true, render:{sprite:{texture:earth,xScale:1,yScale:window.innerHeight/50/100}} });
-    Composite.add(engine.world, [ground, player, punti]);
+    document.addEventListener( 'visibilitychange' , function() {
+      if (document.hidden) {
+          
+          engine.gravity.y = 0
+          mov = 0
+      } else {
+          
+          mov = -2
+          engine.gravity.y = 0.01*scale
+      }
+  }, false );
 
-    function restart() {
-      domande = shuffleDomande(domande)
+    function start() {
       engine.gravity.y = 0
-      Body.setPosition(player,{x:render.options.width/3,y:render.options.height/2})
-      Body.setAngle(player,0)
-      Body.setVelocity(player,{x:0,y:0})
-      Body.setAngularVelocity(player,0)
+      try {
+        Composite.remove(engine.world,[ground,player,punti])
+      }
+      catch(error) {
+        
+      }
+      player = Bodies.rectangle(render.options.width/3, render.options.height/2, 50*scale, 37*scale, {chamfer: {radius: 15}, render:{sprite:{texture:doggo, xScale:scale,yScale:scale}}})
+      Body.setMass(player, 20)
+      console.log(render.options.height+" "+window.screen.height+" "+window.innerHeight)
+      ground = Bodies.rectangle(render.options.width/2, render.options.height-render.options.height/100, render.options.width, render.options.height/50, { isStatic: true, render:{sprite:{texture:earth,xScale:1,yScale:render.options.height/50/100}} });
+
+      punti = Bodies.rectangle(player.position.x,render.options.height*0.8,1,1,{isStatic:true,isSensor:true, render:{sprite:{texture:createImage(punteggio.toString(),30,30,type)}}})
+          punti.collisionFilter = {
+          'group': -1,
+          'category': 2,
+          'mask': 0,
+          }
+
+      Composite.add(engine.world, [ground, player, punti]);
+
+      domande = shuffleDomande(domande)
+
       j = 1
       if (l === 0) {
         var go = setInterval(()=>{
@@ -397,18 +482,32 @@ export default function App(props) {
           }
           Composite.add(engine.world, [conto])
 
-          console.log(Composite.allBodies(engine.world))
+          
 
           if (l === 3)
           {
+
+            try {
+
+              for (var v = 0;v<document.styleSheets[2].cssRules.length;v++) {
+                var newRule = document.styleSheets[2].cssRules[v].cssText.replace("paused","running")
+                document.styleSheets[2].deleteRule(v)
+                document.styleSheets[2].insertRule(newRule,v)
+              }
+              
+            }
+          
+            catch(error) {
+              console.log(error)
+            }
           punteggio = 0
-          console.log(punteggio)
+          
           gameOver=false
           noClick = true
           l = 0
           won = false
           justStarted = true
-          console.log("HERE IS L: "+l)
+          
           handleClick()
             clearInterval(go)
             setTimeout(()=>{
@@ -423,7 +522,7 @@ export default function App(props) {
       }
 
       else {
-        console.log("L IS NOT ZERO: "+l)
+        
       }
       try {
         Composite.remove(engine.world,[domanda,qr,punti,conto])
@@ -437,18 +536,32 @@ export default function App(props) {
     Events.on(engine, 'collisionStart', function(event) {
       var pairs = event.pairs;
       
-      console.log(pairs[0].bodyB)
+      
 
       if (!pairs[0].bodyA.isSensor && !pairs[0].bodyB.isSensor && !gameOver && !alreadyTouched) {
-        //document.body.style.animationPlayState = "paused"
+        
         alreadyTouched = true
         document.body.style.animationPlayState="paused"
-        console.log("game over")
+        try {
+
+          for (var v = 0;v<document.styleSheets[2].cssRules.length;v++) {
+            var newRule = document.styleSheets[2].cssRules[v].cssText.replace("running","paused")
+            document.styleSheets[2].deleteRule(v)
+            document.styleSheets[2].insertRule(newRule,v)
+          }
+          
+        }
+      
+        catch(error) {
+          console.log(error)
+        }
+        
         var gOSound = document.querySelector(".gO")
         gOSound.volume = 0.5
         gOSound.play()
         player.render.sprite.texture = doggoDead
         gameOver=true
+        started = false
 
         setTimeout(()=>{
 
@@ -464,9 +577,12 @@ export default function App(props) {
             background: '#373737'
           })
           .then((result)=> {
-            console.log(result.value)
+            
             if (result.value === true) {
-              restart()
+              start()
+            }
+            else {
+              window.top.close()
             }
           })
 
