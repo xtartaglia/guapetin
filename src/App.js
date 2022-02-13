@@ -19,7 +19,6 @@ import { findAllInRenderedTree } from 'react-dom/cjs/react-dom-test-utils.produc
 function createImage(string, w, h, type) {
 
   var canvas = new fabric.Canvas()
-  var stroke;
   var size;
   var fontFamily = 'Arial'
   var fill
@@ -33,7 +32,7 @@ function createImage(string, w, h, type) {
 
   else if (type === 1) {
     canvas.width = w
-    canvas.height = 
+    canvas.height = h
     size = 20
     fill='white'
   }
@@ -79,8 +78,7 @@ text.set({
     fontFamily:fontFamily,
     fontWeight: 'bold',
     fontSize: size,
-    fill:'white',
-    stroke:stroke
+    fill:'white'
 });
   while (text.width > canvas.width) {
     text.set(text.width -= 10);
@@ -391,7 +389,7 @@ export default function App(props) {
             // Note - error messages will vary depending on browser
           }
 
-          conto = Bodies.rectangle(render.options.width/2,render.options.height/2,render.options.width/4,render.options.height/4,{label:'conto',isStatic:true,isSensor:true, render:{sprite:{texture:createImage((5-l).toString(),render.options.width/4,render.options.height/4,2)}}})
+          conto = Bodies.rectangle(render.options.width/2,render.options.height/2,render.options.width/4,render.options.height/4,{label:'conto',isStatic:true,isSensor:true, render:{sprite:{texture:createImage((3-l).toString(),render.options.width/4,render.options.height/4,2)}}})
           punti.collisionFilter = {
           'group': -1,
           'category': 2,
@@ -401,7 +399,7 @@ export default function App(props) {
 
           console.log(Composite.allBodies(engine.world))
 
-          if (l === 5)
+          if (l === 3)
           {
           punteggio = 0
           console.log(punteggio)
