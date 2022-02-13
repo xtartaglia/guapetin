@@ -13,6 +13,7 @@ import doggoLove from './doggo_love.png'
 import doggoSad from './doggo_sad.png'
 import doggoDead from './doggo_dead.png'
 import wrong from './wrong.wav'
+import swal from 'sweetalert2'
 
 function createImage(string, w, h, type) {
 
@@ -300,10 +301,21 @@ export default function App(props) {
                 engine.gravity.y = 0
                 document.body.style.animationPlayState = "paused"
                 setTimeout(()=>{
-
-                  if (window.confirm("La partita è finita.\nIl tuo punteggio è: "+punteggio+"\nChiudi questo messaggio per avviare una nuova partita") == true) {
-                    restart()
-                  }
+                  swal.fire({
+                    title:"La partita è finita",
+                    html:"Il tuo punteggio è: "+punteggio+"<br>Chiudi questo messaggio per iniziare una nuova partita",
+                    icon:"info",
+                    showCancelButton: true,
+                    confirmButtonText: 'Daje annamoooooo',
+                    cancelButtonText: '¡No gracias señora!',
+                    background:'#a5b4f2'
+                  })
+                  .then((result)=> {
+                    console.log(result.value)
+                    if (result.value === true) {
+                      restart()
+                    }
+                  })
                 },2000)
               }
               domanda = Domanda({screenHeight:render.options.height,groundHeight:render.options.height/50, x:player.position.x+1000*scaleX, q:domande["domanda"+j], scale:scale})
@@ -440,12 +452,26 @@ export default function App(props) {
         gameOver=true
 
         setTimeout(()=>{
-          if (window.confirm("NOOOOOOO! Hai fatto male a guapetín :(\nIl tuo punteggio è: "+punteggio+"\nChiudi questo messaggio per iniziare una nuova partita") == true) {
-            restart()
-          }
+
+          swal.fire({
+            title:"NOOOOOOO! Hai fatto male a guapetín :(",
+            html:"Il tuo punteggio è: "+punteggio+"<br>Chiudi questo messaggio per iniziare una nuova partita",
+            icon:"error",
+            showCancelButton: true,
+            confirmButtonText: 'Daje annamoooooo',
+            cancelButtonText: '¡No gracias señora!',
+            background:'#a5b4f2'
+          })
+          .then((result)=> {
+            console.log(result.value)
+            if (result.value === true) {
+              restart()
+            }
+          })
+
           alreadyTouched = false
           player.render.sprite.texture = doggo
-        },2000)
+        },1000)
 
         if (won) {
           punteggio=punteggio-1
