@@ -16,6 +16,8 @@ import wrong from './wrong.wav'
 import swal from 'sweetalert2'
 import { findAllInRenderedTree } from 'react-dom/cjs/react-dom-test-utils.production.min'
 
+screen.orientation.lock('portrait')
+
 function createImage(string, w, h, type) {
 
   var canvas = new fabric.Canvas()
@@ -27,15 +29,13 @@ function createImage(string, w, h, type) {
   if (type === 0) {
     canvas.width = w
     canvas.height = h
-    stroke='whit'
     size = 30
     fill='white'
   }
 
   else if (type === 1) {
     canvas.width = w
-    canvas.height = h
-    stroke=''
+    canvas.height = 
     size = 20
     fill='white'
   }
@@ -43,7 +43,6 @@ function createImage(string, w, h, type) {
   else if (type === 2) {
     canvas.width = w
     canvas.height = h
-    stroke = 'white'
     size = 1000
     fill='white'
   }
@@ -56,8 +55,7 @@ function createImage(string, w, h, type) {
       fontSize:size,
       fontFamily:fontFamily,
       fontWeight: 'bold',
-      fill:fill,
-      stroke:stroke
+      fill:fill
     })
     
     while (graphText.width>canvas.width) {
@@ -313,7 +311,7 @@ export default function App(props) {
                     color: 'white',
                     background: '#373737',
                     width:render.options.width/2,
-                    height:render.options.height/2
+                    height:render.options.width/2
                   })
                   .then((result)=> {
                     console.log(result.value)
