@@ -210,8 +210,8 @@ export default function App(props) {
       element:scena.current,
       engine: engine,
       options: {
-        width:window.screen.width*window.devicePixelRatio,
-        height:window.screen.height*window.devicePixelRatio,
+        width:window.screen.width,
+        height:window.screen.height,
         wireframes: false,
         background:'transparent'
       }
@@ -234,8 +234,8 @@ export default function App(props) {
 
     function fullscreenChange(event) {
       if (document.fullscreenElement) {
-        render.options.height = window.screen.height*window.devicePixelRatio
-        render.options.width = window.screen.width*window.devicePixelRatio
+        render.options.height = window.innerHeight
+        render.options.width = window.innerWidth
         console.log("HEY BITCH FULLSCREEEEEN"+render.options.height+window.outerHeight)
         setScale(window.screen.height/746)
         fullscreen = true
