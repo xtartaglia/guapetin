@@ -6,7 +6,7 @@ import win from './i-ruv-you-1.mp3'
 import jump from './jump.mp3'
 import domande from './domande.json'
 import { fabric } from 'fabric'
-import './index.css'
+import './App.css'
 import earth from './ground.png'
 import gO from './game over.mp3'
 import doggoLove from './doggo_love.png'
@@ -14,6 +14,7 @@ import doggoSad from './doggo_sad.png'
 import doggoDead from './doggo_dead.png'
 import wrong from './wrong.wav'
 import swal from 'sweetalert2'
+import { findAllInRenderedTree } from 'react-dom/cjs/react-dom-test-utils.production.min'
 
 function createImage(string, w, h, type) {
 
@@ -307,8 +308,12 @@ export default function App(props) {
                     icon:"info",
                     showCancelButton: true,
                     confirmButtonText: 'Daje annamoooooo',
+                    confirmButtonColor: '#5ca353',
                     cancelButtonText: '¡No gracias señora!',
-                    background:'#a5b4f2'
+                    color: 'white',
+                    background: '#373737',
+                    width:render.options.width/2,
+                    height:render.options.height/2
                   })
                   .then((result)=> {
                     console.log(result.value)
@@ -459,8 +464,12 @@ export default function App(props) {
             icon:"error",
             showCancelButton: true,
             confirmButtonText: 'Daje annamoooooo',
+            confirmButtonColor: '#5ca353',
             cancelButtonText: '¡No gracias señora!',
-            background:'#a5b4f2'
+            color:'white',
+            background: '#373737',
+            width:render.options.width/2,
+            height:render.options.height/2
           })
           .then((result)=> {
             console.log(result.value)
