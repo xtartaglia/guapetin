@@ -27,7 +27,7 @@ function createImage(string, w, h, type) {
   if (type === 0) {
     canvas.width = w
     canvas.height = h
-    stroke='black'
+    stroke='whit'
     size = 30
     fill='white'
   }
@@ -469,7 +469,7 @@ export default function App(props) {
             color:'white',
             background: '#373737',
             width:render.options.width/2,
-            height:render.options.height/2
+            height:render.options.width/2
           })
           .then((result)=> {
             console.log(result.value)
