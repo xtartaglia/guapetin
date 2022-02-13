@@ -214,13 +214,13 @@ export default function App(props) {
       engine: engine,
       options: {
         width:window.screen.width,
-        height:window.screen.height,
+        height:window.screen.height+window.screenTop,
         wireframes: false,
         background:'transparent'
       }
     })
 
-    var filler = Bodies.rectangle(render.options.width/2,render.options.height+render.options.height/8,render.options.width,render.options.height/4, {isStatic:true, render:{fillStyle:'red'}})
+    var filler = Bodies.rectangle(render.options.width/2,render.options.height+render.options.height/16,render.options.width,render.options.height/4, {isStatic:true, render:{fillStyle:'red'}})
     Composite.add(engine.world,filler)
 
     console.log("before fullscreen"+height)
@@ -245,6 +245,15 @@ export default function App(props) {
 
         height = window.screen.height+window.screenTop
         width = window.screen.width
+        if (width<height) {
+          type = 1
+          speed = 1
+        }
+    
+        else {
+          type = 0
+          speed = 2
+        }
         console.log("HEY BITCH FULLSCREEEEEN"+height+window.outerHeight)
         setScale(window.screen.height/746)
         fullscreen = true
@@ -300,16 +309,6 @@ export default function App(props) {
   
     document.addEventListener('fullscreenchange',fullscreenChange)
     document.addEventListener('resize',fullscreenChange)
-
-    if (width<height) {
-      type = 1
-      speed = 1
-    }
-
-    else {
-      type = 0
-      speed = 2
-    }
 
     
 
