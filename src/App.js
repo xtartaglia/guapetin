@@ -492,7 +492,7 @@ export default function App(props) {
       player = Bodies.rectangle(width/3, height/2, 50*scale, 37*scale, {chamfer: {radius: 15}, render:{sprite:{texture:doggo, xScale:scale,yScale:scale}}})
       Body.setMass(player, 20)
       console.log(height+" "+window.screen.height+" "+window.innerHeight)
-      ground = Bodies.rectangle(width/2, height-height/100, width, height/50, { isStatic: true, render:{sprite:{texture:earth,xScale:1,yScale:height/50/100}} });
+      ground = Bodies.rectangle(width/2, height-height/100, width, height/50, { isStatic: true, render:{sprite:{texture:earth}} });
 
       punti = Bodies.rectangle(player.position.x,height*0.8,1,1,{isStatic:true,isSensor:true, render:{sprite:{texture:createImage(punteggio.toString(),30,30,type)}}})
           punti.collisionFilter = {
