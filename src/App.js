@@ -557,7 +557,7 @@ export default function App(props) {
           justStarted = true
           
           handleClick()
-            clearInterval(go)
+          clearInterval(go)
             setTimeout(()=>{
               Composite.remove(engine.world,[conto])
             },1000)
