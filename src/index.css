@@ -11,6 +11,8 @@ body {
   background-repeat: repeat-x;
   animation:background-infinite 60s linear infinite;
   animation-play-state: paused;
+  height: 100%;
+  width: 100%;
 }
 
 .swal2-container.swal2-backdrop-show, .swal2-container.swal2-noanimation {
