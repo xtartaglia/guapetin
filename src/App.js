@@ -257,43 +257,45 @@ export default function App(props) {
       else {
         mov = 0
         engine.gravity.y = 0
-        swal.fire({
-          title:"Ci vuoi lasciare?",
-          html:"Sei sicuro di voler abbandonare la partita?",
-          icon:"warning",
-          showCancelButton: true,
-          confirmButtonText: 'Tornare al gioco',
-          confirmButtonColor: '#5ca353',
-          cancelButtonText: 'Abbandonare la partita',
-          color: 'white',
-          background: '#373737'
-        })
-        .then((result)=> {
-          if (result.value===true) {
-            document.body.requestFullscreen()
-            mov = -2
-            engine.gravity.y = 0.1*scale
-          }
-
-          else {
-            document.exitFullscreen()
-              swal.fire({
-                title:"Se vedemo zi'",
-                html:"Spero il gioco ti sia piaciuto",
-                showCancelButton: false,
-                showConfirmButton:false,
-                color:'white',
-                background: '#373737'
-              })
-              gameOver = true;
-              try {
-                Composite.remove(engine.world,[qr, domanda, punti, conto, player])
-              }
-              catch(error) {
-                
-              }
-          }
-        })
+        if (!voluntary) {
+          swal.fire({
+            title:"Ci vuoi lasciare?",
+            html:"Sei sicuro di voler abbandonare la partita?",
+            icon:"warning",
+            showCancelButton: true,
+            confirmButtonText: 'Tornare al gioco',
+            confirmButtonColor: '#5ca353',
+            cancelButtonText: 'Abbandonare la partita',
+            color: 'white',
+            background: '#373737'
+          })
+          .then((result)=> {
+            if (result.value===true) {
+              document.body.requestFullscreen()
+              mov = -2
+              engine.gravity.y = 0.1*scale
+            }
+  
+            else {
+              document.exitFullscreen()
+                swal.fire({
+                  title:"Se vedemo zi'",
+                  html:"Spero il gioco ti sia piaciuto",
+                  showCancelButton: false,
+                  showConfirmButton:false,
+                  color:'white',
+                  background: '#373737'
+                })
+                gameOver = true;
+                try {
+                  Composite.remove(engine.world,[qr, domanda, punti, conto, player])
+                }
+                catch(error) {
+                  
+                }
+            }
+          })
+        }
       }
     }
   
