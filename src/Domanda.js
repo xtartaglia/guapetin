@@ -23,7 +23,7 @@ export default function Domanda (props) {
     }
 
     else if (i === 8) {
-        box = Bodies.rectangle(x+500,screenHeight-screenHeight/18,larghezza,altezzaC, {isStatic:true, chamfer: {radius: 15}, label:'box'+i, render:{overflow:'hidden',sprite:{texture:groundstuck,xScale:1,yScale:altezzaC/100}}})
+        box = Bodies.rectangle(x+500,screenHeight-screenHeight/12.5,larghezza,altezzaC, {isStatic:true, chamfer: {radius: 15}, label:'box'+i, render:{overflow:'hidden',sprite:{texture:groundstuck,xScale:1,yScale:altezzaC/150}}})
     }
 
     else {

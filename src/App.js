@@ -207,13 +207,13 @@ export default function App(props) {
       engine: engine,
       options: {
         width:window.screen.width,
-        height:window.screen.height,
+        height:window.screen.height+window.screenTop,
         wireframes: false,
         background:'transparent'
       }
     })
 
-    ground = Bodies.rectangle(window.screen.width/2, window.screen.height-window.screen.height/50, window.screen.width, window.screen.height/25, { isStatic: true, render:{sprite:{texture:earth,xScale:1,yScale:window.screen.height/2500}}});
+    ground = Bodies.rectangle(window.screen.width/2, window.screen.height-window.screen.height/25, window.screen.width*1.5, window.screen.height/12.5, { isStatic: true, render:{sprite:{texture:earth,xScale:window.screen.width*1.5/2400,yScale:window.screen.height/12.5/150}}});
     Composite.add(engine.world,[ground])
 
     console.log("before fullscreen"+window.screen.height)
@@ -306,7 +306,7 @@ export default function App(props) {
         justStarted = false
         domande = shuffleDomande(domande)
         engine.gravity.y = 0.1*scale
-        domanda = Domanda({screenHeight:window.screen.height,groundHeight:window.screen.height/50, x:player.position.x+1000*scaleX, q:domande["domanda0"], scale:scale})
+        domanda = Domanda({screenHeight:window.screen.height,groundHeight:window.screen.height/12.5, x:player.position.x+1000*scaleX, q:domande["domanda0"], scale:scale})
         Composite.add(engine.world, [domanda])
         document.body.style.animationPlayState = "running"  
 
@@ -320,19 +320,29 @@ export default function App(props) {
         }
         Composite.add(qr, [q])
         Composite.add(engine.world, [qr])
-        var risp = getAnswers(domande["domanda0"],window.screen.height,window.screen.width,player.position.x,window.screen.height/50,scale)
+        var risp = getAnswers(domande["domanda0"],window.screen.height,window.screen.width,player.position.x,window.screen.height/12.5,scale)
         setTimeout(()=>{
           Composite.add(qr,[risp])
         },1000)
 
         var update = setInterval(()=>{
-          console.log(window.screen.height)
+
+          if (typeof punti != "undefined") {
+            Body.setPosition(punti,{x:player.position.x,y:player.position.y-60})
+          }
+          
           if (typeof domanda !== "undefined" && !gameOver && !alreadyTouched) {
             Composite.translate(domanda,{x:mov*speed,y:0})
+            Body.translate(ground,{x:mov*speed,y:0})
           }
     
           else if (gameOver) {
             clearInterval(update)
+            Composite.remove(engine.world,punti)
+          }
+
+          if (ground.position.x < window.screen.width/4) {
+            Body.setPosition(ground,{x:window.screen.width/2,y:ground.position.y})
           }
 
           var lastChild = Composite.allBodies(domanda)[Composite.allBodies(domanda).length-1]
@@ -421,7 +431,7 @@ export default function App(props) {
                   })
                 },2000)
               }
-              domanda = Domanda({screenHeight:window.screen.height,groundHeight:window.screen.height/50, x:player.position.x+1000*scaleX, q:domande["domanda"+j], scale:scale})
+              domanda = Domanda({screenHeight:window.screen.height,groundHeight:window.screen.height/12.5, x:player.position.x+1000*scaleX, q:domande["domanda"+j], scale:scale})
               Composite.add(engine.world, [domanda])
               sprite = createImage(domande["domanda"+j].d,window.screen.width/2,(window.screen.height/50*49)/4.5*0.3,type)
               q = Bodies.rectangle(player.position.x,(window.screen.height/50*49)/4.5*0.3,window.screen.width/2,(window.screen.height/50*49)/4.5*0.3, {isSensor:true, isStatic:true, render:{sprite:{texture:sprite}}})
@@ -432,7 +442,7 @@ export default function App(props) {
               }
               Composite.add(qr, [q])
 
-              risp = getAnswers(domande["domanda"+j],window.screen.height,window.screen.width,player.position.x,window.screen.height/50,scale)
+              risp = getAnswers(domande["domanda"+j],window.screen.height,window.screen.width,player.position.x,window.screen.height/12.5,scale)
               setTimeout(()=>{
               Composite.add(qr,[risp])
               },1000)
@@ -481,15 +491,10 @@ export default function App(props) {
       player = Bodies.rectangle(window.screen.width/3, window.screen.height/2, 50*scale, 37*scale, {chamfer: {radius: 15}, render:{sprite:{texture:doggo, xScale:scale,yScale:scale}}})
       Body.setMass(player, 20)
       console.log(window.screen.height+" "+window.screen.height+" "+window.innerHeight)
+        
+      
 
-      punti = Bodies.rectangle(player.position.x,window.screen.height*0.8,1,1,{isStatic:true,isSensor:true, render:{sprite:{texture:createImage(punteggio.toString(),30,30,type)}}})
-          punti.collisionFilter = {
-          'group': -1,
-          'category': 2,
-          'mask': 0,
-          }
-
-      Composite.add(engine.world, [ground, player, punti]);
+      Composite.add(engine.world, [player]);
 
       domande = shuffleDomande(domande)
 
@@ -506,14 +511,8 @@ export default function App(props) {
           }
 
           conto = Bodies.rectangle(window.screen.width/2,window.screen.height/2,window.screen.width/4,window.screen.height/4,{label:'conto',isStatic:true,isSensor:true, render:{sprite:{texture:createImage((3-l).toString(),window.screen.width/4,window.screen.height/4,2)}}})
-          punti.collisionFilter = {
-          'group': -1,
-          'category': 2,
-          'mask': 0,
-          }
-          Composite.add(engine.world, [conto])
 
-          
+          Composite.add(engine.world,conto)
 
           if (l === 3)
           {
@@ -532,6 +531,15 @@ export default function App(props) {
               console.log(error)
             }
           punteggio = 0
+
+          punti = Bodies.rectangle(player.position.x,player.position.y-60,1,1,{isStatic:true,isSensor:true, render:{sprite:{texture:createImage(punteggio.toString(),30,30,type)}}})
+          punti.collisionFilter = {
+          'group': -1,
+          'category': 2,
+          'mask': 0,
+          }
+
+          Composite.add(engine.world, [punti])
           
           gameOver=false
           noClick = true
