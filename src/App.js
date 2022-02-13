@@ -323,7 +323,7 @@ export default function App(props) {
         }
         Composite.add(qr, [q])
         Composite.add(engine.world, [qr])
-        var risp = getAnswers(domande["domanda0"],window.screen.height,window.screen.width,player.position.x,window.screen.height/12.5,scale)
+        var risp = getAnswers(domande["domanda0"],window.screen.height,window.screen.width,player.position.x,window.screen.height/12.5*0.8,scale)
         setTimeout(()=>{
           Composite.add(qr,[risp])
         },1000)
@@ -446,7 +446,7 @@ export default function App(props) {
               }
               Composite.add(qr, [q])
 
-              risp = getAnswers(domande["domanda"+j],window.screen.height,window.screen.width,player.position.x,window.screen.height/12.5,scale)
+              risp = getAnswers(domande["domanda"+j],window.screen.height,window.screen.width,player.position.x,window.screen.height/12.5*0.8,scale)
               setTimeout(()=>{
               Composite.add(qr,[risp])
               },1000)
