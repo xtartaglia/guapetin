@@ -239,7 +239,7 @@ export default function App(props) {
         console.log(document.querySelector(".canvas").height)
 
 
-        height = window.screen.height
+        height = window.screen.height+window.screenTop
         width = window.screen.width
         console.log("HEY BITCH FULLSCREEEEEN"+height+window.outerHeight)
         setScale(window.screen.height/746)
