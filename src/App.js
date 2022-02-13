@@ -220,6 +220,9 @@ export default function App(props) {
       }
     })
 
+    var filler = Bodies.rectangle(render.options.width/2,render.options.height+render.options.height/8,render.options.width,render.options.height/4, {isStatic:true, render:{fillStyle:'red'}})
+    Composite.add(engine.world,filler)
+
     console.log("before fullscreen"+height)
 
     swal.fire({
@@ -486,6 +489,7 @@ export default function App(props) {
       catch(error) {
         
       }
+
       player = Bodies.rectangle(width/3, height/2, 50*scale, 37*scale, {chamfer: {radius: 15}, render:{sprite:{texture:doggo, xScale:scale,yScale:scale}}})
       Body.setMass(player, 20)
       console.log(height+" "+window.screen.height+" "+window.innerHeight)
