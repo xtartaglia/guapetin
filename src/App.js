@@ -207,7 +207,7 @@ export default function App(props) {
       engine: engine,
       options: {
         width:window.screen.width,
-        height:window.screen.height+window.screenTop,
+        height:window.screen.height,
         wireframes: false,
         background:'transparent'
       }
