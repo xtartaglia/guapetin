@@ -309,8 +309,7 @@ export default function App(props) {
                     confirmButtonColor: '#5ca353',
                     cancelButtonText: '¡No gracias señora!',
                     color: 'white',
-                    background: '#373737',
-                    width:render.options.width/2,
+                    background: '#373737'
                   })
                   .then((result)=> {
                     console.log(result.value)
@@ -464,8 +463,7 @@ export default function App(props) {
             confirmButtonColor: '#5ca353',
             cancelButtonText: '¡No gracias señora!',
             color:'white',
-            background: '#373737',
-            width:render.options.width/2
+            background: '#373737'
           })
           .then((result)=> {
             console.log(result.value)
