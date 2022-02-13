@@ -16,7 +16,7 @@ import wrong from './wrong.wav'
 import swal from 'sweetalert2'
 import { findAllInRenderedTree } from 'react-dom/cjs/react-dom-test-utils.production.min'
 
-screen.orientation.lock('portrait')
+window.screen.orientation.lock('portrait')
 
 function createImage(string, w, h, type) {
 
