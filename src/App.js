@@ -103,12 +103,12 @@ function getAnswers(q,screenHeight,screenWidth,playerPos,groundHeight, scale) {
   var type
 
   if (screenWidth<screenHeight) {
-    pos = playerPos+screenWidth/8*3
+    pos = playerPos+screenWidth/3
     type = 1
   }
 
   else {
-    pos = playerPos+screenWidth/4
+    pos = playerPos+screenWidth/3
     type = 0
   }
 
@@ -222,7 +222,7 @@ export default function App(props) {
     }
 
 
-    var player = Bodies.rectangle(window.innerWidth/4, window.innerHeight/2, 50*scale, 37*scale, {chamfer: {radius: 15}, render:{sprite:{texture:doggo, xScale:scale,yScale:scale}}})
+    var player = Bodies.rectangle(window.innerWidth/3, window.innerHeight/2, 50*scale, 37*scale, {chamfer: {radius: 15}, render:{sprite:{texture:doggo, xScale:scale,yScale:scale}}})
     Body.setMass(player, 20)
 
     var punti = Bodies.rectangle(player.position.x,render.options.height*0.8,1,1,{isStatic:true,isSensor:true, render:{sprite:{texture:createImage(punteggio.toString(),30,30,type)}}})
@@ -268,7 +268,9 @@ export default function App(props) {
 
           var lastChild = Composite.allBodies(domanda)[Composite.allBodies(domanda).length-1]
 
-          if (lastChild.position.x<player.position.x-10 && !checkedWon) {
+
+          if (lastChild.position.x-100<player.position.x+37*scale/2 && !checkedWon) {
+            console.log('TRUEEEEEEEEEEEEEEEEEE')
             checkedWon = true
             if (!won) {
               player.render.sprite.texture = doggoSad
@@ -281,7 +283,7 @@ export default function App(props) {
             }
           }
 
-          if (lastChild.position.x-player.position.x < render.options.width/4) {
+          if (lastChild.position.x-player.position.x < render.options.width/3) {
             Composite.remove(qr, [q])
             Composite.translate(risp,{x:-2,y:0})
 
@@ -309,7 +311,6 @@ export default function App(props) {
                     color: 'white',
                     background: '#373737',
                     width:render.options.width/2,
-                    height:render.options.width/2
                   })
                   .then((result)=> {
                     console.log(result.value)
@@ -375,7 +376,7 @@ export default function App(props) {
     function restart() {
       domande = shuffleDomande(domande)
       engine.gravity.y = 0
-      Body.setPosition(player,{x:render.options.width/4,y:render.options.height/2})
+      Body.setPosition(player,{x:render.options.width/3,y:render.options.height/2})
       Body.setAngle(player,0)
       Body.setVelocity(player,{x:0,y:0})
       Body.setAngularVelocity(player,0)
@@ -464,8 +465,7 @@ export default function App(props) {
             cancelButtonText: '¡No gracias señora!',
             color:'white',
             background: '#373737',
-            width:render.options.width/2,
-            height:render.options.width/2
+            width:render.options.width/2
           })
           .then((result)=> {
             console.log(result.value)
