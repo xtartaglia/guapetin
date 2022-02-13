@@ -235,6 +235,8 @@ export default function App(props) {
     function fullscreenChange(event) {
       if (document.fullscreenElement) {
 
+        window.screen.orientation.lock('portrait')
+
         if (window.screen.width<window.screen.height) {
           type = 1
           speed = 1
