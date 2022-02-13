@@ -210,8 +210,8 @@ export default function App(props) {
       element:scena.current,
       engine: engine,
       options: {
-        width:window.screen.width,
-        height:window.screen.height,
+        width:window.screen.width*window.devicePixelRatio,
+        height:window.screen.height*window.devicePixelRatio,
         wireframes: false,
         background:'transparent'
       }
@@ -234,15 +234,17 @@ export default function App(props) {
 
     function fullscreenChange(event) {
       if (document.fullscreenElement) {
-        render.options.height = window.screen.height
-        render.options.width = window.screen.width
+        render.options.height = window.screen.height*window.devicePixelRatio
+        render.options.width = window.screen.width*window.devicePixelRatio
         console.log("HEY BITCH FULLSCREEEEEN"+render.options.height+window.outerHeight)
         setScale(window.screen.height/746)
         fullscreen = true
         if (!started)
         {
-          start()
-          started = true
+          setTimeout(()=>{
+            start()
+            started = true
+          },1000)
         }
       }
 
@@ -311,7 +313,6 @@ export default function App(props) {
         },1000)
 
         var update = setInterval(()=>{
-          console.log(render.options.height)
           if (typeof domanda !== "undefined" && !gameOver && !alreadyTouched) {
             Composite.translate(domanda,{x:mov,y:0})
           }
