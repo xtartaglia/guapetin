@@ -132,7 +132,7 @@ function createImage(string, w, h, type, color, specW) {
   var text = new fabric.Textbox(string);
   // set initial values
   text.set({
-
+    width: canvas.width*0.75,
     textAlign: 'center',
     fontFamily: fontFamily,
     fontWeight: 'bold',
@@ -154,9 +154,8 @@ function createImage(string, w, h, type, color, specW) {
     text.set({ fontSize: text.fontSize - 1 });
   }
 
-  
-  canvas.centerObject(text)
   canvas.add(text)
+  canvas.centerObject(text)
 
   return canvas.toDataURL("image/png");
 }
