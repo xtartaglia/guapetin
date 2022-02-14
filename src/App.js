@@ -132,7 +132,6 @@ function createImage(string, w, h, type, color, specW) {
   var text = new fabric.Textbox(string);
   // set initial values
   text.set({
-    textAlign: 'center',
     fontFamily: fontFamily,
     fontWeight: 'bold',
     fontSize: size,
