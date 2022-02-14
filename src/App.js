@@ -80,7 +80,7 @@ const getQuestions = async () => {
   return questions
 }
 
-function createImage(string, w, h, type, color) {
+function createImage(string, w, h, type, color, specW) {
 
   var canvas = new fabric.Canvas()
   var size;
@@ -132,7 +132,6 @@ function createImage(string, w, h, type, color) {
   var text = new fabric.Textbox(string);
   // set initial values
   text.set({
-    width: canvas.width,
     textAlign: 'center',
     fontFamily: fontFamily,
     fontWeight: 'bold',
@@ -140,6 +139,9 @@ function createImage(string, w, h, type, color) {
     fill: 'white'
   });
 
+  if (typeof specW === "undefined") {
+    text.set(text.width = canvas.width)
+  }
   if (typeof color !== 'undefined') {
     text.backgroundColor = color
   }
@@ -530,7 +532,7 @@ export default function App(props) {
                 setTimeout(() => {
                   swal.fire({
                     title: "La partita è finita",
-                    html: "Il tuo punteggio è: " + punteggio + "<br>Chiudi questo messaggio per iniziare una nuova partita",
+                    html: "Il tuo punteggio è: " + punteggio + "<br>Vuoi fare un'altra partita?",
                     icon: "info",
                     showCancelButton: true,
                     confirmButtonText: 'Daje annamoooooo',
@@ -611,7 +613,7 @@ export default function App(props) {
 
     document.addEventListener('rightanswer', (e) => {
       console.log('rightanswer' + e)
-      var img = createImage(rispostaGiusta.r, 200, (window.screen.height - window.screen.height / 12.5) / 4.5 * 0.6, type, 'rgba(1, 255, 0, 0.32)')
+      var img = createImage(rispostaGiusta.r, 200, (window.screen.height - window.screen.height / 12.5) / 4.5 * 0.6, type, 'rgba(1, 255, 0, 0.32)', "lol")
       var right = Bodies.rectangle(Composite.allBodies(domanda)[Composite.allBodies(domanda).length - 1].position.x, rispostaGiusta.pos, 200, (window.screen.height - window.screen.height / 12.5) / 4.5 * 0.6, { isStatic: true, isSensor: true, render: { sprite: { texture: img } } })
       Composite.add(domanda, right)
     })
