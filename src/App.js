@@ -19,6 +19,7 @@ import swal from 'sweetalert2'
 const rightAnswer = new Event('rightanswer')
 var rispostaGiusta;
 var volume = 1
+var guapeton;
 
 function decodeThatShit(str) {
   str = decodeURI(str)
@@ -326,12 +327,14 @@ export default function App(props) {
 
         if (!data.value.guepet) {
           (async () => {
+            guapeton = false
             domande = await getQuestions()
             console.log(domande)
             document.body.requestFullscreen()
           })()
         }
         else {
+          guapeton = true
           document.body.requestFullscreen()
         }
       })
@@ -552,13 +555,16 @@ export default function App(props) {
 
                       if (result.value === true) {
 
+                        if (!guapeton) {
+                          (async () => {
+                            domande = await getQuestions()
+                            start()
+                          })()
+                        }
 
-                        (async () => {
-                          domande = await getQuestions()
+                        else {
                           start()
-                        })()
-
-
+                        }
                       }
 
                       else {
@@ -783,10 +789,16 @@ export default function App(props) {
             .then((result) => {
 
               if (result.value === true) {
-                (async () => {
-                  domande = await getQuestions()
+                if (!guapeton) {
+                  (async () => {
+                    domande = await getQuestions()
+                    start()
+                  })()
+                }
+
+                else {
                   start()
-                })()
+                }
               }
 
               else {
