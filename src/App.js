@@ -132,6 +132,7 @@ function createImage(string, w, h, type, color, specW) {
   var text = new fabric.Textbox(string);
   // set initial values
   text.set({
+    width: canvas.width,
     textAlign: 'center',
     fontFamily: fontFamily,
     fontWeight: 'bold',
@@ -140,7 +141,7 @@ function createImage(string, w, h, type, color, specW) {
   });
 
   if (typeof specW === 'undefined') {
-    text.set(text.width = canvas.width)
+    text.set({width : canvas.width})
     console.log("SEEEEEEEEEEEEEEET")
   }
   if (typeof color !== 'undefined') {
