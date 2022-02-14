@@ -148,7 +148,7 @@ function createImage(string, w, h, type, color, specW) {
     text.backgroundColor = color
   }
   while (text.width > canvas.width) {
-    text.set(text.width -= 10);
+    text.set({ width : text.width - 10});
   }
   while (text.height > limit) {
     text.set({ fontSize: text.fontSize - 1 });
@@ -587,7 +587,7 @@ export default function App(props) {
               domanda = Domanda({ screenHeight: window.screen.height, groundHeight: window.screen.height / 12.5, x: player.position.x + 1000 * scaleX, q: domande["domanda" + j], scale: scale })
               Composite.add(engine.world, [domanda])
               sprite = createImage(domande["domanda" + j].d, window.screen.width * 0.75, (window.screen.height / 50 * 49) / 4.5 * 0.3, type)
-              q = Bodies.rectangle(window.screen.width/2, (window.screen.height / 50 * 49) / 4.5 * 0.3, window.screen.width * 0.75, (window.screen.height / 50 * 49) / 4.5 * 0.3, { isSensor: true, isStatic: true, render: { sprite: { texture: sprite } } })
+              q = Bodies.rectangle(window.screen.width / 2, (window.screen.height / 50 * 49) / 4.5 * 0.3, window.screen.width * 0.75, (window.screen.height / 50 * 49) / 4.5 * 0.3, { isSensor: true, isStatic: true, render: { sprite: { texture: sprite } } })
               q.collisionFilter = {
                 'group': -1,
                 'category': 2,
