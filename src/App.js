@@ -547,7 +547,8 @@ export default function App(props) {
 
 
                         (async () => {
-                          const questions = await getQuestions()
+                          domande = await getQuestions()
+                          start()
                         })()
 
 
@@ -775,7 +776,10 @@ export default function App(props) {
             .then((result) => {
 
               if (result.value === true) {
-                start()
+                (async () => {
+                  domande = await getQuestions()
+                  start()
+                })()
               }
 
               else {
