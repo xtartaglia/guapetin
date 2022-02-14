@@ -39,7 +39,7 @@ function ordinare(data) {
 
   for (var i = 0; i < data.results.length; i++) {
 
-    console.log(qst)
+    
     newDomanda["domanda" + i] = {
       d: decodeThatShit(data.results[i].question)
     }
@@ -56,7 +56,7 @@ function ordinare(data) {
       }
 
 
-      console.log(data.results.length)
+      
     }
 
   }
@@ -69,13 +69,13 @@ const getQuestions = async () => {
     var response = await fetch('https://opentdb.com/api.php?amount=10&difficulty=medium&encode=url3986');
     var data = await response.json();
     var questions = ordinare(data)
-    console.log(questions)
+    
     questions = shuffleDomande(questions)
-    console.log(questions)
+    
 
 
   } catch (e) {
-    console.log(e.message);
+    
   }
 
   return questions
@@ -143,7 +143,7 @@ function createImage(string, w, h, type, color, specW) {
 
   if (typeof specW === 'undefined') {
     //text.set({width : canvas.width})
-    console.log("SEEEEEEEEEEEEEEET")
+    
   }
   if (typeof color !== 'undefined') {
     text.backgroundColor = color
@@ -292,7 +292,19 @@ export default function App(props) {
     ground = Bodies.rectangle(window.screen.width / 2, window.screen.height - window.screen.height / 25, window.screen.width * 1.5, window.screen.height / 12.5, { isStatic: true, render: { sprite: { texture: earth, xScale: window.screen.width * 1.5 / 2400, yScale: window.screen.height / 12.5 / 150 } } });
     Composite.add(engine.world, [ground])
 
-    console.log("before fullscreen" + window.screen.height)
+    console.log(document.styleSheets)
+
+    try {
+      console.log(document.styleSheets[0].cssRules[3].cssText)
+      var newRule = document.styleSheets[0].cssRules[3].cssText.replace("-1500px", "-"+window.screen.height*1500/580+"px")
+      document.styleSheets[0].deleteRule(3)
+      document.styleSheets[0].insertRule(newRule, 3)
+      console.log(document.styleSheets[0].cssRules[3].cssText)
+    }
+
+  catch (error) {
+    console.error(error)
+  }
 
     swal.fire({
       title: "Guapetín",
@@ -302,6 +314,7 @@ export default function App(props) {
       confirmButtonColor: '#5ca353',
       color: 'white',
       background: '#373737',
+      allowOutsideClick: false,
       preConfirm: function () {
         return new Promise((resolve, reject) => {
           // get your inputs using their placeholder or maybe add IDs to them
@@ -316,20 +329,20 @@ export default function App(props) {
     })
       .then((data) => {
         if (data.value.isMuted) {
-          console.log(data.value.isMuted)
+          
           volume = 0
-          console.log("youpi")
+          
         }
         else {
-          console.log("malaise")
-          console.log(data)
+          
+          
         }
 
         if (!data.value.guepet) {
           (async () => {
             guapeton = false
             domande = await getQuestions()
-            console.log(domande)
+            
             document.body.requestFullscreen()
           })()
         }
@@ -353,11 +366,11 @@ export default function App(props) {
           type = 0
           speed = 1
         }
-        console.log("HEY BITCH FULLSCREEEEEN" + window.screen.height + window.outerHeight)
+        
         setScale(window.screen.height / 850)
         fullscreen = true
         if (!started) {
-          console.log("I AM NOT STARTED!!")
+          
           start()
           started = true
         }
@@ -376,7 +389,8 @@ export default function App(props) {
             confirmButtonColor: '#5ca353',
             cancelButtonText: 'Abbandonare la partita',
             color: 'white',
-            background: '#373737'
+            background: '#373737',
+            allowOutsideClick: false
           })
             .then((result) => {
               if (result.value === true) {
@@ -393,7 +407,8 @@ export default function App(props) {
                   showCancelButton: false,
                   showConfirmButton: false,
                   color: 'white',
-                  background: '#373737'
+                  background: '#373737',
+                  allowOutsideClick: false
                 })
                 gameOver = true;
                 try {
@@ -466,7 +481,7 @@ export default function App(props) {
               if (player.position.y < rispostaGiusta.pos + (window.screen.height - window.screen.height / 12.5) / (2 * Object.keys(domande["domanda" + j]).length - 1) && player.position.y > rispostaGiusta.pos - (window.screen.height - window.screen.height / 12.5) / (2 * Object.keys(domande["domanda" + j]).length - 1)) {
                 won = true
                 won = true
-                console.log("YOU DID WIN!!" + won)
+                
                 var win = document.querySelector(".win")
                 win.volume = 0.5 * volume
                 if (volume !== 0) {
@@ -496,12 +511,12 @@ export default function App(props) {
 
             checkedWon = true
             if (!won) {
-              console.log("YOU DID NOT WIN" + won)
+              
               player.render.sprite.texture = doggoSad
               document.dispatchEvent(rightAnswer)
               var sad = document.querySelector(".wrong")
               sad.volume = 1 * volume
-              console.log(volume)
+              
               if (volume !== 0) {
                 sad.play()
               }
@@ -523,7 +538,7 @@ export default function App(props) {
             if (lastChild.position.x < -100) {
               Composite.remove(engine.world, [domanda])
               checkedWon = false
-              console.log(j + "/" + Object.keys(domande).length)
+              
               if (j === Object.keys(domande).length) {
                 gameOver = true
                 started = false
@@ -541,7 +556,7 @@ export default function App(props) {
                 }
 
                 catch (error) {
-                  console.log(error)
+                  
                 }
                 setTimeout(() => {
                   swal.fire({
@@ -553,7 +568,8 @@ export default function App(props) {
                     confirmButtonColor: '#5ca353',
                     cancelButtonText: '¡No gracias señora!',
                     color: 'white',
-                    background: '#373737'
+                    background: '#373737',
+                    allowOutsideClick: false
                   })
                     .then((result) => {
 
@@ -580,7 +596,8 @@ export default function App(props) {
                           showCancelButton: false,
                           showConfirmButton: false,
                           color: 'white',
-                          background: '#373737'
+                          background: '#373737',
+                          allowOutsideClick: false
                         })
                         gameOver = true;
                         try {
@@ -593,7 +610,7 @@ export default function App(props) {
                     })
                 }, 2000)
               }
-              console.log("DA LASTCHILD POSITION X < -100, j = " + j)
+              
               domanda = Domanda({ screenHeight: window.screen.height, groundHeight: window.screen.height / 12.5, x: player.position.x + 1000 * scaleX, q: domande["domanda" + j], scale: scale })
               Composite.add(engine.world, [domanda])
               sprite = createImage(domande["domanda" + j].d, window.screen.width/2*4/3, (window.screen.height / 50 * 49) / 4.5 * 0.3, type)
@@ -630,9 +647,10 @@ export default function App(props) {
     }
 
     document.addEventListener("click", handleClick)
+    document.addEventListener("keypress",handleClick)
 
     document.addEventListener('rightanswer', (e) => {
-      console.log('rightanswer' + e)
+      
       var img = createImage(rispostaGiusta.r, 200*4/3, (window.screen.height - window.screen.height / 12.5) / 4.5 * 0.6, type, 'rgba(1, 255, 0, 0.32)', "lol")
       var right = Bodies.rectangle(Composite.allBodies(domanda)[Composite.allBodies(domanda).length - 1].position.x, rispostaGiusta.pos, 200, (window.screen.height - window.screen.height / 12.5) / 4.5 * 0.6, { isStatic: true, isSensor: true, render: { sprite: { texture: img } } })
       Composite.add(domanda, right)
@@ -662,7 +680,7 @@ export default function App(props) {
 
       player = Bodies.rectangle(window.screen.width / 3, window.screen.height / 2, 50 * scale, 37 * scale, { chamfer: { radius: 15 }, render: { sprite: { texture: doggo, xScale: scale, yScale: scale } } })
       Body.setMass(player, 20)
-      console.log(window.screen.height + " " + window.screen.height + " " + window.innerHeight)
+      
 
 
 
@@ -704,7 +722,7 @@ export default function App(props) {
             }
 
             catch (error) {
-              console.log(error)
+              
             }
             punteggio = 0
 
@@ -769,7 +787,7 @@ export default function App(props) {
         }
 
         catch (error) {
-          console.log(error)
+          
         }
 
         var gOSound = document.querySelector(".gO")
@@ -792,7 +810,8 @@ export default function App(props) {
             confirmButtonColor: '#5ca353',
             cancelButtonText: '¡No gracias señora!',
             color: 'white',
-            background: '#373737'
+            background: '#373737',
+            allowOutsideClick: false
           })
             .then((result) => {
 
@@ -818,7 +837,8 @@ export default function App(props) {
                   showCancelButton: false,
                   showConfirmButton: false,
                   color: 'white',
-                  background: '#373737'
+                  background: '#373737',
+                  allowOutsideClick: false
                 })
                 gameOver = true;
                 try {

@@ -4,4 +4,5 @@
     background-repeat: repeat-x;
     animation:background-infinite 60s linear infinite;
     animation-play-state: paused;
+    background-position: 0 0;
   }
