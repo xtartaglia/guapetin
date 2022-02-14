@@ -139,8 +139,9 @@ function createImage(string, w, h, type, color, specW) {
     fill: 'white'
   });
 
-  if (typeof specW === "undefined") {
+  if (typeof specW === 'undefined') {
     text.set(text.width = canvas.width)
+    console.log("SEEEEEEEEEEEEEEET")
   }
   if (typeof color !== 'undefined') {
     text.backgroundColor = color
@@ -456,30 +457,35 @@ export default function App(props) {
 
 
           if (lastChild.position.x - 100 < player.position.x + 37 * scale / 2 && !checkedWon) {
-
-            if (player.position.y < rispostaGiusta.pos + (window.screen.height - window.screen.height / 12.5) / (2 * Object.keys(domande["domanda" + j]).length - 1) && player.position.y > rispostaGiusta.pos - (window.screen.height - window.screen.height / 12.5) / (2 * Object.keys(domande["domanda" + j]).length - 1)) {
-              won = true
-              won = true
-              console.log("YOU DID WIN!!" + won)
-              var win = document.querySelector(".win")
-              win.volume = 0.5 * volume
-              win.play()
-              player.render.sprite.texture = doggoLove
-              setTimeout(() => {
-                player.render.sprite.texture = doggo
-                won = undefined
-              }, 2000)
-
-              punteggio++
-              Composite.remove(engine.world, punti)
-              punti = Bodies.rectangle(player.position.x, window.screen.height * 0.8, 1, 1, { isStatic: true, isSensor: true, render: { sprite: { texture: createImage(punteggio.toString(), 30, 30, type) } } })
-              punti.collisionFilter = {
-                'group': -1,
-                'category': 2,
-                'mask': 0,
+            
+            try {
+              if (player.position.y < rispostaGiusta.pos + (window.screen.height - window.screen.height / 12.5) / (2 * Object.keys(domande["domanda" + j]).length - 1) && player.position.y > rispostaGiusta.pos - (window.screen.height - window.screen.height / 12.5) / (2 * Object.keys(domande["domanda" + j]).length - 1)) {
+                won = true
+                won = true
+                console.log("YOU DID WIN!!" + won)
+                var win = document.querySelector(".win")
+                win.volume = 0.5 * volume
+                win.play()
+                player.render.sprite.texture = doggoLove
+                setTimeout(() => {
+                  player.render.sprite.texture = doggo
+                  won = undefined
+                }, 2000)
+  
+                punteggio++
+                Composite.remove(engine.world, punti)
+                punti = Bodies.rectangle(player.position.x, window.screen.height * 0.8, 1, 1, { isStatic: true, isSensor: true, render: { sprite: { texture: createImage(punteggio.toString(), 30, 30, type) } } })
+                punti.collisionFilter = {
+                  'group': -1,
+                  'category': 2,
+                  'mask': 0,
+                }
+                Composite.add(engine.world, [punti])
+  
               }
-              Composite.add(engine.world, [punti])
-
+            }
+            catch(e) {
+              console.error(e)
             }
 
             checkedWon = true
