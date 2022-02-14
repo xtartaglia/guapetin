@@ -66,7 +66,7 @@ function ordinare(data) {
 
 const getQuestions = async () => {
   try {
-    var response = await fetch('https://opentdb.com/api.php?amount=10&category=22&encode=url3986');
+    var response = await fetch('https://opentdb.com/api.php?amount=10&difficulty=medium&encode=url3986');
     var data = await response.json();
     var questions = ordinare(data)
     console.log(questions)
