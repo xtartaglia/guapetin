@@ -177,7 +177,7 @@ function getAnswers(q, screenHeight, screenWidth, playerPos, groundHeight, scale
   }
 
   for (let i = 0; i < r.length - 1; i++) {
-    var sprite = createImage(q["r" + i].r, 200, (screenHeight - groundHeight) / 4.5 * 0.6, type)
+    var sprite = createImage(q["r" + i].r, 200*4/3, (screenHeight - groundHeight) / 4.5 * 0.6, type)
     if (q["r" + i].giusto) {
       rispostaGiusta = {
         r: q["r" + i].r,
@@ -420,7 +420,7 @@ export default function App(props) {
         document.body.style.animationPlayState = "running"
 
         qr = Composite.create()
-        var sprite = createImage(domande["domanda0"].d, window.screen.width / 2, (window.screen.height / 50 * 49) / 4.5 * 0.3, type)
+        var sprite = createImage(domande["domanda0"].d, window.screen.width / 2*4/3, (window.screen.height / 50 * 49) / 4.5 * 0.3, type)
         var q = Bodies.rectangle(window.screen.width / 2, (window.screen.height / 50 * 49) / 4.5 * 0.3, window.screen.width * 0.75, (window.screen.height / 50 * 49) / 4.5 * 0.3, { isSensor: true, isStatic: true, render: { sprite: { texture: sprite } } })
         q.collisionFilter = {
           'group': -1,
@@ -586,7 +586,7 @@ export default function App(props) {
               console.log("DA LASTCHILD POSITION X < -100, j = " + j)
               domanda = Domanda({ screenHeight: window.screen.height, groundHeight: window.screen.height / 12.5, x: player.position.x + 1000 * scaleX, q: domande["domanda" + j], scale: scale })
               Composite.add(engine.world, [domanda])
-              sprite = createImage(domande["domanda" + j].d, window.screen.width * 0.75, (window.screen.height / 50 * 49) / 4.5 * 0.3, type)
+              sprite = createImage(domande["domanda" + j].d, window.screen.width/2*4/3, (window.screen.height / 50 * 49) / 4.5 * 0.3, type)
               q = Bodies.rectangle(window.screen.width / 2, (window.screen.height / 50 * 49) / 4.5 * 0.3, window.screen.width * 0.75, (window.screen.height / 50 * 49) / 4.5 * 0.3, { isSensor: true, isStatic: true, render: { sprite: { texture: sprite } } })
               q.collisionFilter = {
                 'group': -1,
@@ -621,7 +621,7 @@ export default function App(props) {
 
     document.addEventListener('rightanswer', (e) => {
       console.log('rightanswer' + e)
-      var img = createImage(rispostaGiusta.r, 200, (window.screen.height - window.screen.height / 12.5) / 4.5 * 0.6, type, 'rgba(1, 255, 0, 0.32)', "lol")
+      var img = createImage(rispostaGiusta.r, 200*4/3, (window.screen.height - window.screen.height / 12.5) / 4.5 * 0.6, type, 'rgba(1, 255, 0, 0.32)', "lol")
       var right = Bodies.rectangle(Composite.allBodies(domanda)[Composite.allBodies(domanda).length - 1].position.x, rispostaGiusta.pos, 200, (window.screen.height - window.screen.height / 12.5) / 4.5 * 0.6, { isStatic: true, isSensor: true, render: { sprite: { texture: img } } })
       Composite.add(domanda, right)
     })
