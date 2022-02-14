@@ -469,7 +469,9 @@ export default function App(props) {
                 console.log("YOU DID WIN!!" + won)
                 var win = document.querySelector(".win")
                 win.volume = 0.5 * volume
-                win.play()
+                if (volume !== 0) {
+                  win.play()
+                }
                 player.render.sprite.texture = doggoLove
                 setTimeout(() => {
                   player.render.sprite.texture = doggo
@@ -500,7 +502,9 @@ export default function App(props) {
               var sad = document.querySelector(".wrong")
               sad.volume = 1 * volume
               console.log(volume)
-              sad.play()
+              if (volume !== 0) {
+                sad.play()
+              }
               setTimeout(() => {
                 player.render.sprite.texture = doggo
                 won = false
@@ -618,7 +622,9 @@ export default function App(props) {
         var sound = document.querySelector(".jump")
         sound.playbackRate = 2
         sound.volume = 0.5 * volume
-        sound.play()
+        if (volume !== 0) {
+          sound.play()
+        }
         Body.applyForce(player, { x: player.position.x, y: player.position.y }, { x: 0, y: -0.1 * scale })
       }
     }
@@ -768,7 +774,9 @@ export default function App(props) {
 
         var gOSound = document.querySelector(".gO")
         gOSound.volume = 0.5 * volume
-        gOSound.play()
+        if (volume !== 0) {
+          gOSound.play()
+        }
         player.render.sprite.texture = doggoDead
         gameOver = true
         started = false
