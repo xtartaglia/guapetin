@@ -149,7 +149,7 @@ function createImage(string, w, h, type, color, specW) {
   while (text.width > canvas.width) {
     text.set({ width : text.width - 10});
   }
-  while (text.height > limit) {
+  while (text.height > limit-10) {
     text.set({ fontSize: text.fontSize - 1 });
   }
 
