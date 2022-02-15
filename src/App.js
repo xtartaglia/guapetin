@@ -308,7 +308,7 @@ export default function App(props) {
 
     swal.fire({
       title: "Guapetín",
-      html: "Il gioco è semplice. Rispondi alle domande passando attraverso lo spazio corrispondente alla risposta giusta senza far cadere Guapetín.<br>Attento alle nuvole, sono tossiche 😱<br><br><input type=checkbox id='audio' name='audio'><label for='audio'>Togliere l'audio?</label><br><input type=checkbox id='guepet' name='audio'><label for='guepet'>Sei un guapetón?</label>",
+      html: "Il gioco è semplice. Rispondi alle domande passando attraverso lo spazio corrispondente alla risposta giusta senza far cadere Guapetín.<br>Attento alle nuvole, sono tossiche 😱<br><br><input type=checkbox id='audio' name='audio'><label for='audio'>Disattivare l'audio?</label><br><input type=checkbox id='guepet' name='audio'><label for='guepet'>Sei un guapetón?</label>",
       icon: "info",
       confirmButtonText: 'Daje annamoooooo',
       confirmButtonColor: '#5ca353',
