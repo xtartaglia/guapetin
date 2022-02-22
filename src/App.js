@@ -19,7 +19,7 @@ import swal from 'sweetalert2'
 const rightAnswer = new Event('rightanswer')
 var rispostaGiusta;
 var volume = 1
-var guapeton;
+var guapeton = true;
 
 function decodeThatShit(str) {
   str = decodeURI(str)
@@ -340,8 +340,8 @@ export default function App(props) {
 
         if (!data.value.guepet) {
           (async () => {
-            guapeton = false
-            domande = await getQuestions()
+            //guapeton = false
+            //domande = await getQuestions()
             
             document.body.requestFullscreen()
           })()
