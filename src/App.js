@@ -21,6 +21,7 @@ const rightAnswer = new Event('rightanswer')
 var rispostaGiusta;
 var volume = 1
 var guapeton = true;
+var jumpSound
 
 function decodeThatShit(str) {
   str = decodeURI(str)
