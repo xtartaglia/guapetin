@@ -15,7 +15,7 @@ import doggoSad from './doggo_sad.png'
 import doggoDead from './doggo_dead.png'
 import wrong from './wrong.wav'
 import swal from 'sweetalert2'
-import purupu from './purupuu.mp3'
+import purupu from './purupuu2.mp3'
 
 const rightAnswer = new Event('rightanswer')
 var rispostaGiusta;
@@ -341,11 +341,10 @@ export default function App(props) {
         }
 
         if (!data.value.guepet) {
-          jumpSound = ".jump"
           (async () => {
             //guapeton = false
             //domande = await getQuestions()
-            
+            jumpSound = ".jump"
             document.body.requestFullscreen()
           })()
         }
