@@ -640,7 +640,7 @@ export default function App(props) {
 
       if (!gameOver) {
         var sound = document.querySelector(jumpSound)
-        if (jumpSound = ".jump") {
+        if (jumpSound === ".jump") {
           sound.playbackRate = 2
           sound.volume = 0.5 * volume
         }
