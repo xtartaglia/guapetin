@@ -15,6 +15,7 @@ import doggoSad from './doggo_sad.png'
 import doggoDead from './doggo_dead.png'
 import wrong from './wrong.wav'
 import swal from 'sweetalert2'
+import purupu from './purupuu.mp3'
 
 const rightAnswer = new Event('rightanswer')
 var rispostaGiusta;
@@ -339,6 +340,7 @@ export default function App(props) {
         }
 
         if (!data.value.guepet) {
+          jumpSound = ".jump"
           (async () => {
             //guapeton = false
             //domande = await getQuestions()
@@ -348,6 +350,7 @@ export default function App(props) {
         }
         else {
           guapeton = true
+          jumpSound = ".purupu"
           document.body.requestFullscreen()
         }
       })
@@ -636,7 +639,7 @@ export default function App(props) {
       }
 
       if (!gameOver) {
-        var sound = document.querySelector(".jump")
+        var sound = document.querySelector(jumpSound)
         sound.playbackRate = 2
         sound.volume = 0.5 * volume
         if (volume !== 0) {
@@ -878,6 +881,7 @@ export default function App(props) {
       <audio className="jump" src={jump} preload="auto"></audio>
       <audio className="gO" src={gO} preload="auto"></audio>
       <audio className="wrong" src={wrong} preload="auto"></audio>
+      <audio className="purupu" src={purupu} preload="auto"></audio>
       <img src={doggoLove} preload="auto" hidden={true}></img>
       <img src={doggoSad} preload="auto" hidden={true}></img>
       <img src={doggoDead} preload="auto" hidden={true}></img>
