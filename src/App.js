@@ -288,7 +288,8 @@ export default function App(props) {
         width: window.screen.width,
         height: window.screen.height + window.screenTop,
         wireframes: false,
-        background: 'transparent'
+        background: 'transparent',
+        pixelRatio: 'auto'
       }
     })
 
@@ -359,12 +360,12 @@ export default function App(props) {
 
         if (window.screen.width < window.screen.height) {
           type = 1
-          speed = 1/scaleX*scale
+          speed = 1*scale
         }
 
         else {
           type = 0
-          speed = 1/scaleX*scale
+          speed = 1*scale
         }
         
         setScale(window.screen.height / 850)
