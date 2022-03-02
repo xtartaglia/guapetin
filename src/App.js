@@ -713,7 +713,7 @@ export default function App(props) {
 
       }
 
-      player = Bodies.rectangle(window.screen.width / 3, window.screen.height / 2, 50 * scale, 37 * scale, { chamfer: { radius: 15 }, render: { sprite: { texture: doggo, xScale: scale, yScale: scale } } })
+      player = Bodies.rectangle(window.screen.width / 3, 0, 50 * scale, 37 * scale, { chamfer: { radius: 15 }, render: { sprite: { texture: doggo, xScale: scale, yScale: scale } } })
       Body.setMass(player, 20*scale)
       
 
