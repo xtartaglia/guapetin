@@ -656,7 +656,7 @@ export default function App(props) {
           sound.play()
         }
         engine.gravity.y = 0
-        Body.applyForce(player, { x: player.position.x, y: player.position.y }, { x: 0, y: -engine.gravity.y })
+        Body.applyForce(player, { x: player.position.x, y: player.position.y }, { x: 0, y: -0.15 })
         engine.gravity.y = 0.15
 
           try {
