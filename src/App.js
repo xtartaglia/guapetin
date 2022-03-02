@@ -359,12 +359,12 @@ export default function App(props) {
 
         if (window.screen.width < window.screen.height) {
           type = 1
-          speed = 1
+          speed = 1*scaleX
         }
 
         else {
           type = 0
-          speed = 1
+          speed = 1*scaleX
         }
         
         setScale(window.screen.height / 850)
@@ -643,7 +643,7 @@ export default function App(props) {
         if (volume !== 0) {
           sound.play()
         }
-        Body.applyForce(player, { x: player.position.x, y: player.position.y }, { x: 0, y: -0.1 * scale })
+        Body.applyForce(player, { x: player.position.x, y: player.position.y }, { x: 0, y: -0.1 * scale * scaleX })
       }
     }
 
@@ -763,8 +763,6 @@ export default function App(props) {
         Composite.remove(engine.world, [domanda, qr, punti, conto])
       } catch (error) {
         console.error(error);
-        // expected output: ReferenceError: nonExistentFunction is not defined
-        // Note - error messages will vary depending on browser
       }
     }
 
