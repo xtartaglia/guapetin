@@ -462,12 +462,12 @@ export default function App(props) {
             console.error(e)
           }
           grav = Bodies.rectangle(15, 15, 30, 30, { isStatic: true, isSensor: true, render: { sprite: { texture: createImage(engine.gravity.y.toString(), 30, 30, type) } } })
-                punti.collisionFilter = {
+                grav.collisionFilter = {
                   'group': -1,
                   'category': 2,
                   'mask': 0,
                 }
-                Composite.add(engine.world, [punti])
+                Composite.add(engine.world, [grav])
         },1000)
 
         var update = setInterval(() => {
