@@ -360,12 +360,12 @@ export default function App(props) {
 
         if (window.screen.width < window.screen.height) {
           type = 1
-          speed = 1*scale
+          speed = 1
         }
 
         else {
           type = 0
-          speed = 1*scale
+          speed = 1
         }
         
         setScale(window.screen.height / 850)
@@ -397,7 +397,7 @@ export default function App(props) {
               if (result.value === true) {
                 document.body.requestFullscreen()
                 mov = -2
-                engine.gravity.y = 0.2
+                engine.gravity.y = 0.15
               }
 
               else {
@@ -433,7 +433,7 @@ export default function App(props) {
       if (justStarted && !gameOver && fullscreen) {
         justStarted = false
 
-        engine.gravity.y = 0.2
+        engine.gravity.y = 0.15
         domanda = Domanda({ screenHeight: window.screen.height, groundHeight: window.screen.height / 12.5, x: player.position.x + 2000, q: domande["domanda0"], scale: scale })
         Composite.add(engine.world, [domanda])
         document.body.style.animationPlayState = "running"
@@ -644,7 +644,7 @@ export default function App(props) {
         if (volume !== 0) {
           sound.play()
         }
-        Body.applyForce(player, { x: player.position.x, y: player.position.y }, { x: 0, y: -0.2 })
+        Body.applyForce(player, { x: player.position.x, y: player.position.y }, { x: 0, y: -0.15 })
       }
     }
 
@@ -667,7 +667,7 @@ export default function App(props) {
       } else {
 
         mov = -2
-        engine.gravity.y = 0.2
+        engine.gravity.y = 0.15
       }
     }, false);
 
