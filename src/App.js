@@ -292,7 +292,7 @@ export default function App(props) {
       }
     })
 
-    ground = Bodies.rectangle(window.screen.width*2, window.screen.height - window.screen.height / 25, window.screen.width * 1.5, window.screen.height / 12.5, { isStatic: true, render: { sprite: { texture: earth, xScale: window.screen.width*1.5/2400, yScale: window.screen.height / 12.5 / 150 } } });
+    ground = Bodies.rectangle(window.screen.width/2, window.screen.height - window.screen.height / 25, window.screen.width * 1.5, window.screen.height / 12.5, { isStatic: true, render: { sprite: { texture: earth, xScale: window.screen.width*1.5/2400, yScale: window.screen.height / 12.5 / 150 } } });
     Composite.add(engine.world, [ground])
 
     try {
@@ -469,7 +469,7 @@ export default function App(props) {
           }
 
           if (ground.position.x < window.screen.width / 4) {
-            Body.setPosition(ground, { x: window.screen.width*2, y: ground.position.y })
+            Body.setPosition(ground, { x: window.screen.width/2, y: ground.position.y })
           }
 
           var lastChild = Composite.allBodies(domanda)[Composite.allBodies(domanda).length - 1]
