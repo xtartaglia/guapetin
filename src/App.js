@@ -287,6 +287,8 @@ export default function App(props) {
     var engine = Engine.create({
     })
 
+    engine.timing.isFixed = true
+
     var domanda;
     var qr;
     var type;
