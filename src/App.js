@@ -411,7 +411,7 @@ export default function App(props) {
                 document.body.requestFullscreen()
                 mov = -2
                 if (engine.gravity.y === 0) {
-                  engine.gravity.y = 0.15*scale
+                  engine.gravity.y = 0.15*scale*scaleX
                 }
               }
 
@@ -449,7 +449,7 @@ export default function App(props) {
         justStarted = false
 
         if (engine.gravity.y === 0) {
-          engine.gravity.y = 0.15*scale
+          engine.gravity.y = 0.15*scale*scaleX
         }
         domanda = Domanda({ screenHeight: window.screen.height, groundHeight: window.screen.height / 12.5, x: player.position.x + 2000, q: domande["domanda0"], scale: scale })
         Composite.add(engine.world, [domanda])
@@ -661,7 +661,6 @@ export default function App(props) {
         if (volume !== 0) {
           sound.play()
         }
-        Body.setVelocity(player, {x:0, y:0})
         Body.applyForce(player, { x: player.position.x, y: player.position.y }, { x: 0, y: -engine.gravity.y })
 
           try {
@@ -701,7 +700,7 @@ export default function App(props) {
 
         mov = -2
         if (engine.gravity.y === 0) {
-          engine.gravity.y = 0.15*scale
+          engine.gravity.y = 0.15*scale*scaleX
         }
       }
     }, false);
