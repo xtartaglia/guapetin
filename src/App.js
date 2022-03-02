@@ -452,7 +452,6 @@ export default function App(props) {
         }
         domanda = Domanda({ screenHeight: window.screen.height, groundHeight: window.screen.height / 12.5, x: player.position.x + 2000, q: domande["domanda0"], scale: scale })
         Composite.add(engine.world, [domanda])
-        document.body.style.animationPlayState = "running"
 
         qr = Composite.create()
         var sprite = createImage(domande["domanda0"].d, window.screen.width / 2*4/3, (window.screen.height / 50 * 49) / 4.5 * 0.3, type)
@@ -762,11 +761,11 @@ export default function App(props) {
             justStarted = true
             checkedWon = false
 
-            handleClick()
+            document.body.style.animationPlayState = "running"
+
             clearInterval(go)
             setTimeout(() => {
               Composite.remove(engine.world, [conto])
-              handleClick()
             }, 1000)
           }
 
