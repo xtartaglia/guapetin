@@ -23,7 +23,6 @@ var rispostaGiusta;
 var volume = 1
 var guapeton = true;
 var jumpSound
-var grav;
 
 function decodeThatShit(str) {
   str = decodeURI(str)
@@ -662,21 +661,6 @@ export default function App(props) {
           sound.play()
         }
         Body.applyForce(player, { x: player.position.x, y: player.position.y }, { x: 0, y: -engine.gravity.y })
-
-          try {
-            Composite.remove(engine.world, [grav])
-          }
-          catch(e) {
-            console.error(e)
-          }
-          grav = Bodies.rectangle(50, 20, 100, 40, { isStatic: true, isSensor: true, render: { sprite: { texture: createImage(player.velocity.y.toString(), 100, 40, type) } } })
-                grav.collisionFilter = {
-                  'group': -1,
-                  'category': 2,
-                  'mask': 0,
-                }
-                Composite.add(engine.world, [grav])
-
       }
     }
 
@@ -779,10 +763,10 @@ export default function App(props) {
             checkedWon = false
 
             handleClick()
-            handleClick()
             clearInterval(go)
             setTimeout(() => {
               Composite.remove(engine.world, [conto])
+              handleClick()
             }, 1000)
           }
 
