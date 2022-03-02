@@ -663,7 +663,7 @@ export default function App(props) {
           catch(e) {
             console.error(e)
           }
-          grav = Bodies.rectangle(50, 20, 100, 40, { isStatic: true, isSensor: true, render: { sprite: { texture: createImage((-engine.gravity.y).toString(), 100, 40, type) } } })
+          grav = Bodies.rectangle(50, 20, 100, 40, { isStatic: true, isSensor: true, render: { sprite: { texture: createImage((-engine.gravity.y)+"\n"+player.mass, 100, 40, type) } } })
                 grav.collisionFilter = {
                   'group': -1,
                   'category': 2,
