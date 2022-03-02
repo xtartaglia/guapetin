@@ -434,7 +434,7 @@ export default function App(props) {
         justStarted = false
 
         engine.gravity.y = 0.2 * scale * scaleX
-        domanda = Domanda({ screenHeight: window.screen.height, groundHeight: window.screen.height / 12.5, x: player.position.x + 2500 * scaleX, q: domande["domanda0"], scale: scale })
+        domanda = Domanda({ screenHeight: window.screen.height, groundHeight: window.screen.height / 12.5, x: player.position.x + 2500, q: domande["domanda0"], scale: scale })
         Composite.add(engine.world, [domanda])
         document.body.style.animationPlayState = "running"
 
@@ -611,7 +611,7 @@ export default function App(props) {
                 }, 2000)
               }
               
-              domanda = Domanda({ screenHeight: window.screen.height, groundHeight: window.screen.height / 12.5, x: player.position.x + 2500 * scaleX, q: domande["domanda" + j], scale: scale })
+              domanda = Domanda({ screenHeight: window.screen.height, groundHeight: window.screen.height / 12.5, x: player.position.x + 2500, q: domande["domanda" + j], scale: scale })
               Composite.add(engine.world, [domanda])
               sprite = createImage(domande["domanda" + j].d, window.screen.width/2*4/3, (window.screen.height / 50 * 49) / 4.5 * 0.3, type)
               q = Bodies.rectangle(player.position.x, (window.screen.height / 50 * 49) / 4.5 * 0.3, window.screen.width/2, (window.screen.height / 50 * 49) / 4.5 * 0.3, { isSensor: true, isStatic: true, render: { sprite: { texture: sprite } } })
@@ -644,7 +644,7 @@ export default function App(props) {
         if (volume !== 0) {
           sound.play()
         }
-        Body.applyForce(player, { x: player.position.x, y: player.position.y }, { x: 0, y: -0.2 * scale * scaleX })
+        Body.applyForce(player, { x: player.position.x, y: player.position.y }, { x: 0, y: -0.2 * scale })
       }
     }
 
