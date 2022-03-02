@@ -396,7 +396,7 @@ export default function App(props) {
               if (result.value === true) {
                 document.body.requestFullscreen()
                 mov = -2
-                engine.gravity.y = 0.1 * scale
+                engine.gravity.y = 0.1 * scale * scaleX
               }
 
               else {
@@ -432,7 +432,7 @@ export default function App(props) {
       if (justStarted && !gameOver && fullscreen) {
         justStarted = false
 
-        engine.gravity.y = 0.1 * scale
+        engine.gravity.y = 0.1 * scale * scaleX
         domanda = Domanda({ screenHeight: window.screen.height, groundHeight: window.screen.height / 12.5, x: player.position.x + 1000 * scaleX, q: domande["domanda0"], scale: scale })
         Composite.add(engine.world, [domanda])
         document.body.style.animationPlayState = "running"
@@ -666,7 +666,7 @@ export default function App(props) {
       } else {
 
         mov = -2
-        engine.gravity.y = 0.01 * scale
+        engine.gravity.y = 0.01 * scale * scaleX
       }
     }, false);
 
