@@ -456,6 +456,7 @@ export default function App(props) {
         var updateGravity = setInterval(()=> {
           try {
             Composite.remove(engine.world, [grav])
+            var grav;
           }
           catch(e) {
             console.error(e)
