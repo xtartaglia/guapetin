@@ -761,7 +761,7 @@ export default function App(props) {
             justStarted = true
             checkedWon = false
 
-            document.body.style.animationPlayState = "running"
+            document.dispatchEvent('click')
 
             clearInterval(go)
             setTimeout(() => {
