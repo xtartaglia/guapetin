@@ -30,7 +30,6 @@ export default function Domanda (props) {
 
     else {
         box = Bodies.rectangle(x+500,i*i*(screenHeight-groundHeight)/(2*r.length-1)+(screenHeight-groundHeight)/(2*r.length-1)/2,larghezza,altezzaB, {isStatic:true, isSensor:true, label:'box'+i, render:{visible:false}})
-        console.log((i-1)/2)
         if (!q["r"+(i-1)/2].giusto) {
             box.collisionFilter = {
                 'group': -1,
@@ -40,7 +39,6 @@ export default function Domanda (props) {
         }
 
         else {
-            console.log("giusto!")
         }
     }
     Composite.add(domanda, box)

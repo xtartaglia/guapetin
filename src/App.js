@@ -16,6 +16,7 @@ import doggoDead from './doggo_dead.png'
 import wrong from './wrong.wav'
 import swal from 'sweetalert2'
 import purupu from './purupuu2.mp3'
+import loveComp from './lovecomp1.png'
 
 const rightAnswer = new Event('rightanswer')
 var rispostaGiusta;
@@ -291,17 +292,13 @@ export default function App(props) {
       }
     })
 
-    ground = Bodies.rectangle(window.screen.width / 2, window.screen.height - window.screen.height / 25, window.screen.width * 1.5, window.screen.height / 12.5, { isStatic: true, render: { sprite: { texture: earth, xScale: window.screen.width * 1.5 / 2400, yScale: window.screen.height / 12.5 / 150 } } });
+    ground = Bodies.rectangle(window.screen.width*2, window.screen.height - window.screen.height / 25, window.screen.width * 1.5, window.screen.height / 12.5, { isStatic: true, render: { sprite: { texture: earth, xScale: window.screen.width*1.5/2400, yScale: window.screen.height / 12.5 / 150 } } });
     Composite.add(engine.world, [ground])
 
-    console.log(document.styleSheets)
-
     try {
-      console.log(document.styleSheets[0].cssRules[3].cssText)
       var newRule = document.styleSheets[0].cssRules[3].cssText.replace("-2750px", "-"+window.screen.height*2750/580+"px")
       document.styleSheets[0].deleteRule(3)
       document.styleSheets[0].insertRule(newRule, 3)
-      console.log(document.styleSheets[0].cssRules[3].cssText)
     }
 
   catch (error) {
@@ -472,7 +469,7 @@ export default function App(props) {
           }
 
           if (ground.position.x < window.screen.width / 4) {
-            Body.setPosition(ground, { x: window.screen.width / 2, y: ground.position.y })
+            Body.setPosition(ground, { x: window.screen.width*2, y: ground.position.y })
           }
 
           var lastChild = Composite.allBodies(domanda)[Composite.allBodies(domanda).length - 1]
@@ -481,8 +478,7 @@ export default function App(props) {
           if (lastChild.position.x - 100 < player.position.x + 37 * scale / 2 && !checkedWon) {
             
             try {
-              if (player.position.y < rispostaGiusta.pos + (window.screen.height - window.screen.height / 12.5) / (2 * Object.keys(domande["domanda" + j]).length - 1) && player.position.y > rispostaGiusta.pos - (window.screen.height - window.screen.height / 12.5) / (2 * Object.keys(domande["domanda" + j]).length - 1)) {
-                won = true
+              if (player.position.y < rispostaGiusta.pos + (window.screen.height - window.screen.height / 12.5) / (2 * Object.keys(domande["domanda" + (j-1)]).length - 1) && player.position.y > rispostaGiusta.pos - (window.screen.height - window.screen.height / 12.5) / (2 * Object.keys(domande["domanda" + (j-1)]).length - 1)) {
                 won = true
                 
                 var win = document.querySelector(".win")
@@ -887,6 +883,7 @@ export default function App(props) {
       <img src={doggoLove} preload="auto" hidden={true}></img>
       <img src={doggoSad} preload="auto" hidden={true}></img>
       <img src={doggoDead} preload="auto" hidden={true}></img>
+      <img src={loveComp} preload="auto" hidden={true} height='100%' width='auto'></img>
     </div>
   )
 }
