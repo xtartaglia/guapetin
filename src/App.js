@@ -369,7 +369,12 @@ export default function App(props) {
 
     function fullscreenChange(event) {
       engine.timing.timeScale = 0
-      Engine._bodiesClearForces(this.world.bodies)
+      try {
+        Engine._bodiesClearForces(this.world.bodies)
+      }
+      catch(e) {
+        console.error(e)
+      }
       if (document.fullscreenElement) {
 
         window.screen.orientation.lock('portrait')
