@@ -298,7 +298,7 @@ export default function App(props) {
 
     try {
       console.log(document.styleSheets[0].cssRules[3].cssText)
-      var newRule = document.styleSheets[0].cssRules[3].cssText.replace("-1500px", "-"+window.screen.height*1500/580+"px")
+      var newRule = document.styleSheets[0].cssRules[3].cssText.replace("-2750px", "-"+window.screen.height*2750/580+"px")
       document.styleSheets[0].deleteRule(3)
       document.styleSheets[0].insertRule(newRule, 3)
       console.log(document.styleSheets[0].cssRules[3].cssText)
