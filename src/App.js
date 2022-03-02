@@ -70,7 +70,7 @@ function ordinare(data) {
 
 const getQuestions = async () => {
   try {
-    var response = await fetch('https://opentdb.com/api.php?amount=1&difficulty=medium&encode=url3986');
+    var response = await fetch('https://opentdb.com/api.php?amount=10&difficulty=medium&encode=url3986');
     var data = await response.json();
     var questions = ordinare(data)
     
@@ -321,7 +321,7 @@ export default function App(props) {
 
     swal.fire({
       title: "Guapetín",
-      html: "Il gioco è semplice. Rispondi alle domande passando attraverso lo spazio corrispondente alla risposta giusta senza far cadere Guapetín.<br>Attento alle nuvole, sono tossiche 😱<br><br><input type=checkbox id='audio' name='audio'><label for='audio'>Disattivare l'audio?</label><br><input type=checkbox id='guepet' name='audio'><label for='guepet'>Sei un guapetón?</label>",
+      html: "Guapetín stava volando tutto tranquillo quando si ritrovò tutto ad un tratto dentro a una tempesta di nuvole tossiche 😱<br>Evita le nuvole per salvare Guapetín e rispondi alle domande per accumulare punti.<br>In bocca al purupùùù<br><br><input type=checkbox id='audio' name='audio'><label for='audio'>Disattivare l'audio?</label><br><input type=checkbox id='guepet' name='audio'><label for='guepet'>Sei un guapetón?</label>",
       icon: "info",
       confirmButtonText: 'Daje annamoooooo',
       confirmButtonColor: '#5ca353',
@@ -354,7 +354,7 @@ export default function App(props) {
         if (!data.value.guepet) {
           (async () => {
             guapeton = false
-            domande = await getQuestions()
+            //domande = await getQuestions()
             jumpSound = ".jump"
             document.body.requestFullscreen()
           })()
