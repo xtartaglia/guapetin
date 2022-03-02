@@ -446,7 +446,7 @@ export default function App(props) {
     function handleClick() {
       if (justStarted && !gameOver && fullscreen) {
         justStarted = false
-        engine.gravity.y = 0.15*scale*scaleX
+        engine.gravity.y = 0.15*scaleX
       }
 
       if (!gameOver) {
