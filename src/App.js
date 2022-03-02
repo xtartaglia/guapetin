@@ -288,7 +288,6 @@ export default function App(props) {
     })
 
     engine.timing.isFixed = true
-    engine.timing.timeScale = 0
 
     var domanda;
     var qr;
@@ -368,13 +367,6 @@ export default function App(props) {
       })
 
     function fullscreenChange(event) {
-      engine.timing.timeScale = 0
-      try {
-        Engine._bodiesClearForces(this.world.bodies)
-      }
-      catch(e) {
-        console.error(e)
-      }
       if (document.fullscreenElement) {
 
         window.screen.orientation.lock('portrait')
@@ -400,6 +392,7 @@ export default function App(props) {
 
       else {
         mov = 0
+        engine.gravity.y = 0
         if (!voluntary) {
           swal.fire({
             title: "Ci vuoi lasciare?",
@@ -417,7 +410,9 @@ export default function App(props) {
               if (result.value === true) {
                 document.body.requestFullscreen()
                 mov = -2
-                engine.timing.timeScale = 1
+                if (engine.gravity.y === 0) {
+                  engine.gravity.y = 0.15*scale*scaleX
+                }
               }
 
               else {
@@ -453,9 +448,9 @@ export default function App(props) {
       if (justStarted && !gameOver && fullscreen) {
         justStarted = false
 
-        engine.timing.timeScale = 1
-
-        engine.gravity.y = 0.15*scale*scaleX
+        if (engine.gravity.y === 0) {
+          engine.gravity.y = 0.15*scale*scaleX
+        }
         domanda = Domanda({ screenHeight: window.screen.height, groundHeight: window.screen.height / 12.5, x: player.position.x + 2000, q: domande["domanda0"], scale: scale })
         Composite.add(engine.world, [domanda])
         document.body.style.animationPlayState = "running"
@@ -565,6 +560,7 @@ export default function App(props) {
                 gameOver = true
                 started = false
                 clearInterval(update)
+                engine.gravity.y = 0
                 document.body.style.animationPlayState = "paused"
                 try {
 
@@ -698,13 +694,14 @@ export default function App(props) {
     document.addEventListener('visibilitychange', function () {
       if (document.hidden) {
 
+        engine.gravity.y = 0
         mov = 0
       } else {
 
         mov = -2
-
+        if (engine.gravity.y === 0) {
           engine.gravity.y = 0.15*scale*scaleX
-
+        }
       }
     }, false);
 
@@ -780,7 +777,8 @@ export default function App(props) {
             justStarted = true
             checkedWon = false
 
-            handleClick()
+            engine.gravity.y = 0.15*scale*scaleX
+            mov = -2
             clearInterval(go)
             setTimeout(() => {
               Composite.remove(engine.world, [conto])
