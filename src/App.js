@@ -359,12 +359,12 @@ export default function App(props) {
 
         if (window.screen.width < window.screen.height) {
           type = 1
-          speed = 2*scaleX*scale
+          speed = 2/scaleX*scale
         }
 
         else {
           type = 0
-          speed = 2*scaleX*scale
+          speed = 2/scaleX*scale
         }
         
         setScale(window.screen.height / 850)
