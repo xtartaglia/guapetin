@@ -17,6 +17,7 @@ import wrong from './wrong.wav'
 import swal from 'sweetalert2'
 import purupu from './purupuu2.mp3'
 import loveComp from './lovecomp1.png'
+import pouroupou from './pouroupou.png'
 
 const rightAnswer = new Event('rightanswer')
 var rispostaGiusta;
@@ -69,7 +70,7 @@ function ordinare(data) {
 
 const getQuestions = async () => {
   try {
-    var response = await fetch('https://opentdb.com/api.php?amount=10&difficulty=medium&encode=url3986');
+    var response = await fetch('https://opentdb.com/api.php?amount=1&difficulty=medium&encode=url3986');
     var data = await response.json();
     var questions = ordinare(data)
     
@@ -352,8 +353,8 @@ export default function App(props) {
 
         if (!data.value.guepet) {
           (async () => {
-            //guapeton = false
-            //domande = await getQuestions()
+            guapeton = false
+            domande = await getQuestions()
             jumpSound = ".jump"
             document.body.requestFullscreen()
           })()
@@ -462,8 +463,39 @@ export default function App(props) {
       }
     }
 
+    function bigBitch() {
+      var mult
+                if (guapeton) {
+                  player.render.sprite.texture = pouroupou
+                  player.render.sprite.xScale = 0.1
+                  player.render.sprite.yScale = 0.1
+                  mult = 0.1
+                }
+
+                else {
+                  player.render.sprite.texture = doggoLove
+                  mult = 1
+                }
+                
+                var big = 0
+                var end = setInterval(()=>{
+                  
+                  player.render.sprite.xScale += big/1000*mult
+                  player.render.sprite.yScale += big/1000*mult
+
+                  if (big === 100) {
+                  clearInterval(end)
+                  }
+                  big++
+                },1000 / 60)
+                var gameEnd = document.querySelector(".purupu")
+                if (volume !== 0) {
+                  gameEnd.play()
+                }
+    }
+
     function moveBitch() {
-        domanda = Domanda({ screenHeight: window.screen.height, groundHeight: window.screen.height / 12.5, x: player.position.x + 2000, q: domande["domanda0"], scale: scale })
+        domanda = Domanda({ screenHeight: window.screen.height, groundHeight: window.screen.height / 12.5, x: player.position.x + 1500, q: domande["domanda0"], scale: scale })
         Composite.add(engine.world, [domanda])
 
         qr = Composite.create()
@@ -519,6 +551,9 @@ export default function App(props) {
                 setTimeout(() => {
                   player.render.sprite.texture = doggo
                   won = undefined
+                  if (j === Object.keys(domande).length) {
+                    bigBitch()
+                  }
                 }, 2000)
   
                 punteggio++
@@ -551,6 +586,9 @@ export default function App(props) {
               setTimeout(() => {
                 player.render.sprite.texture = doggo
                 won = false
+                if (j === Object.keys(domande).length) {
+                  bigBitch()
+                }
               }, 2000)
             }
           }
@@ -639,7 +677,7 @@ export default function App(props) {
                 }, 2000)
               }
               
-              domanda = Domanda({ screenHeight: window.screen.height, groundHeight: window.screen.height / 12.5, x: player.position.x + 2000, q: domande["domanda" + j], scale: scale })
+              domanda = Domanda({ screenHeight: window.screen.height, groundHeight: window.screen.height / 12.5, x: player.position.x + 1500, q: domande["domanda" + j], scale: scale })
               Composite.add(engine.world, [domanda])
               sprite = createImage(domande["domanda" + j].d, window.screen.width/2*4/3, (window.screen.height / 50 * 49) / 4.5 * 0.3, type)
               q = Bodies.rectangle(player.position.x, (window.screen.height / 50 * 49) / 4.5 * 0.3, window.screen.width/2, (window.screen.height / 50 * 49) / 4.5 * 0.3, { isSensor: true, isStatic: true, render: { sprite: { texture: sprite } } })
@@ -899,7 +937,7 @@ export default function App(props) {
       <img src={doggoLove} preload="auto" hidden={true}></img>
       <img src={doggoSad} preload="auto" hidden={true}></img>
       <img src={doggoDead} preload="auto" hidden={true}></img>
-      <img src={loveComp} preload="auto" hidden={true} height='100%' width='auto'></img>
+      <img src={pouroupou} preload="auto" hidden={true}></img>
     </div>
   )
 }
