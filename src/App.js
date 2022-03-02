@@ -779,6 +779,7 @@ export default function App(props) {
             checkedWon = false
 
             handleClick()
+            handleClick()
             clearInterval(go)
             setTimeout(() => {
               Composite.remove(engine.world, [conto])
