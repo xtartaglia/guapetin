@@ -24,9 +24,6 @@ var volume = 1
 var guapeton = true;
 var jumpSound
 var grav;
-var gravScale = 0.03
-var gravity = 0;
-var timeStamp = 0;
 
 function decodeThatShit(str) {
   str = decodeURI(str)
@@ -290,8 +287,6 @@ export default function App(props) {
     var engine = Engine.create({
     })
 
-    engine.gravity.y = 0
-
     var domanda;
     var qr;
     var type;
@@ -395,7 +390,7 @@ export default function App(props) {
 
       else {
         mov = 0
-        //engine.gravity.y = 0
+        engine.gravity.y = 0
         if (!voluntary) {
           swal.fire({
             title: "Ci vuoi lasciare?",
@@ -413,7 +408,7 @@ export default function App(props) {
               if (result.value === true) {
                 document.body.requestFullscreen()
                 mov = -2
-                //engine.gravity.y = 0.15*scale
+                engine.gravity.y = 0.15*scale
               }
 
               else {
@@ -449,9 +444,7 @@ export default function App(props) {
       if (justStarted && !gameOver && fullscreen) {
         justStarted = false
 
-        //engine.gravity.y = 0.15*scale
-        gravity = 0.15
-        console.log("Hey BITCH")
+        engine.gravity.y = 0.15*scale
         domanda = Domanda({ screenHeight: window.screen.height, groundHeight: window.screen.height / 12.5, x: player.position.x + 2000, q: domande["domanda0"], scale: scale })
         Composite.add(engine.world, [domanda])
         document.body.style.animationPlayState = "running"
@@ -472,8 +465,6 @@ export default function App(props) {
         }, 1000)
 
         var update = setInterval(() => {
-          timeStamp++
-          Body.applyForce(player, player.position, {x:0, y:gravity*gravScale})
 
           if (typeof punti != "undefined") {
             Body.setPosition(punti, { x: player.position.x, y: player.position.y - 60 })
@@ -563,7 +554,7 @@ export default function App(props) {
                 gameOver = true
                 started = false
                 clearInterval(update)
-               // engine.gravity.y = 0
+                engine.gravity.y = 0
                 document.body.style.animationPlayState = "paused"
                 try {
 
@@ -664,9 +655,9 @@ export default function App(props) {
         if (volume !== 0) {
           sound.play()
         }
-        //engine.gravity.y = 0
-        Body.applyForce(player, { x: player.position.x, y: player.position.y }, { x: 0, y: -0.3*scale })
-        //engine.gravity.y = 0.15
+        engine.gravity.y = 0
+        Body.applyForce(player, { x: player.position.x, y: player.position.y }, { x: 0, y: -0.15 })
+        engine.gravity.y = 0.15
 
           try {
             Composite.remove(engine.world, [grav])
@@ -674,7 +665,7 @@ export default function App(props) {
           catch(e) {
             console.error(e)
           }
-          grav = Bodies.rectangle(50, 20, 100, 40, { isStatic: true, isSensor: true, render: { sprite: { texture: createImage((-gravity)+"<br>", 100, 40, type) } } })
+          grav = Bodies.rectangle(50, 20, 100, 40, { isStatic: true, isSensor: true, render: { sprite: { texture: createImage((-engine.gravity.y)+"<br>", 100, 40, type) } } })
                 grav.collisionFilter = {
                   'group': -1,
                   'category': 2,
@@ -699,17 +690,17 @@ export default function App(props) {
     document.addEventListener('visibilitychange', function () {
       if (document.hidden) {
 
-        //engine.gravity.y = 0
+        engine.gravity.y = 0
         mov = 0
       } else {
 
         mov = -2
-        //engine.gravity.y = 0.15*scale
+        engine.gravity.y = 0.15*scale
       }
     }, false);
 
     function start() {
-      //engine.gravity.y = 0
+      engine.gravity.y = 0
       try {
         Composite.remove(engine.world, [player, punti])
       }
