@@ -789,7 +789,7 @@ export default function App(props) {
 
 
 
-      if (!pairs[0].bodyA.isSensor && !pairs[0].bodyB.isSensor && !gameOver && !alreadyTouched) {
+      if ((!pairs[0].bodyA.isSensor && !pairs[0].bodyB.isSensor && !gameOver && !alreadyTouched) || player.position.y < -10) {
 
         alreadyTouched = true
         document.body.style.animationPlayState = "paused"
