@@ -23,6 +23,7 @@ var rispostaGiusta;
 var volume = 1
 var guapeton = true;
 var jumpSound
+var grav;
 
 function decodeThatShit(str) {
   str = decodeURI(str)
@@ -101,10 +102,17 @@ function createImage(string, w, h, type, color, specW) {
 
   else if (type === 1) {
     size = 20
+    breakwords = false
   }
 
   else if (type === 2) {
     size = 1000
+    breakwords = false
+  }
+
+  else if (type === 3) {
+    size = 20
+    breakwords = true
   }
 
   var words = string.split(' ')
@@ -115,7 +123,8 @@ function createImage(string, w, h, type, color, specW) {
       fontSize: size,
       fontFamily: fontFamily,
       fontWeight: 'bold',
-      fill: fill
+      fill: fill,
+      breakwords: breakwords
     })
 
     while (graphText.width > canvas.width) {
@@ -141,7 +150,8 @@ function createImage(string, w, h, type, color, specW) {
     fontFamily: fontFamily,
     fontWeight: 'bold',
     fontSize: size,
-    fill: 'white'
+    fill: 'white',
+    breakwords: breakwords
   });
 
   if (typeof specW === 'undefined') {
@@ -456,7 +466,6 @@ export default function App(props) {
         var updateGravity = setInterval(()=> {
           try {
             Composite.remove(engine.world, [grav])
-            var grav;
           }
           catch(e) {
             console.error(e)
