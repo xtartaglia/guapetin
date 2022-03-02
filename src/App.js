@@ -706,6 +706,7 @@ export default function App(props) {
     }, false);
 
     function start() {
+      engine.gravity.y = 0
       try {
         Composite.remove(engine.world, [player, punti])
       }
@@ -713,7 +714,7 @@ export default function App(props) {
 
       }
 
-      player = Bodies.rectangle(window.screen.width / 3, 0, 50 * scale, 37 * scale, { chamfer: { radius: 15 }, render: { sprite: { texture: doggo, xScale: scale, yScale: scale } } })
+      player = Bodies.rectangle(window.screen.width / 3, window.screen.height / 2, 50 * scale, 37 * scale, { chamfer: { radius: 15 }, render: { sprite: { texture: doggo, xScale: scale, yScale: scale } } })
       Body.setMass(player, 20*scale)
       
 
@@ -777,8 +778,7 @@ export default function App(props) {
             justStarted = true
             checkedWon = false
 
-            engine.gravity.y = 0.15*scale*scaleX
-            mov = -2
+            handleClick()
             clearInterval(go)
             setTimeout(() => {
               Composite.remove(engine.world, [conto])
