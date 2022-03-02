@@ -464,22 +464,6 @@ export default function App(props) {
           Composite.add(qr, [risp])
         }, 1000)
 
-        var updateGravity = setInterval(()=> {
-          try {
-            Composite.remove(engine.world, [grav])
-          }
-          catch(e) {
-            console.error(e)
-          }
-          grav = Bodies.rectangle(50, 20, 100, 40, { isStatic: true, isSensor: true, render: { sprite: { texture: createImage(engine.gravity.y.toString(), 100, 40, type) } } })
-                grav.collisionFilter = {
-                  'group': -1,
-                  'category': 2,
-                  'mask': 0,
-                }
-                Composite.add(engine.world, [grav])
-        },1000)
-
         var update = setInterval(() => {
 
           if (typeof punti != "undefined") {
@@ -672,6 +656,21 @@ export default function App(props) {
           sound.play()
         }
         Body.applyForce(player, { x: player.position.x, y: player.position.y }, { x: 0, y: -engine.gravity.y })
+
+          try {
+            Composite.remove(engine.world, [grav])
+          }
+          catch(e) {
+            console.error(e)
+          }
+          grav = Bodies.rectangle(50, 20, 100, 40, { isStatic: true, isSensor: true, render: { sprite: { texture: createImage((-engine.gravity.y).toString(), 100, 40, type) } } })
+                grav.collisionFilter = {
+                  'group': -1,
+                  'category': 2,
+                  'mask': 0,
+                }
+                Composite.add(engine.world, [grav])
+
       }
     }
 
