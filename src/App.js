@@ -91,6 +91,7 @@ function createImage(string, w, h, type, color, specW) {
   var size;
   var fontFamily = 'Arial'
   var fill
+  var breakwords
   fill = 'white'
 
   canvas.width = w
@@ -124,7 +125,7 @@ function createImage(string, w, h, type, color, specW) {
       fontFamily: fontFamily,
       fontWeight: 'bold',
       fill: fill,
-      breakwords: breakwords
+      breakWords: breakwords
     })
 
     while (graphText.width > canvas.width) {
@@ -151,7 +152,7 @@ function createImage(string, w, h, type, color, specW) {
     fontWeight: 'bold',
     fontSize: size,
     fill: 'white',
-    breakwords: breakwords
+    breakWords: breakwords
   });
 
   if (typeof specW === 'undefined') {
@@ -470,7 +471,7 @@ export default function App(props) {
           catch(e) {
             console.error(e)
           }
-          grav = Bodies.rectangle(15, 15, 30, 30, { isStatic: true, isSensor: true, render: { sprite: { texture: createImage(engine.gravity.y.toString(), 100, 30, type) } } })
+          grav = Bodies.rectangle(50, 20, 100, 40, { isStatic: true, isSensor: true, render: { sprite: { texture: createImage(engine.gravity.y.toString(), 100, 40, type) } } })
                 grav.collisionFilter = {
                   'group': -1,
                   'category': 2,
