@@ -446,10 +446,23 @@ export default function App(props) {
     function handleClick() {
       if (justStarted && !gameOver && fullscreen) {
         justStarted = false
+        engine.gravity.y = 0.15*scale*scaleX
+      }
 
-        if (engine.gravity.y === 0) {
-          engine.gravity.y = 0.15*scale*scaleX
+      if (!gameOver) {
+        var sound = document.querySelector(jumpSound)
+        if (jumpSound === ".jump") {
+          sound.playbackRate = 2
+          sound.volume = 0.5 * volume
         }
+        if (volume !== 0) {
+          sound.play()
+        }
+        Body.applyForce(player, { x: player.position.x, y: player.position.y }, { x: 0, y: -engine.gravity.y })
+      }
+    }
+
+    function moveBitch() {
         domanda = Domanda({ screenHeight: window.screen.height, groundHeight: window.screen.height / 12.5, x: player.position.x + 2000, q: domande["domanda0"], scale: scale })
         Composite.add(engine.world, [domanda])
 
@@ -647,20 +660,6 @@ export default function App(props) {
           }
 
         }, 1000 / 60)
-
-      }
-
-      if (!gameOver) {
-        var sound = document.querySelector(jumpSound)
-        if (jumpSound === ".jump") {
-          sound.playbackRate = 2
-          sound.volume = 0.5 * volume
-        }
-        if (volume !== 0) {
-          sound.play()
-        }
-        Body.applyForce(player, { x: player.position.x, y: player.position.y }, { x: 0, y: -engine.gravity.y })
-      }
     }
 
     document.addEventListener("click", handleClick)
@@ -760,8 +759,8 @@ export default function App(props) {
             won = false
             justStarted = true
             checkedWon = false
-
-            document.dispatchEvent('click')
+            
+            moveBitch()
 
             clearInterval(go)
             setTimeout(() => {
