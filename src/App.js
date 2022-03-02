@@ -655,7 +655,9 @@ export default function App(props) {
         if (volume !== 0) {
           sound.play()
         }
+        engine.gravity.y = 0
         Body.applyForce(player, { x: player.position.x, y: player.position.y }, { x: 0, y: -engine.gravity.y })
+        engine.gravity.y = 0.15
 
           try {
             Composite.remove(engine.world, [grav])
@@ -663,7 +665,7 @@ export default function App(props) {
           catch(e) {
             console.error(e)
           }
-          grav = Bodies.rectangle(50, 20, 100, 40, { isStatic: true, isSensor: true, render: { sprite: { texture: createImage((-engine.gravity.y)+"\n"+player.mass, 100, 40, type) } } })
+          grav = Bodies.rectangle(50, 20, 100, 40, { isStatic: true, isSensor: true, render: { sprite: { texture: createImage((-engine.gravity.y)+"<br>", 100, 40, type) } } })
                 grav.collisionFilter = {
                   'group': -1,
                   'category': 2,
