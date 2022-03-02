@@ -410,7 +410,7 @@ export default function App(props) {
                 document.body.requestFullscreen()
                 mov = -2
                 if (engine.gravity.y === 0) {
-                  engine.gravity.y = 0.15*scale*scaleX
+                  engine.gravity.y = 0.2*scaleX
                 }
               }
 
@@ -446,7 +446,7 @@ export default function App(props) {
     function handleClick() {
       if (justStarted && !gameOver && fullscreen) {
         justStarted = false
-        engine.gravity.y = 0.15*scaleX
+        engine.gravity.y = 0.2*scaleX
       }
 
       if (!gameOver) {
@@ -682,7 +682,7 @@ export default function App(props) {
 
         mov = -2
         if (engine.gravity.y === 0) {
-          engine.gravity.y = 0.15*scale*scaleX
+          engine.gravity.y = 0.15*scaleX
         }
       }
     }, false);
