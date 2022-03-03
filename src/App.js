@@ -367,7 +367,9 @@ export default function App(props) {
         if (!data.value.guepet) {
           (async () => {
             guapeton = false
-            //domande = await getQuestions()
+            if (cumpleYaFestejado) {
+              domande = await getQuestions()
+            }
             jumpSound = ".jump"
             document.body.requestFullscreen()
           })()
