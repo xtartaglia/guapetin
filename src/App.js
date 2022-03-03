@@ -535,6 +535,87 @@ export default function App(props) {
 
           var lastChild = Composite.allBodies(domanda)[Composite.allBodies(domanda).length - 1]
 
+          if (player.position.y < -10) {
+            document.body.style.animationPlayState = "paused"
+        try {
+
+          for (var v = 0; v < document.styleSheets[2].cssRules.length; v++) {
+            var newRule = document.styleSheets[2].cssRules[v].cssText.replace("running", "paused")
+            document.styleSheets[2].deleteRule(v)
+            document.styleSheets[2].insertRule(newRule, v)
+          }
+
+        }
+
+        catch (error) {
+          
+        }
+
+        var gOSound = document.querySelector(".gO")
+        gOSound.volume = 0.5 * volume
+        if (volume !== 0) {
+          gOSound.play()
+        }
+        player.render.sprite.texture = doggoDead
+        gameOver = true
+        started = false
+
+        setTimeout(() => {
+
+          swal.fire({
+            title: "NOOOOOOO! Hai fatto uscire Guapetín dallo schermo :(",
+            html: "Il tuo punteggio è: " + punteggio + "<br>Chiudi questo messaggio per iniziare una nuova partita",
+            icon: "error",
+            showCancelButton: true,
+            confirmButtonText: 'Daje annamoooooo',
+            confirmButtonColor: '#5ca353',
+            cancelButtonText: '¡No gracias señora!',
+            color: 'white',
+            background: '#373737',
+            allowOutsideClick: false
+          })
+            .then((result) => {
+
+              if (result.value === true) {
+                if (!guapeton) {
+                  (async () => {
+                    domande = await getQuestions()
+                    start()
+                  })()
+                }
+
+                else {
+                  start()
+                }
+              }
+
+              else {
+                voluntary = true
+                document.exitFullscreen()
+                swal.fire({
+                  title: "Se vedemo zi'",
+                  html: "Spero il gioco ti sia piaciuto",
+                  showCancelButton: false,
+                  showConfirmButton: false,
+                  color: 'white',
+                  background: '#373737',
+                  allowOutsideClick: false
+                })
+                gameOver = true;
+                try {
+                  Composite.remove(engine.world, [qr, domanda, punti, conto, player])
+                }
+                catch (error) {
+
+                }
+              }
+            })
+
+          alreadyTouched = false
+          player.render.sprite.texture = doggo
+        }, 1000)
+          }
+
 
           if (lastChild.position.x - 100 < player.position.x + 37 * scale / 2 && !checkedWon) {
             
@@ -827,7 +908,7 @@ export default function App(props) {
 
 
 
-      if ((!pairs[0].bodyA.isSensor && !pairs[0].bodyB.isSensor && !gameOver && !alreadyTouched) || player.position.y < -10) {
+      if (!pairs[0].bodyA.isSensor && !pairs[0].bodyB.isSensor && !gameOver && !alreadyTouched) {
 
         alreadyTouched = true
         document.body.style.animationPlayState = "paused"
