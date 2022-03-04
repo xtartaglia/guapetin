@@ -54,6 +54,6 @@ code {
 @media screen and (max-width: 45em) {
 
   body {
-    animation: background-infinite 120s linear infinite
+    animation: background-infinite 110s linear infinite
   }
 }

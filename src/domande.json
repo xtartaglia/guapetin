@@ -41,7 +41,7 @@
         "d": "Fino a dove ti amo?",
         "r0": {
             "r": "Cesena",
-            "giusto": false
+            "giusto": true
         },
         "r1": {
             "r": "Forlì",
@@ -53,7 +53,7 @@
         },
         "r3": {
             "r": "Montréal",
-            "giusto": true
+            "giusto": false
         }
     },
     "domanda3": {
@@ -76,7 +76,7 @@
         }
     },
     "domanda4": {
-        "d": "Las quesadillas pueden no llevar queso?",
+        "d": "¿Las quesadillas pueden no llevar queso?",
         "r0": {
             "r": "Que que que no!",
             "giusto": false
@@ -114,7 +114,7 @@
         }
     },
     "domanda6": {
-        "d": "Mejor queso?",
+        "d": "¿Mejor queso?",
         "r0": {
             "r": "Emmental",
             "giusto": false
@@ -133,7 +133,7 @@
         }
     },
     "domanda7": {
-        "d": "Qué pueden llevar los tacos?",
+        "d": "¿Qué pueden llevar los tacos?",
         "r0": {
             "r": "LAY-TCHOO-GAH",
             "giusto": false
@@ -147,7 +147,7 @@
             "giusto": false
         },
         "r3": {
-            "r": "Frijoles",
+            "r": "Chicharrón",
             "giusto": true
         }
     },
@@ -186,6 +186,59 @@
         },
         "r3": {
             "r": "Pose",
+            "giusto": false
+        }
+    },
+    "domanda10": {
+        "d": "Quando ci siamo messi insieme ufficialmente?",
+        "r0": {
+            "r": "18 febbraio 2021",
+            "giusto": false
+        },
+        "r1": {
+            "r": "18 febbraio 2022",
+            "giusto": true
+        },
+        "r2": {
+            "r": "19 febbraio 2021",
+            "giusto": false
+        },
+        "r3": {
+            "r": "19 febbraio 2022",
+            "giusto": false
+        }
+    },
+    "domanda11": {
+        "d": "Tuuuuuuuuuuuuuu...",
+        "r0": {
+            "r": "Cara de guanábana",
+            "giusto": false
+        },
+        "r1": {
+            "r": "tuuuuuuuuu me mencionaste",
+            "giusto": false
+        },
+        "r2": {
+            "r": "y dijiste cosas de mentiras",
+            "giusto": false
+        },
+        "r3": {
+            "r": "de mi",
+            "giusto": true
+        }
+    },
+    "domanda12": {
+        "d": "In Québec, cosa si associa principalmente allo sciroppo d'acero?",
+        "r0": {
+            "r": "crêpes",
+            "giusto": true
+        },
+        "r1": {
+            "r": "pancakes",
+            "giusto": false
+        },
+        "r2": {
+            "r": "gâteaux de poêle",
             "giusto": false
         }
     }
