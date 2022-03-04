@@ -2,7 +2,7 @@
     background-image: url('lovecomp1.png');
     background-size: auto 100%;
     background-repeat: repeat-x;
-    animation:background-infinite 110s linear infinite;
+    animation:background-infinite 90s linear infinite;
     animation-play-state: paused;
     background-position: 0 0;
   }
