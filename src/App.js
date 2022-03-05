@@ -18,6 +18,7 @@ import swal from 'sweetalert2'
 import purupu from './purupuu2.mp3'
 import loveComp from './lovecomp1.png'
 import pouroupou from './pouroupou.png'
+import cancion from './cancion.mp3'
 
 const rightAnswer = new Event('rightanswer')
 var rispostaGiusta;
@@ -378,6 +379,10 @@ export default function App(props) {
           guapeton = true
           jumpSound = ".purupu"
           document.body.requestFullscreen()
+          setTimeout(()=>{
+            var canzone = document.querySelector(".cancion")
+            canzone.play()
+          },60000)
         }
       })
 
@@ -1005,6 +1010,7 @@ export default function App(props) {
 
   return (
     <div ref={scena} className="canvas" height="100vh" width="100vh" >
+      <audio className="cancion" src={cancion} preload="auto"></audio>
       <audio className="win" src={win} preload="auto"></audio>
       <audio className="jump" src={jump} preload="auto"></audio>
       <audio className="gO" src={gO} preload="auto"></audio>
