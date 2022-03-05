@@ -371,6 +371,12 @@ export default function App(props) {
             if (cumpleYaFestejado) {
               domande = await getQuestions()
             }
+            else {
+              setTimeout(()=>{
+                var canzone = document.querySelector(".cancion")
+                canzone.play()
+              },60000)
+            }
             jumpSound = ".jump"
             document.body.requestFullscreen()
           })()
