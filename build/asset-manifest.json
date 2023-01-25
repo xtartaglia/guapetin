@@ -1,0 +1,30 @@
+{
+  "files": {
+    "main.css": "/static/css/main.cab0d285.css",
+    "main.js": "/static/js/main.d3054ae9.js",
+    "static/js/787.d678e311.chunk.js": "/static/js/787.d678e311.chunk.js",
+    "static/media/cancion.mp3": "/static/media/cancion.6039a78000b69c7d6359.mp3",
+    "static/media/lovecomp1.png": "/static/media/lovecomp1.09357db0145a3eba825b.png",
+    "static/media/wrong.wav": "/static/media/wrong.324f4e9b4006dd1c287c.wav",
+    "static/media/game over.mp3": "/static/media/game over.9f92432b60bc2ee7e8ce.mp3",
+    "static/media/pouroupou.png": "/static/media/pouroupou.dfca00faae72c44786b6.png",
+    "static/media/ground.png": "/static/media/ground.6292ae30418efde99561.png",
+    "static/media/i-ruv-you-1.mp3": "/static/media/i-ruv-you-1.21da531f8075abdfa066.mp3",
+    "static/media/doggo_love.png": "/static/media/doggo_love.d5b5561a10235b18ceba.png",
+    "static/media/doggo_dead.png": "/static/media/doggo_dead.84c0dc822ed59907aebe.png",
+    "static/media/doggo_sad.png": "/static/media/doggo_sad.74b7236cb051731e51ab.png",
+    "static/media/doggo.png": "/static/media/doggo.7251475a3ce710e4f58e.png",
+    "static/media/groundstuck.png": "/static/media/groundstuck.b76ab41c8b2a6234b263.png",
+    "static/media/nuvola.png": "/static/media/nuvola.d04f345f6883ff80d180.png",
+    "static/media/purupuu2.mp3": "/static/media/purupuu2.d4760f510c0ec3d2f61e.mp3",
+    "static/media/jump.mp3": "/static/media/jump.d13c65c389bc8f2de2b3.mp3",
+    "index.html": "/index.html",
+    "main.cab0d285.css.map": "/static/css/main.cab0d285.css.map",
+    "main.d3054ae9.js.map": "/static/js/main.d3054ae9.js.map",
+    "787.d678e311.chunk.js.map": "/static/js/787.d678e311.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.cab0d285.css",
+    "static/js/main.d3054ae9.js"
+  ]
+}
