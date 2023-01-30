@@ -871,7 +871,7 @@ export default function App(props) {
 
             try {
               document.styleSheets[0].cssRules[0].style.setProperty('--customState', 'running')
-              console.log(document.styleSheets[0].cssRules[0].cssText)
+              console.log(document.styleSheets[0].cssRules)
             }
 
             catch (error) {
