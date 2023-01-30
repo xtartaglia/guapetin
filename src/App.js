@@ -883,6 +883,7 @@ export default function App(props) {
                 var newRule = document.styleSheets[2].cssRules[v].cssText.replace("paused", "running")
                 document.styleSheets[2].deleteRule(v)
                 document.styleSheets[2].insertRule(newRule, v)
+                console.log(document.styleSheets[2].cssRules[v].cssText)
               }
 
             }
