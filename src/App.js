@@ -524,14 +524,12 @@ export default function App(props) {
       document.body.style.animationPlayState = "paused"
       try {
 
-              var r = document.querySelector(':root')
-              //var rs = getComputedStyle(r)
-              r.style.setProperty('--customState', 'running');
+        document.styleSheets[0].cssRules[0].style.setProperty('--customState', 'paused')
 
       }
 
       catch (error) {
-
+        console.log(error)
       }
 
       var gOSound = document.querySelector(".gO")
@@ -718,17 +716,15 @@ export default function App(props) {
               started = false
               clearInterval(update)
               engine.gravity.y = 0
-              document.body.style.animationPlayState = "paused"
+             document.body.style.animationPlayState = "paused"
               try {
 
-                var r = document.querySelector(':root')
-                //var rs = getComputedStyle(r)
-                r.style.setProperty('--customState', 'running');
+                document.styleSheets[0].cssRules[0].style.setProperty('--customState', 'paused')
 
               }
 
               catch (error) {
-
+                console.error(error)
               }
               setTimeout(() => {
                 swal.fire({
@@ -874,15 +870,12 @@ export default function App(props) {
           if (l === 3) {
 
             try {
-
-              var r = document.querySelector(':root')
-              //var rs = getComputedStyle(r)
-              r.style.setProperty('--customState', 'running');
-
+              document.styleSheets[0].cssRules[0].style.setProperty('--customState', 'running')
+              console.log(document.styleSheets[0].cssRules[0].cssText)
             }
 
             catch (error) {
-
+              console.error(error)
             }
             punteggio = 0
 
