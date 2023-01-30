@@ -1,3 +1,7 @@
+:root {
+  --customState: paused;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -11,7 +15,7 @@ body {
   background-repeat: repeat-x;
   background-position: 0 0;
   animation:background-infinite 90s linear infinite;
-  animation-play-state: paused;
+  animation-play-state: var(--customState);
   height: 100%;
   width: 100%;
 }

@@ -524,11 +524,9 @@ export default function App(props) {
       document.body.style.animationPlayState = "paused"
       try {
 
-        for (var v = 0; v < document.styleSheets[2].cssRules.length; v++) {
-          var newRule = document.styleSheets[2].cssRules[v].cssText.replace("running", "paused")
-          document.styleSheets[2].deleteRule(v)
-          document.styleSheets[2].insertRule(newRule, v)
-        }
+              var r = document.querySelector(':root')
+              //var rs = getComputedStyle(r)
+              r.style.setProperty('--customState', 'running');
 
       }
 
@@ -723,11 +721,9 @@ export default function App(props) {
               document.body.style.animationPlayState = "paused"
               try {
 
-                for (var v = 0; v < document.styleSheets[2].cssRules.length; v++) {
-                  var newRule = document.styleSheets[2].cssRules[v].cssText.replace("running", "paused")
-                  document.styleSheets[2].deleteRule(v)
-                  document.styleSheets[2].insertRule(newRule, v)
-                }
+                var r = document.querySelector(':root')
+                //var rs = getComputedStyle(r)
+                r.style.setProperty('--customState', 'running');
 
               }
 
@@ -879,12 +875,9 @@ export default function App(props) {
 
             try {
 
-              for (var v = 0; v < document.styleSheets[2].cssRules.length; v++) {
-                var newRule = document.styleSheets[2].cssRules[v].cssText.replace("paused", "running")
-                document.styleSheets[2].deleteRule(v)
-                document.styleSheets[2].insertRule(newRule, v)
-                console.log("lol"+document.styleSheets[2].cssRules[v].cssText)
-              }
+              var r = document.querySelector(':root')
+              //var rs = getComputedStyle(r)
+              r.style.setProperty('--customState', 'running');
 
             }
 
