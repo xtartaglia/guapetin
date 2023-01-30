@@ -1,4 +1,4 @@
-body::backdrop, body::-webkit-backdrop, body::-moz-backdrop, body::-ms-backdrop {
+body::backdrop {
   --customState: paused;
 }
 

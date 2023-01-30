@@ -524,7 +524,14 @@ export default function App(props) {
       document.body.style.animationPlayState = "paused"
       try {
 
-        document.styleSheets[0].cssRules[0].style.setProperty('--customState', 'paused')
+        for (var i = 0; i<document.styleSheets[0].cssRules.length;i++) {
+          
+          if(document.styleSheets[0].cssRules[i].style.cssText.includes("--customState")) {
+
+            document.styleSheets[0].cssRules[i].style.setProperty('--customState', 'paused')
+          }
+
+        }
 
       }
 
@@ -719,7 +726,14 @@ export default function App(props) {
              document.body.style.animationPlayState = "paused"
               try {
 
-                document.styleSheets[0].cssRules[0].style.setProperty('--customState', 'paused')
+                for (var i = 0; i<document.styleSheets[0].cssRules.length;i++) {
+          
+                  if(document.styleSheets[0].cssRules[i].style.cssText.includes("--customState")) {
+        
+                    document.styleSheets[0].cssRules[i].style.setProperty('--customState', 'paused')
+                  }
+        
+                }
 
               }
 
@@ -870,8 +884,14 @@ export default function App(props) {
           if (l === 3) {
 
             try {
-              document.styleSheets[0].cssRules[0].style.setProperty('--customState', 'running')
-              console.log(document.styleSheets[0].cssRules)
+              for (var i = 0; i<document.styleSheets[0].cssRules.length;i++) {
+          
+                if(document.styleSheets[0].cssRules[i].style.cssText.includes("--customState")) {
+      
+                  document.styleSheets[0].cssRules[i].style.setProperty('--customState', 'running')
+                }
+      
+              }
             }
 
             catch (error) {
